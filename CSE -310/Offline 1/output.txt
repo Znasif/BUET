@@ -1,0 +1,138 @@
+I foo FUNCTION
+<foo,FUNCTION> inserted at position 0, 0
+
+
+I i IDENTIFIER
+<i,IDENTIFIER> inserted at position 5, 0
+
+
+L foo
+<foo,FUNCTION> found at position 0, 0
+
+
+L j
+j not found
+
+
+I 123 NUMBER
+<123,NUMBER> inserted at position 4, 0
+
+
+P
+0 --> < foo : FUNCTION>
+1 --> 
+2 --> 
+3 --> 
+4 --> < 123 : NUMBER>
+5 --> < i : IDENTIFIER>
+6 --> 
+
+
+D ja
+ja not found
+
+
+D 123
+Deleted from 4, 0
+
+
+P
+0 --> < foo : FUNCTION>
+1 --> 
+2 --> 
+3 --> 
+4 --> 
+5 --> < i : IDENTIFIER>
+6 --> 
+
+
+I 231 NUMBER
+<231,NUMBER> inserted at position 0, 1
+
+
+I 105 NUMBER
+<105,NUMBER> inserted at position 4, 0
+
+
+P
+0 --> < foo : FUNCTION> < 231 : NUMBER>
+1 --> 
+2 --> 
+3 --> 
+4 --> < 105 : NUMBER>
+5 --> < i : IDENTIFIER>
+6 --> 
+
+
+I <= RELOP
+<<=,RELOP> inserted at position 3, 0
+
+
+I == RELOP
+<==,RELOP> inserted at position 4, 1
+
+
+P
+0 --> < foo : FUNCTION> < 231 : NUMBER>
+1 --> 
+2 --> 
+3 --> < <= : RELOP>
+4 --> < 105 : NUMBER> < == : RELOP>
+5 --> < i : IDENTIFIER>
+6 --> 
+
+
+I <= RELOP
+<<=,RELOP> already exists
+
+
+D ==
+Deleted from 4, 1
+
+
+P
+0 --> < foo : FUNCTION> < 231 : NUMBER>
+1 --> 
+2 --> 
+3 --> < <= : RELOP>
+4 --> < 105 : NUMBER>
+5 --> < i : IDENTIFIER>
+6 --> 
+
+
+D 231
+Deleted from 0, 1
+
+
+I 204 NUMBER
+<204,NUMBER> inserted at position 0, 1
+
+
+P
+0 --> < foo : FUNCTION> < 204 : NUMBER>
+1 --> 
+2 --> 
+3 --> < <= : RELOP>
+4 --> < 105 : NUMBER>
+5 --> < i : IDENTIFIER>
+6 --> 
+
+
+D 204
+Deleted from 0, 1
+
+
+I 123 NUMBER
+<123,NUMBER> inserted at position 4, 1
+
+
+P
+0 --> < foo : FUNCTION>
+1 --> 
+2 --> 
+3 --> < <= : RELOP>
+4 --> < 105 : NUMBER> < 123 : NUMBER>
+5 --> < i : IDENTIFIER>
+6 --> 
+
+

@@ -1,0 +1,33 @@
+			brief desctiption of project
+-we want to create a mobile app which will be connected to a database 
+- the user of this app will be students and teachers
+- this app will work like a social media. 
+- There will be Profile for every teacehr which will be provided by education board
+- it will serve as a national database for teachers also 
+- Students can also open id..... But its not mendatory. Anyone can use this app without login
+			Features:
+- there will be monthly video training (both mendatory and optional ) for teachers
+-there will be subjectwise video lecture for students
+-there will be community room for teahers and students where they can discuss abot problems of various subjects
+- if teachers complete their training there will be short online test where all teachers around the country will participate
+- This trainings will be online. so the teachers dont have to waste their time and govt nednt waste their money for their training
+- But why they will participate this trainings ?
+because there will be rating system based on their rank in online test, number of trainings done and their activity
+-what do we mean by activity ? 
+they will upload subjectwise video lecture on this site
+the better the video.. the more that teacher will famous
+besides they will answer students questions in community room 
+that will help their rating too
+- where are the students? 
+they will use this app for watching these videos
+there will be subjectwise(perhaps topicwise lecture) so that the students dont have to run from here to there to find a solutioun on any topic
+they can like videos and vote for any particular teacher which will help that teacher to rise on the top of the ranklist
+Advantages:
+-A competetive environment will be created among teachers and they will try to do better and better for their own sake
+- Govt dont have to worry about teachers training
+- Students around the country will come in touch of good Teachers so the gap between city and village students will shrink
+- This is a fun way of learning
+- As the country is getting digitalized day by day we have to start somewhere
+- Now a days an android phone is reaching every hand
+we have to use this opportunity to connect more people and create a brige among teachers and students which will boost the whole education system
+overall its a cheap and smart way of education

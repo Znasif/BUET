@@ -1,0 +1,9 @@
+Herbert Schildt at herbert@schildt.com
+Bjarne Stroustrup at bjarne@bjarne.com
+Author: Herbert Schildt Name: Teach Yourself C++ Price: 150.5 Stock: 50
+Author: Herbert Schildt Name: Teach Yourself C++ Price: 150.5 Stock: 40
+Author: Bjarne Stroustrup Name: The C++ Programming Language Price: 200 Stock: 20
+Borrowing amount exceeds the current stock!
+Author: Bjarne Stroustrup Name: The C++ Programming Language Price: 200 Stock: 30
+Herbert Schildt at herbert@schildt.com
+Bjarne Stroustrup at bjarne@bjarne.com
