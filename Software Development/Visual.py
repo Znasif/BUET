@@ -68,3 +68,21 @@ class Visual:
         Visual.plot('Numbers and Contour', im_org)
         Visual.plot('Numbers', im_nums)
         return im_nums
+
+    @staticmethod
+    def get_overlay(im_org, im_plot):
+        """
+        Shows overlap of the two images in different colors
+        :param im_org: image 1
+        :param im_plot: image 2
+        :return: NIL
+        """
+        p, q = np.shape(im_org)
+
+        new = np.full((p, q, 3), (255, 255, 255))
+
+        new[im_org == 0] = (255, 255, 0)
+        new[im_plot == 0] = (255, 0, 255)
+
+        Visual.image_write("See.jpg", new)
+
