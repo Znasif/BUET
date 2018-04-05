@@ -32,6 +32,12 @@ for cnt in contours[2:]:
         cv2.drawContours(empty,[cnt], 0, 0, 2)
     else:
         cv2.drawContours(nums,[cnt], 0, 0, -1)
+#make numbers more eroded
+#use template matching on the nums.jpg
+#grow numbers through region growing and make [0-9] templates
+#http://scikit-image.org/docs/dev/auto_examples/features_detection/plot_template.html
+#http://scikit-image.org/docs/dev/api/skimage.feature.html#skimage.feature.match_template
+#save the templates[0-9] to DS and find matches
 kernel = np.ones((7,7),np.uint8)
 empty = cv2.erode(empty,kernel,iterations=1)
 kernel = np.ones((3,3),np.uint8)
