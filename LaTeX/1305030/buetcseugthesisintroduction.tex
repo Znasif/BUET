@@ -1,0 +1,56 @@
+\chapter{Introduction}\label{intro}
+
+Map digitization is the process of constructing vector based shapes from scanned paper maps. There has been some major research on the extraction of features from raster maps to vector format. Traditional mouza maps have a limited size. Therefore representing them in digital format provides with additional scopes and features. When these maps are digitized, their manipulation, property extraction an representation becomes straightforward. 
+
+The main hurdles with vectorizing the map is to find the actual plotlines that require vectorization. Traditional image scan leaves several noise factors that reduce accuracy of feature extraction. These include but are not limited to: paper crease, ink smear, missing ink, overlap, smear etc. Extracting the actual contours of the plots by removing noise and linking missing links is the objective of this thesis.
+
+This chapter will introduce the topics and briefly discuss about motivation behind this thesis, summary of existing works, limitations and objectives.
+
+\section{Problem Statement and Motivation}
+
+The problem statement is \textbf{\textit{``Mouza Land Map Digitization''}}. Here digitization refers to feature extraction of morphological mouza maps to vectorize the plot contours and assign necessary data to the plots.
+
+The proposed automated method will eliminate noise and perform edge linking, contour and number extraction and reconstruction of the plot from vector subsegments.
+
+There is currently no system in place to make the whole process automated from scanned image to noise reduction to number and contour recognition and georeferencing feature extraction. Raster to vector is necessary for the overlay feature and to provide sufficient accuracy at different zoom level.
+
+The motivation behind this thesis is to automate the whole process of digitizing the mouza maps in such a way that:
+\begin{enumerate}
+\item Mouza plot information can be easily accessible and representable.
+\item The information can be overlaid on any complex background such as topographical, topological, land cover, land use maps or even google map due to georeferencing.
+\item Final digitized output can be modified with GIS and automatically reconstruct complex maps through divide and conquer.
+\item preservation data accuracy.
+\end{enumerate}
+
+\section{Summary of Existing Works and Limitations}
+
+Several ideas of morphological map segmentation have been proposed so far. 
+In~\cite{Panja003} the author deals with the problem based on assumptions that most of the extracted features will be of regular polygon. In~\cite{632031} authors have used the underlying property of lines to extract structural information. In~\cite{6065540} authors have focused on determining the text of a map with varying orientation and size. In~\cite{206957,YAMADA1991479} authors have proposed an approach that detects layers in a map in parallel. Besides these other map extraction processes have also been introduced. This literature review will be discussed elaborately in chapter 3. 
+
+The main limitation of the existing work is that there is no complete automated process of map feature extraction curtailed to the specific set of requirements in mouza map digitization. The approaches all refer to different subproblems but are not automated to the last required output. Some have problem domain very dissimilar to that of the mouza maps, like~\cite(4512313) deals specifically with assigning altitude value to scanned contour maps.
+
+\section{Objectives}
+
+The main objectives of this thesis is to automate the following aspects of feature extraction and utilisation:
+\begin{enumerate}
+\item Compensating and correcting the inherent limitations of a scanned paper map.
+\item Georeferencing the extracted plot informations
+\item Progressive reconstruction of parent map from multiple submaps.
+\end{enumerate}
+
+\section{Scope of the Thesis}
+
+The domain of this problem is not limited to the scope of this thesis. The following aspects are not in the purview of this work:
+\begin{enumerate}
+\item Recognising and interpreting the various texts and symbols present in standard Mouza maps.
+\item Georeferencing with Latitude/Longitude, UTM or GPS data.
+\item Joining different Mouza maps
+\end{enumerate}
+
+\section{Organization of the Thesis}
+
+We have divided our work plan in several chapters. Chapter \ref{intro} is introduction which contains our topics and brief discussion about motivation behind the topics, summary of existing works, limitations and objectives. Chapter \ref{ch:term} includes some terminologies regarding our thesis. Chapter \ref{ch:review} contains the publications consulted in this thesis. Chapter \ref{ch:workplan} proposes the guidelines for this work.
+
+
+
+\endinput
