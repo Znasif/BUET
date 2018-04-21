@@ -29,7 +29,7 @@ class Visual:
         return img
 
     @staticmethod
-    def image_write(title,img):
+    def image_write(title, img):
         """
         Write image to file
 
@@ -37,19 +37,19 @@ class Visual:
         :param img: numpy array to write
         :return: NIL
         """
-        cv2.imwrite(Visual.out_folder+title, img)
+        cv2.imwrite(Visual.out_folder+title+".jpg", img)
 
     @staticmethod
-    def plot(title, image, map='gray'):
+    def plot(title, image, a_map='gray'):
         """
         Show image in new window
 
         :param title: Title of image
         :param image: the numpy array to represent
-        :param map: default to greyscale image
+        :param a_map: default to greyscale image
         :return: NIL
         """
-        plt.imshow(image, cmap=map)
+        plt.imshow(image, cmap=a_map)
         plt.title(title)
         plt.axis('off')
         plt.show()
