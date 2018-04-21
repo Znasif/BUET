@@ -95,7 +95,7 @@ class Process:
             empty = ~empty
             img = img | empty
             subplot_list.append(np.copy(img))
-        return subplot_list
+        return subplot_list, contours
 
     @staticmethod
     def get_split(img, contour_size=1000):

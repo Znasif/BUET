@@ -51,6 +51,7 @@ class Visual:
         """
         plt.imshow(image, cmap=map)
         plt.title(title)
+        plt.axis('off')
         plt.show()
 
     @staticmethod
@@ -64,8 +65,8 @@ class Visual:
         :return: numbered image
         """
         im_nums = ~(im_org ^ im_plot)
-        Visual.plot('Contour', im_plot)
-        Visual.plot('Numbers and Contour', im_org)
+        # Visual.plot('Contour', im_plot)
+        # Visual.plot('Numbers and Contour', im_org)
         Visual.plot('Numbers', im_nums)
         return im_nums
 
@@ -84,5 +85,18 @@ class Visual:
         new[im_org == 0] = (255, 255, 0)
         new[im_plot == 0] = (255, 0, 255)
 
-        Visual.image_write("See.jpg", new)
+        return new
 
+    @staticmethod
+    def draw_contour(img_org, contour):
+        """
+        Just an interface for drawContour function
+        :param img_org: original image
+        :param contour: contour to be drawn
+        :return: image with just the contour
+        """
+
+        empty = np.zeros(img_org.shape, np.uint8)
+        empty = ~empty
+        cv2.drawContours(empty, [contour], 0, 0, 1)
+        return empty
