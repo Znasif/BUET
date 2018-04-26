@@ -52,6 +52,17 @@ class Process:
         return img
 
     @staticmethod
+    def get_edges(img):
+        """
+        A better edge detection scheme
+        :param img: Image where edges are not coherent
+        :return: image where edges are highlighted
+        """
+        reduced_noise = Process.blurs(img, 1)
+        img = cv2.Canny(reduced_noise, 100, 200)
+        return ~img
+
+    @staticmethod
     def get_contour(img, flag=0, color=0):
         """
         This derives the available contours of an image
