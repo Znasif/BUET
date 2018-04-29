@@ -111,7 +111,7 @@ public class Main {
         try {
             scan = new Scanner(file);
             int i=0;
-            String[] si;
+            String[] si;-version
             while (scan.hasNextLine()) {
                 s=scan.nextLine();
                 si=s.split(" ");
