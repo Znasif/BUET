@@ -24,14 +24,14 @@ def get_match(img, template):
     loc = np.where(res >= threshold)
     for pt in zip(*loc[::-1]):
         cv2.rectangle(img, pt, (pt[0] + template.shape[1], pt[1] + template.shape[0]), 0, 2)
-    cv2.imshow("detected", img)
-    cv2.waitKey(0)
+    return img
 
 
 if __name__ == "__main__":
-    img = cv2.imread("SymbolSet.png", 0)
-    img1 = cv2.imread("Symbols.png", 0)
-    template = cv2.imread("Crop5.jpg", 0)
+    # img = cv2.imread("SymbolSet.png", 0)
     # get_matches1(img)
     # get_matches(img1)
-    get_match(img, template)
+    for i in range(3):
+        img = cv2.imread("Symbols.png", 0)
+        template = cv2.imread("Crop"+str(i+3)+".jpg", 0)
+        cv2.imwrite("Crop"+str(i)+".jpg", get_match(img, template))
