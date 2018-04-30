@@ -3,9 +3,10 @@ import numpy as np
 import cv2
 import sys
 
+
 def _thinningIteration(im, iter):
-	I, M = im, np.zeros(im.shape, np.uint8)
-	expr = """
+    I, M = im, np.zeros(im.shape, np.uint8)
+    expr = """
 	for (int i = 1; i < NI[0]-1; i++) {
 		for (int j = 1; j < NI[1]-1; j++) {
 			int p2 = I2(i-1, j);
@@ -32,33 +33,34 @@ def _thinningIteration(im, iter):
 	} 
 	"""
 
-	weave.inline(expr, ["I", "iter", "M"])
-	return (I & ~M)
+
+    weave.inline(expr, ["I", "iter", "M"])
+    return (I & ~M)
 
 
 def thinning(src):
-	dst = src.copy() / 255
-	prev = np.zeros(src.shape[:2], np.uint8)
-	diff = None
+    dst = src.copy() / 255
+    prev = np.zeros(src.shape[:2], np.uint8)
+    diff = None
 
-	while True:
-		dst = _thinningIteration(dst, 0)
-		dst = _thinningIteration(dst, 1)
-		diff = np.absolute(dst - prev)
-		prev = dst.copy()
-		if np.sum(diff) == 0:
-			break
+    while True:
+        dst = _thinningIteration(dst, 0)
+        dst = _thinningIteration(dst, 1)
+        diff = np.absolute(dst - prev)
+        prev = dst.copy()
+        if np.sum(diff) == 0:
+            break
 
-	return dst * 255
+    return dst * 255
+
 
 if __name__ == "__main__":
-	src = cv2.imread("kanji.png")
-	if src == None:
-		sys.exit()
-	bw = cv2.cvtColor(src, cv2.cv.CV_BGR2GRAY)
-	_, bw2 = cv2.threshold(bw, 10, 255, cv2.THRESH_BINARY)
-	bw2 = thinning(bw2)
-	cv2.imshow("src", bw)
-	cv2.imshow("thinning", bw2)
-	cv2.waitKey()
-
+    src = cv2.imread("kanji.png")
+    if src == None:
+        sys.exit()
+    bw = cv2.cvtColor(src, cv2.cv.CV_BGR2GRAY)
+    _, bw2 = cv2.threshold(bw, 10, 255, cv2.THRESH_BINARY)
+    bw2 = thinning(bw2)
+    cv2.imshow("src", bw)
+    cv2.imshow("thinning", bw2)
+    cv2.waitKey()
