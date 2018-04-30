@@ -37,7 +37,7 @@ class Visual:
         :param img: numpy array to write
         :return: NIL
         """
-        cv2.imwrite(Visual.out_folder+title+".jpg", img)
+        cv2.imwrite(Visual.out_folder+title.split(".")[0]+".jpg", img)
 
     @staticmethod
     def plot(title, image, a_map='gray'):
