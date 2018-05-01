@@ -1,4 +1,5 @@
 import math, random
+import matplotlib.pyplot as plt
 
 def generatePolygon( ctrX, ctrY, aveRadius, irregularity, spikeyness, numVerts ) :
     '''Start with the centre of the polygon at ctrX, ctrY,
@@ -45,6 +46,22 @@ def generatePolygon( ctrX, ctrY, aveRadius, irregularity, spikeyness, numVerts )
 
     return points
 
+def write_points(points, fname):
+    sz = len(points)
+    with open("1305030_"+fname,'w+') as f:
+        for i in range(sz):
+            a, b = points[i]
+            if i != sz-1:
+                x, y = points[i+1]
+                plt.plot([a, x], [b, y], marker='o')
+            else:
+                x, y = points[0]
+                plt.plot([a, x], [b, y], marker='o')
+            f.write(str(a)+" "+str(b)+'\n')
+        plt.show()
+        f.close()
+
+
 def clip(x, min, max) :
     if( min > max ) :  return x
     elif( x < min ) :  return min
@@ -53,4 +70,4 @@ def clip(x, min, max) :
 
 
 if __name__ == "__main__":
-    print(generatePolygon(7, 7, 4, .5, .5, 10))
+    write_points(generatePolygon(7, 7, 4, .5, .5, 20), "out.txt")
