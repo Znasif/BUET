@@ -1,22 +1,35 @@
 #include <bits/stdc++.h>
 
+#define stv 0
+#define env 1
+#define spv 2
+#define mrv 3
+#define rgv 4
+#define pi acos(0.0)
+
 using namespace std;
 
-vector<pair<int, pair<double, double>>> graph;
-vector<pair<double, int>> sorted;
-vector<int> final;
+vector<pair<pair<int,int>, pair<double, double>>> graph, sorted;
 
 int V=0;
 int p0,p1;
 
-bool sortbysec(const pair<int,pair<double, double>> &a,
-               const pair<int,pair<double, double>> &b)
+bool sortbysec(const pair<pair<int,int>, pair<double, double>> &a,
+               const pair<pair<int,int>, pair<double, double>> &b)
 {
-    return (a.second > b.second);
+    return (a.second.second > b.second.second);
 }
 
+struct bst
+{
+    bool operator() (const double& lhs, const double& rhs) const
+    {
+        return lhs<rhs;
+    }
+};
 
-bool orientation(int f, int s, int i){
+int decide_point(int f, int s, int i)
+{
     double px,py,qx,qy,rx,ry;
     px = graph[f].second.first;
     py = graph[f].second.second;
@@ -27,63 +40,74 @@ bool orientation(int f, int s, int i){
     rx = graph[i].second.first;
     ry = graph[i].second.second;
 
-    return (qy - py) * (rx - qx) >= (qx - px) * (ry - qy);
+    double ax, ay, bx, by;
+    ax = qx - px;
+    ay = qy - py;
+    bx = qx - rx;
+    by = qy - ry;
+
+    double ang = acos((ax*bx+ay*by)/(sqrt(ax*ax+ay*ay)+sqrt(bx*bx+by*by)));
+
+    if(qy>py && qy>ry)
+    {
+        if(ang < pi)
+            return stv;
+        else if(ang > pi)
+            return spv;
+        return rgv;
+    }
+    if(qy<py && qy<ry)
+    {
+        if(ang < pi)
+            return env;
+        else if(ang > pi)
+            return mrv;
+        return rgv;
+    }
+    return rgv;
 }
 
-void convexhull(int show=0)
+void make_monotone()
 {
-    FILE* fi = freopen("1305030_points.txt","r",stdin);
+    //FILE* fi = freopen("1305030_out.txt","r",stdin);
+    //FILE* fi = freopen("input1.txt","r",stdin);
+    FILE* fi = freopen("input2.txt","r",stdin);
     int cnt=0;
     //cout.precision(12);
-    if(show) cout <<  "Points :"<<endl;
     cin>>V;
     while (cnt<V)
     {
         double a,b;
         cin>>a>>b;
-        graph.push_back(make_pair(cnt, make_pair(a,b)));
-        if(show)
-        {
-            cout << graph[cnt].first<<  " X : "<< graph[cnt].second.first << " Y : "<< graph[cnt].second.second << '\n';
-        }
+        graph.push_back(make_pair(make_pair(cnt,-1), make_pair(a,b)));
+        sorted.push_back(make_pair(make_pair(cnt,-1), make_pair(a,b)));
+        // cout << graph[cnt].first<<  " X : "<< graph[cnt].second.first << " Y : "<< graph[cnt].second.second << '\n';
         cnt++;
     }
-    fclose(fi);
-}
-
-void writePoints()
-{
-    ofstream myfile("1305030_edges.txt", ofstream::out);
-    int H=final.size();
-    double cost=0.0;
-    cout<<"Extreme Points : \n"<<endl;
-    cout<<1<<" "<<graph[final[0]].second.first<<" "<<graph[final[0]].second.second<<endl;
-    for(int i=0; i<H-1; i++)
+    sort(sorted.begin(), sorted.end(), sortbysec);
+    for (int i = 0; i < V-2; i++)
     {
-        myfile<<final[i]<<" "<<final[i+1]<<endl;
-        cout<<i+2<<" "<<graph[final[i+1]].second.first<<" "<<graph[final[i+1]].second.second<<endl;
-        double a = graph[final[i]].second.first-graph[final[i+1]].second.first;
-        double b = graph[final[i]].second.second-graph[final[i+1]].second.second;
-        cost += sqrt(a*a+b*b);
+        //cout << sorted[i].first.first<<" "<<sorted[i].first.second<<  " X : "<< sorted[i].second.first;
+        //cout << " Y : "<< sorted[i].second.second << '\n';
+        int ret = decide_point(i, i+1, i+2);
+        graph[i+1].first.second = ret;
+        cout << graph[i].first.first<<" "<<graph[i].first.second<<  " X : "<< graph[i].second.first;
+        cout << " Y : "<< graph[i].second.second << '\n';
     }
-    cout<<"\nTotal Length of Convex Hull : "<<cost<<endl;
-    myfile.close();
+    fclose(fi);
 }
 
 
 int main()
 {
     int start_s=clock();
-    convexhull();
-    writePoints();
-    double a,b;
 
-    while(1){
-        cout<<"Check Points: "<<endl;
-        cin>>a>>b;
-        cout<<a<<b<<endl;
-        checkPoint(a,b);
-    }
+
+
+    make_monotone();
+
+
+
     int stop_s=clock();
     cout << "\ntime: " << (stop_s-start_s)/double(CLOCKS_PER_SEC) << endl;
 }

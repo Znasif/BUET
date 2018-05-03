@@ -1,5 +1,6 @@
 import math, random
 import matplotlib.pyplot as plt
+import sys
 
 def generatePolygon( ctrX, ctrY, aveRadius, irregularity, spikeyness, numVerts ) :
     '''Start with the centre of the polygon at ctrX, ctrY,
@@ -49,6 +50,7 @@ def generatePolygon( ctrX, ctrY, aveRadius, irregularity, spikeyness, numVerts )
 def write_points(points, fname):
     sz = len(points)
     with open("1305030_"+fname,'w+') as f:
+        f.write(str(sz)+'\n')
         for i in range(sz):
             a, b = points[i]
             if i != sz-1:
@@ -62,6 +64,21 @@ def write_points(points, fname):
         f.close()
 
 
+def read_points(fname):
+    with open("1305030_"+fname, 'r') as f:
+        lines = f.readlines()
+        points = []
+        flag = 1
+        for l in lines:
+            if flag:
+                flag = 0
+                continue
+            a, b = l.split()
+            if fname == "points.txt":
+                points.append((float(a), float(b)))
+        f.close()
+    return write_points(points, fname)
+
 def clip(x, min, max) :
     if( min > max ) :  return x
     elif( x < min ) :  return min
@@ -70,4 +87,7 @@ def clip(x, min, max) :
 
 
 if __name__ == "__main__":
-    write_points(generatePolygon(7, 7, 4, .5, .5, 20), "out.txt")
+    if sys.argv[1] == "-1":
+        read_points("out.txt")
+    else:
+        write_points(generatePolygon(7, 7, 4, .5, .5, int(sys.argv[1])), "out.txt")
