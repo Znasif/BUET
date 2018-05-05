@@ -16,8 +16,10 @@ def make_cover(n, m):
     for i in range(m):
         if l[i] != set():
             ret.append((rn.uniform(0,2), len(l[i]), l[i]))
+            # ret.append((1, len(l[i]), l[i]))
         elif l[i] == set():
             ret.append((rn.uniform(0,2), 1, [rn.randint(0, n-1)]))
+            # ret.append((1, 1, [rn.randint(0, n-1)]))
     return ret
 
 
@@ -46,4 +48,4 @@ if __name__ == "__main__":
         j, k = input().split()
         l.append((j, k, make_cover(int(j), int(k))))
         i -= 1
-    write_points(l, "out.txt")
+    write_points(l, "out1.txt")

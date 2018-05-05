@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include "Simplex.cpp"
+#include "1305030_Simplex.cpp"
 
 typedef unsigned long long ll;
 
@@ -38,12 +38,12 @@ double set_covered(ll coveredMask,int nowConsiderIndex){
     return memo[nowConsiderIndex][coveredMask];
 }
 
-void runDP(int show=0){
+double runDP(int show=0){
     double act = set_covered(0, 0);
     if(show) cout<<" Actual Minimum Cost : "<<act<<endl<<endl;
     int cnt=0;
     ll flag=0;
-    if(act == INFINITY) return;
+    if(act == INFINITY) return INFINITY;
     while(cnt<m && flag!=(1<<n)-1){
         if(lookUp[cnt][flag]==true){
             flag |= S[cnt];
@@ -51,9 +51,10 @@ void runDP(int show=0){
         }
         cnt++;
     }
+    return act;
 }
 
-void runLP(int show=0){
+double runLP(int show=0){
     double f=-INFINITY;
     for(int i=0; i<n; i++){
         int sz = sets[i].size();
@@ -64,24 +65,24 @@ void runLP(int show=0){
             A[i][sets[i][j]]=-1;
         }
     }
-    double *b, Ret;
+    double *b, Ret = INFINITY;
     b = new double[m];
     long ret = Simplex(n, m, A, b, Ret);
     if(ret==1){
         Ret = 0;
-        ll check=0;
         for(int i=0; i<m; i++){
             // Deterministic Rounding
             if(b[i]>=1/f){
                 if(show) cout<<i<<" ";
                 Ret+=cost[i];
-                check |= S[i];
             }
         }
         if(show) cout<<"\n\n Minimum Cost with Deterministic Rounding: "<<Ret<<endl<<endl;
-        if(check!=(1<<n)-1 && show) cout<<"\n     --Not Covered--\n";
+        ll check;
+        do{
         check = 0;
         Ret = 0;
+        if(show) cout<<"\nTry : ";
         for(int i=0; i<m; i++){
             // Randomized Rounding
             bool take = (rand() % 100) < 100*b[i];
@@ -91,18 +92,37 @@ void runLP(int show=0){
                 check |= S[i];
             }
         }
+        }while(check!=(1<<n)-1);
         if(show) cout<<"\n\n Minimum Cost with Randomized Rounding: "<<Ret<<endl;
-        if(check!=(1<<n)-1 && show) cout<<"\n     --Not Covered--\n";
     }
     else if(ret==0 && show) cout<<"Solution not Feasible";
     else if(ret==-1 && show) cout<<"Unbounded";
     if(show) cout<<endl<<endl;
     delete[] b;
+    return Ret;
+}
+
+void clean(){
+    for(int i=0; i<m; i++){
+        delete[] memo[i];
+        delete[] A[i];
+        delete[] lookUp[i];
+    }
+    for(int i=0; i<n; i++){
+        sets[i].clear();
+    }
+    delete[] sets;
+    delete[] S;
+    delete[] cost;
+    delete[] memo;
+    delete[] A[m];
+    delete[] A;
+    delete[] lookUp;
 }
 
 void setup(int show=0)
 {
-    FILE* fi = freopen("1305030_out.txt","r",stdin);
+    FILE* fi = freopen("1305030_test.txt","r",stdin);
     //FILE* fi = freopen("5. Sample test case.txt","r",stdin);
     int T, p;
     cin>>T;
@@ -140,25 +160,14 @@ void setup(int show=0)
 
         A[n][m] = 0;
 
-        runLP(show);
-        runDP(show);
+        double dp, lp;
+        lp = runLP(show);
+        dp = runDP(show);
+
+        if(!show) cout<<lp/dp<<endl;
 
         if(show) cout<<endl;
-        for(int i=0; i<m; i++){
-            delete[] memo[i];
-            delete[] A[i];
-            delete[] lookUp[i];
-        }
-        for(int i=0; i<n; i++){
-            sets[i].clear();
-        }
-        delete[] sets;
-        delete[] S;
-        delete[] cost;
-        delete[] memo;
-        delete[] A[m];
-        delete[] A;
-        delete[] lookUp;
+        //clean();
         T--;
     }
 }
