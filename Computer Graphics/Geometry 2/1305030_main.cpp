@@ -41,12 +41,13 @@ int decide_point(int f, int s, int i)
     ry = graph[i].second.second;
 
     double ax, ay, bx, by;
-    ax = qx - px;
-    ay = qy - py;
-    bx = qx - rx;
-    by = qy - ry;
+    bx = px - qx;
+    by = py - qy;
+    ax = rx - qx;
+    ay = ry - qy;
 
-    double ang = acos((ax*bx+ay*by)/(sqrt(ax*ax+ay*ay)+sqrt(bx*bx+by*by)));
+    double ang = atan2(ax*by-bx*ay, ax*bx+ay*by);
+    cout<<ang/pi*180<<" "<<qx<<" "<<qy<<" || "<<py<<" "<<ry<<endl;
 
     if(qy>py && qy>ry)
     {
@@ -70,8 +71,8 @@ int decide_point(int f, int s, int i)
 void make_monotone()
 {
     //FILE* fi = freopen("1305030_out.txt","r",stdin);
-    //FILE* fi = freopen("input1.txt","r",stdin);
-    FILE* fi = freopen("input2.txt","r",stdin);
+    //FILE* fi = freopen("1305030_input1.txt","r",stdin);
+    FILE* fi = freopen("1305030_input2.txt","r",stdin);
     int cnt=0;
     //cout.precision(12);
     cin>>V;
@@ -90,9 +91,10 @@ void make_monotone()
         //cout << sorted[i].first.first<<" "<<sorted[i].first.second<<  " X : "<< sorted[i].second.first;
         //cout << " Y : "<< sorted[i].second.second << '\n';
         int ret = decide_point(i, i+1, i+2);
+        cout<<ret<<endl;
         graph[i+1].first.second = ret;
-        cout << graph[i].first.first<<" "<<graph[i].first.second<<  " X : "<< graph[i].second.first;
-        cout << " Y : "<< graph[i].second.second << '\n';
+        //cout << graph[i].first.first<<" "<<graph[i].first.second<<  " X : "<< graph[i].second.first;
+        //cout << " Y : "<< graph[i].second.second << '\n';
     }
     fclose(fi);
 }

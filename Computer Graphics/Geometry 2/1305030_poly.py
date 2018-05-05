@@ -60,6 +60,7 @@ def write_points(points, fname):
                 x, y = points[0]
                 plt.plot([a, x], [b, y], marker='o')
             f.write(str(a)+" "+str(b)+'\n')
+        plt.axis('scaled')
         plt.show()
         f.close()
 
@@ -74,9 +75,9 @@ def read_points(fname):
                 flag = 0
                 continue
             a, b = l.split()
-            if fname == "points.txt":
-                points.append((float(a), float(b)))
+            points.append((float(a), float(b)))
         f.close()
+    #print(points)
     return write_points(points, fname)
 
 def clip(x, min, max) :
