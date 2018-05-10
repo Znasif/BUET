@@ -89,6 +89,6 @@ def clip(x, min, max) :
 
 if __name__ == "__main__":
     if sys.argv[1] == "-1":
-        read_points("out.txt")
+        read_points("mono.txt")
     else:
         write_points(generatePolygon(7, 7, 4, .5, .5, int(sys.argv[1])), "out.txt")

@@ -20,6 +20,19 @@ bool sortbysec(const pair<pair<int,int>, pair<double, double>> &a,
     return (a.second.second > b.second.second);
 }
 
+void process_start(int f){
+
+}
+
+void process(int f){
+    int point_type = graph[f].first.second;
+    if(point_type==stv)
+    else if(point_type==env)
+    else if(point_type==spv)
+    else if(point_type==mrv)
+    else
+}
+
 struct bst
 {
     bool operator() (const double& lhs, const double& rhs) const
@@ -27,6 +40,7 @@ struct bst
         return lhs<rhs;
     }
 };
+
 
 int decide_point(int f, int s, int i)
 {
@@ -41,28 +55,27 @@ int decide_point(int f, int s, int i)
     ry = graph[i].second.second;
 
     double ax, ay, bx, by;
-    bx = px - qx;
-    by = py - qy;
-    ax = rx - qx;
-    ay = ry - qy;
+    bx = qx - px;
+    by = qy - py;
+    ax = rx - px;
+    ay = ry - py;
 
-    double ang = atan2(ax*by-bx*ay, ax*bx+ay*by);
-    cout<<ang/pi*180<<" "<<qx<<" "<<qy<<" || "<<py<<" "<<ry<<endl;
+    double ang = bx*ay - by*ax;
 
     if(qy>py && qy>ry)
     {
-        if(ang < pi)
-            return stv;
-        else if(ang > pi)
+        if(ang < 0)
             return spv;
+        else if(ang > 0)
+            return stv;
         return rgv;
     }
     if(qy<py && qy<ry)
     {
-        if(ang < pi)
-            return env;
-        else if(ang > pi)
+        if(ang < 0)
             return mrv;
+        else if(ang > 0)
+            return env;
         return rgv;
     }
     return rgv;
@@ -86,16 +99,24 @@ void make_monotone()
         cnt++;
     }
     sort(sorted.begin(), sorted.end(), sortbysec);
-    for (int i = 0; i < V-2; i++)
+
+    for (int i = 0; i < V; i++)
     {
         //cout << sorted[i].first.first<<" "<<sorted[i].first.second<<  " X : "<< sorted[i].second.first;
         //cout << " Y : "<< sorted[i].second.second << '\n';
-        int ret = decide_point(i, i+1, i+2);
-        cout<<ret<<endl;
-        graph[i+1].first.second = ret;
+        if(i==0){
+            graph[V-1].first.second = decide_point(V-2, V-1, 0);
+            graph[0].first.second = decide_point(V-1, 0, 1);
+        }
+        if(i<V-2){
+            graph[i+1].first.second = decide_point(i, i+1, i+2);
+        }
         //cout << graph[i].first.first<<" "<<graph[i].first.second<<  " X : "<< graph[i].second.first;
         //cout << " Y : "<< graph[i].second.second << '\n';
     }
+
+
+
     fclose(fi);
 }
 
