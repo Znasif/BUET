@@ -65,6 +65,35 @@ def write_points(points, fname):
         f.close()
 
 
+def read_poly(fname):
+    points = []
+    with open(fname, 'r') as f:
+        lines = f.readlines()
+        l = lines[0].split()
+        for i in l[1:]:
+            a, b = i.split(',')
+            points.append((float(a), -float(b)))
+        f.close()
+    write_points(points, fname)
+
+
+def write_poly(fname):
+    l = "polygon "
+    with open("1305030_"+fname, 'r') as f:
+        lines = f.readlines()
+        flag = 1
+        for i in lines:
+            if flag:
+                flag = 0
+                continue
+            a, b = i.split()
+            l += str(int(float(a))) + ',' + str(int(-float(b))) + ' '
+        f.close()
+    with open(fname, 'w+') as f:
+        f.write(l)
+        f.close()
+
+
 def read_points(fname):
     with open("1305030_"+fname, 'r') as f:
         lines = f.readlines()
@@ -89,6 +118,14 @@ def clip(x, min, max) :
 
 if __name__ == "__main__":
     if sys.argv[1] == "-1":
-        read_points("mono.txt")
+        # show input
+        read_points(sys.argv[2])
+    elif sys.argv[1] == "-2":
+        # jar to input
+        read_poly(sys.argv[2])
+    elif sys.argv[1] == "-3":
+        # input to jar
+        write_poly(sys.argv[2])
     else:
+        # generate input
         write_points(generatePolygon(7, 7, 4, .5, .5, int(sys.argv[1])), "out.txt")

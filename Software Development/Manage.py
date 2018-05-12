@@ -10,4 +10,4 @@ if __name__ == "__main__":
     a = Visual.image_open(title[3], 1)
     b = Visual.image_open(title[3])
     b, _ = Process.get_contour(b, 1, a)
-    Visual.image_write(title[3]+"subs", b)
+    Visual.image_write(title[3].split('.')[0]+"subs", b)

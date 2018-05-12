@@ -3,6 +3,14 @@
 #define vpdd vector<pdd>
 using namespace std;
 
+struct bst
+{
+    bool operator () (const pdd& left,const pdd& right) const
+    {
+        return left < right;
+    }
+};
+
 void sort_y(vpdd v)
 {
     vpdd kome,bare;
@@ -25,13 +33,23 @@ int main()
 {
     freopen("1305030_mono.txt","r",stdin);
     vpdd v;
+    set<pdd, bst> s;
+    //map<pdd, pdd> s;
     int point_number,i;
     double x,y;
     cin>>point_number;
-    for(i=1;i<=point_number;i++){
+    for(i=0;i<point_number;i++){
         cin>>x>>y;
         v.push_back(pdd(x,y));
+        //s[v[i]]=v[i];
+        s.insert(pdd(x,y));
     }
-
+    set<pdd>::iterator it = s.begin();
+    while(it != s.end()){
+        cout<<(*it).first<<" "<<(*it).second<<endl;
+        it++;
+    }
+    it = s.end();
+    //for(i=0;i<point_number;i++) cout<<s[v[i]].first<<" "<<s[v[i]].second<<endl;
     sort_y(v);
 }

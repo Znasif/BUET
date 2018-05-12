@@ -4,42 +4,95 @@
 #define env 1
 #define spv 2
 #define mrv 3
-#define rgv 4
-#define pi acos(0.0)
+#define rgl 4
+#define rgr 5
+
+#define pdi pair<int, int>
+#define pdd pair<double, double>
+#define pdp pair<pdi, pdd>
 
 using namespace std;
 
-vector<pair<pair<int,int>, pair<double, double>>> graph, sorted;
-
+vector<pdp> graph, sorted;
 int V=0;
+
+struct bst
+{
+    bool operator () (const int& left,const int& right) const
+    {
+        double px,py,qx,qy,rx,ry;
+        int next=left+1;
+        if(next==V) next=0;
+        px = graph[left].second.first;
+        py = graph[left].second.second;
+
+        qx = graph[next].second.first;
+        qy = graph[next].second.second;
+
+        rx = graph[right].second.first;
+        ry = graph[right].second.second;
+
+        double ax, ay, bx, by;
+        bx = qx - px;
+        by = qy - py;
+        ax = rx - px;
+        ay = ry - py;
+
+        double ang = bx*ay - by*ax;
+        return ang>0;
+    }
+};
+
+vector<pdi> diagonals;
+set<int, bst> edges;
+map<int, int> helper;
+
 int p0,p1;
 
-bool sortbysec(const pair<pair<int,int>, pair<double, double>> &a,
-               const pair<pair<int,int>, pair<double, double>> &b)
+bool sortbysec(const pdp &a, const pdp &b)
 {
     return (a.second.second > b.second.second);
 }
 
-void process_start(int f){
-
+void delete_edge(int f){
+    int prev = f-1;
+    if(prev==-1) prev = V-1;
+    if(graph[helper[prev]].first.second==mrv) diagonals.push_back(make_pair(f, helper[prev]));
+    edges.erase(prev);
 }
 
-void process(int f){
-    int point_type = graph[f].first.second;
-    if(point_type==stv)
-    else if(point_type==env)
-    else if(point_type==spv)
-    else if(point_type==mrv)
-    else
+void update_edge(int f){
+    set<int>::iterator it;
+    it = edges.lower_bound(f);
+    it--;
+    diagonals.push_back(make_pair(f, helper[*(it)]));
 }
 
-struct bst
+void process(int f)
 {
-    bool operator() (const double& lhs, const double& rhs) const
+    int point_type = graph[f].first.second;
+    switch(point_type)
     {
-        return lhs<rhs;
+    case stv:
+        edges.insert(f);
+        helper[f]= f;
+        break;
+    case env:
+        delete_edge(f);
+        break;
+    case spv:
+        update_edge(f);
+        edges.insert(f);
+        helper[f]= f;
+        break;
+    case mrv:
+        delete_edge(f);
+        update_edge(f);
+        break;
+    default:
+        break;
     }
-};
+}
 
 
 int decide_point(int f, int s, int i)
@@ -62,30 +115,30 @@ int decide_point(int f, int s, int i)
 
     double ang = bx*ay - by*ax;
 
-    if(qy>py && qy>ry)
+    if(qy>=py && qy>=ry)
     {
         if(ang < 0)
             return spv;
-        else if(ang > 0)
+        else
             return stv;
-        return rgv;
     }
-    if(qy<py && qy<ry)
+    if(qy<=py && qy<=ry)
     {
         if(ang < 0)
             return mrv;
-        else if(ang > 0)
+        else
             return env;
-        return rgv;
     }
-    return rgv;
+    if(py>qy && qy>ry) return rgl;
+    return rgr;
+
 }
 
 void make_monotone()
 {
     //FILE* fi = freopen("1305030_out.txt","r",stdin);
     //FILE* fi = freopen("1305030_input1.txt","r",stdin);
-    FILE* fi = freopen("1305030_input2.txt","r",stdin);
+    FILE* fi = freopen("1305030_mono.txt","r",stdin);
     int cnt=0;
     //cout.precision(12);
     cin>>V;
@@ -104,18 +157,23 @@ void make_monotone()
     {
         //cout << sorted[i].first.first<<" "<<sorted[i].first.second<<  " X : "<< sorted[i].second.first;
         //cout << " Y : "<< sorted[i].second.second << '\n';
-        if(i==0){
+        if(i==0)
+        {
             graph[V-1].first.second = decide_point(V-2, V-1, 0);
             graph[0].first.second = decide_point(V-1, 0, 1);
         }
-        if(i<V-2){
+        if(i<V-2)
+        {
             graph[i+1].first.second = decide_point(i, i+1, i+2);
         }
-        //cout << graph[i].first.first<<" "<<graph[i].first.second<<  " X : "<< graph[i].second.first;
-        //cout << " Y : "<< graph[i].second.second << '\n';
+        cout << graph[i].first.first<<" "<<graph[i].first.second<<  " X : "<< graph[i].second.first;
+        cout << " Y : "<< graph[i].second.second << '\n';
     }
 
-
+    for (int i = 0; i < V; i++)
+    {
+        //process(sorted[i].first.first);
+    }
 
     fclose(fi);
 }
