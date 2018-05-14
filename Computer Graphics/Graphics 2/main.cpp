@@ -7,7 +7,6 @@ double **I = new double*[4];
 double **view = new double*[4];
 double **pro = new double*[4];
 double **look = new double*[3];
-double eye[3];
 double near, far, fovY, aspectRatio;
 
 
