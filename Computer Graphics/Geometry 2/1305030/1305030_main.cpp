@@ -172,12 +172,12 @@ void sort_monotone(int p_num){
             lx++;
         }
     }
-    //cout<<endl;
-    //for(int i=0;i<l;i++) cout<<l_chain[i]<<" ";
-    //cout<<endl;
-    //for(int i=0;i<r;i++) cout<<r_chain[i]<<" ";
-    //cout<<endl;
-    //for(int i=0;i<sz;i++) cout<<temp[i]<<" ";
+    /*cout<<endl;
+    for(int i=0;i<l;i++) cout<<l_chain[i]<<" ";
+    cout<<endl;
+    for(int i=0;i<r;i++) cout<<r_chain[i]<<" ";
+    cout<<endl;
+    for(int i=0;i<sz;i++) cout<<temp[i]<<" ";*/
     for(int i=0;i<sz-1;i++){
         b = i+1;
         if(b==sz) b = 0;
@@ -189,8 +189,8 @@ void sort_monotone(int p_num){
             }
         }
     }
-    //cout<<endl;
-    //for(int i=0;i<sz;i++) cout<<temp[i]<<" ";
+    /*cout<<endl;
+    for(int i=0;i<sz;i++) cout<<temp[i]<<" ";*/
 
     stack<int> mystack;
     b = 0;
@@ -200,7 +200,7 @@ void sort_monotone(int p_num){
     for(;b<sz-2;b++){
         //cout<<monotone[p_num][temp[b]].first<<" "<<monotone[p_num][temp[b]].second<<endl;
         if(chain[temp[b]] != chain[mystack.top()]){
-            cout<<"Other Chain"<<endl;
+            //cout<<"Other Chain"<<endl;
             r = mystack.top();
             while(mystack.size()>1){
                 l = mystack.top();
@@ -212,7 +212,7 @@ void sort_monotone(int p_num){
             mystack.push(temp[b]);
         }
         else{
-            cout<<"Same Chain"<<endl;
+            //cout<<"Same Chain"<<endl;
             r = mystack.top();
             mystack.pop();
             l = mystack.top();
@@ -400,12 +400,12 @@ void make_monotone()
     for (int i = 0; i < V; i++)
     {
         process(sorted[i].first.first);
-        set<int>::iterator it = edges.begin();
+        /*set<int>::iterator it = edges.begin();
         while(it!=edges.end()){
             cout<<graph[*(it)].second.first<<" ";
             it++;
         }
-        cout<<endl;
+        cout<<endl;*/
     }
     for (int i = 0; i < diagonals.size(); i++)
     {
