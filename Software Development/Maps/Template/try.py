@@ -33,8 +33,10 @@ def get_match(img1, template):
         cv2.rectangle(img, pt, (pt[0] + template.shape[1], pt[1] + template.shape[0]), 0, 2)
     return img
 
+
 def get_match_with_SIFT(img1, template):
     k, d = cv2.xfeatures2d.SIFT_create()
+
 
 if __name__ == "__main__":
     img = cv2.imread("big.jpg", 0)
