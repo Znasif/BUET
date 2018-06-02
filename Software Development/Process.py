@@ -25,7 +25,7 @@ class Process:
         return new
 
     @staticmethod
-    def blurs(img, select=0):
+    def blurs(img, select=3):
         """
         Applies blurs to exterminate small noises in the image
         and then uses morphological closing to join lines
@@ -35,10 +35,12 @@ class Process:
         """
         if select == 0:
             blur = cv2.GaussianBlur(img, (3, 3), 0)
-            ret3, img = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
-            img = cv2.medianBlur(img, 3)
-            kernel = np.ones((5, 5), np.uint8)
-            img = cv2.erode(img, kernel, iterations=1)
+            # ret3, img = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+            img = cv2.adaptiveThreshold(blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+                                        cv2.THRESH_BINARY_INV, 11, 2)
+            img = cv2.GaussianBlur(img, (3, 3), 0)
+            kernel = np.ones((3, 3), np.uint8)
+            img = cv2.morphologyEx(img, cv2.MORPH_OPEN, kernel, iterations=2)
         elif select == 1:
             img = cv2.GaussianBlur(img, (5, 5), 0)
             kernel = np.ones((3, 3), np.uint8)
@@ -49,6 +51,11 @@ class Process:
             img = cv2.erode(img, kernel, iterations=1)
             kernel = np.ones((3, 3), np.uint8)
             img = cv2.dilate(img, kernel, iterations=5)
+        elif select == 3:
+            blur = cv2.GaussianBlur(img, (3, 3), 0)
+            ret3, img = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+            kernel = np.ones((3, 3), np.uint8)
+            img = cv2.dilate(img, kernel, iterations=1)
         return img
 
     @staticmethod
@@ -75,14 +82,14 @@ class Process:
         img = Process.blurs(img)
 
         # get contours
-        ret, thresh = cv2.threshold(img, 127, 255, 0)
-        img, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        img, contours, hierarchy = cv2.findContours(img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
         if flag == 1:
             empty = np.zeros(img.shape, np.uint8)
             for cnt in contours[1:]:
                 cv2.drawContours(empty, [cnt], 0, (255, 255, 255), -1)
-                cv2.drawContours(color, [cnt], 0, (rn.randint(0, 255), rn.randint(0, 255), rn.randint(0, 255)), -1)
+                i, j, k = rn.randint(0, 255), rn.randint(0, 255), rn.randint(0, 255)
+                cv2.drawContours(color, [cnt], 0, (i, j, k), -1)
                 empty = np.zeros(img.shape, np.uint8)
             return color, contours[1:]
         else:
@@ -93,7 +100,7 @@ class Process:
         """
         This gives the subplots of the map
         :param img_org: original image
-        :param img_plot: image with ust the plot lines
+        :param img_plot: image without the plot lines
         :return: list of numpy arrays of sub-images
         """
         _, contours = Process.get_contour(img_plot)
@@ -128,9 +135,9 @@ class Process:
         max_contour_size = 110000
         min_contour_ize = -1
 
-        plots = np.empty_like(img)
+        plots = np.zeros_like(img)
         plots[plots == 0] = 255
-        nums = np.empty_like(img)
+        nums = np.zeros_like(img)
         nums[nums == 0] = 255
 
         for cnt in contours[2:]:

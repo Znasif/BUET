@@ -65,11 +65,11 @@ def region_growing(img, seed):
     img_thresh = int(input("Enter Threshold Value: "))
     while (len(list) > 0):
         pix = list[0]
-        outimg[pix] = 0
+        outimg[pix] = 255
         for coord in get8n(pix[0], pix[1], img.shape):
-            if coord not in processed and img[coord] < img_thresh:
+            if coord not in processed and img[coord] > img_thresh:
                 #print(img[coord],end=" ")
-                outimg[coord] = 0
+                outimg[coord] = 255
                 list.append(coord)
                 processed.append(coord)
         #print()
@@ -97,7 +97,7 @@ def ex1():
     #plt.show()
     img=cv2.GaussianBlur(img,(15,15),0)
     img=cv2.medianBlur(img,15)
-    plts('Seed Points', img)
+    # plts('Seed Points', img)
     cv2.namedWindow('Seed Points')
     cv2.setMouseCallback('Seed Points', on_mouse, 0)
     while (1):
@@ -107,8 +107,8 @@ def ex1():
             print("STOP")
             out = region_growing(img, clicks)
             cv2.imshow('Region Growing', out)
-            cv2.imwrite('Extracted\p.bmp',out)
-            #cv2.destroyAllWindows()
+            # cv2.imwrite('Extracted/p.bmp',out)
+            # cv2.destroyAllWindows()
             break
     cv2.waitKey()
     cv2.destroyAllWindows()
@@ -122,7 +122,7 @@ def get_regions(img):
     a,b=np.shape(img)
     for i in range(a):
         for j in range(b):
-            if processed[i][j]==0 and img[i][j]<img_thresh:
+            if processed[i][j]==0 and img[i][j]>img_thresh:
                 for coord in get8n(i,j,img.shape):
                     if processed[coord]==0:
                         outimg[coord]=0
@@ -137,15 +137,16 @@ def ex2():
     cv2.imshow('1', img)
     cv2.waitKey()
 
-
+def ex3():
+    img = cv2.GaussianBlur(img, (15, 15), 0)
+    img = cv2.medianBlur(img, 15)
+    cv2.imshow('1', img)
+    cv2.waitKey()
+    new = get_regions(img)
+    cv2.imwrite('Maps/region.jpg', new)
+    # cv2.waitKey()
 
 if __name__ == "__main__":
     clicks = []
-    img = cv2.imread('Maps\d.bmp',0)
-    img=cv2.GaussianBlur(img,(15,15),0)
-    img=cv2.medianBlur(img,15)
-    cv2.imshow('1', img)
-    cv2.waitKey()
-    new=get_regions(img)
-    cv2.imshow('2', new)
-    cv2.waitKey()
+    img = cv2.imread('Maps/port.jpg', 0)
+    ex1()

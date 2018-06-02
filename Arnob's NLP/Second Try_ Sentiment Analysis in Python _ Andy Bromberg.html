@@ -1,0 +1,1166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0050)http://andybromberg.com/sentiment-analysis-python/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" __fvdsurfcanyoninserted="1"><script async="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/analytics.js"></script><script type="text/javascript" charset="utf-8" id="zm-extension" src="chrome-extension://fdcgdnkidjaadafnichfpabhfomcebme/scripts/webrtc-patch.js" async=""></script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+
+	<title>Second Try: Sentiment Analysis in Python :  Andy Bromberg</title>
+	
+<!--[if gte IE 7]><!-->
+  <link rel="stylesheet" href="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/style.css" type="text/css" media="screen" charset="utf-8">
+<!-- <![endif]-->
+
+<!--[if IE 7]>
+  <link rel="stylesheet" href="http://andybromberg.com/wp-content/themes/manifest_v1.1/style_ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+<!--[if IE 6]>
+<link rel="stylesheet" type="text/css" media="screen" href="http://andybromberg.com/wp-content/themes/manifest_v1.1/styles_ie6.css" />
+<![endif]-->
+
+  <link rel="alternate" type="application/rss+xml" title="Andy Bromberg RSS Feed" href="http://andybromberg.com/feed/">
+  <link rel="alternate" type="application/atom+xml" title="Andy Bromberg Atom Feed" href="http://andybromberg.com/feed/atom/">
+  <script type="text/javascript" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/jquery-1.3.2.min.js" charset="utf-8">
+    
+  </script>
+  <link rel="pingback" href="http://andybromberg.com/xmlrpc.php">
+    <link rel="dns-prefetch" href="http://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="Andy Bromberg » Second Try: Sentiment Analysis in Python Comments Feed" href="http://andybromberg.com/sentiment-analysis-python/feed/">
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/andybromberg.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.6"}};
+			!function(a,b,c){function d(a){var c,d,e,f,g,h=b.createElement("canvas"),i=h.getContext&&h.getContext("2d"),j=String.fromCharCode;if(!i||!i.fillText)return!1;switch(i.textBaseline="top",i.font="600 32px Arial",a){case"flag":return i.fillText(j(55356,56806,55356,56826),0,0),!(h.toDataURL().length<3e3)&&(i.clearRect(0,0,h.width,h.height),i.fillText(j(55356,57331,65039,8205,55356,57096),0,0),c=h.toDataURL(),i.clearRect(0,0,h.width,h.height),i.fillText(j(55356,57331,55356,57096),0,0),d=h.toDataURL(),c!==d);case"diversity":return i.fillText(j(55356,57221),0,0),e=i.getImageData(16,16,1,1).data,f=e[0]+","+e[1]+","+e[2]+","+e[3],i.fillText(j(55356,57221,55356,57343),0,0),e=i.getImageData(16,16,1,1).data,g=e[0]+","+e[1]+","+e[2]+","+e[3],f!==g;case"simple":return i.fillText(j(55357,56835),0,0),0!==i.getImageData(16,16,1,1).data[0];case"unicode8":return i.fillText(j(55356,57135),0,0),0!==i.getImageData(16,16,1,1).data[0];case"unicode9":return i.fillText(j(55358,56631),0,0),0!==i.getImageData(16,16,1,1).data[0]}return!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i;for(i=Array("simple","flag","unicode8","diversity","unicode9"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/wp-emoji-release.min.js" type="text/javascript"></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="wp-syntax-css-css" href="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/wp-syntax.css" type="text/css" media="all">
+<link rel="stylesheet" id="wp-markdown-prettify-css" href="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/prettify.css" type="text/css" media="all">
+<!-- This site uses the Google Analytics by MonsterInsights plugin v5.5.2 - Universal enabled - https://www.monsterinsights.com/ -->
+<script type="text/javascript">
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','__gaTracker');
+
+	__gaTracker('create', 'UA-10845213-1', 'auto');
+	__gaTracker('set', 'forceSSL', true);
+	__gaTracker('send','pageview');
+
+</script>
+<!-- / Google Analytics by MonsterInsights -->
+<script type="text/javascript" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/jquery.js"></script>
+<script type="text/javascript" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/jquery-migrate.min.js"></script>
+<script type="text/javascript" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/prettify.min.js"></script>
+<link rel="https://api.w.org/" href="http://andybromberg.com/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://andybromberg.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://andybromberg.com/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="First shot: Sentiment Analysis in R" href="http://andybromberg.com/sentiment-analysis/">
+<link rel="next" title="Weekend Project: Hacking the Square Reader" href="http://andybromberg.com/credit-cards/">
+<meta name="generator" content="WordPress 4.6">
+<link rel="canonical" href="http://andybromberg.com/sentiment-analysis-python/">
+<link rel="shortlink" href="http://andybromberg.com/?p=49">
+<link rel="alternate" type="application/json+oembed" href="http://andybromberg.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fandybromberg.com%2Fsentiment-analysis-python%2F">
+<link rel="alternate" type="text/xml+oembed" href="http://andybromberg.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fandybromberg.com%2Fsentiment-analysis-python%2F&amp;format=xml">
+<script type="text/x-mathjax-config;executed=true">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+  <script src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/MathJax.js" id=""></script>
+<link type="text/css" rel="stylesheet" href="chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/content.css"><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+
+<body class="single single-post postid-49 single-format-standard"><div id="MathJax_Message" style="display: none;"></div>
+
+
+<div id="siteWrapper">
+
+  <h1 class="vcard author"><a href="http://andybromberg.com/" title="Home" class="fn">Andy Bromberg</a></h1> 
+
+  <div id="mainNav">
+    <ul>
+      <li class="page_item page-item-19"><a href="http://andybromberg.com/contact/">Contact Me</a></li>
+<li class="page_item page-item-51"><a href="http://andybromberg.com/rss-feed/">Feed</a></li>
+    </ul>
+  </div>
+
+      
+  <div id="siteDescription">
+      </div>
+<div id="coreContent">
+
+	
+
+      <div class="post single hentry">
+        <div class="postContent">
+          <h3 class="entry-title">Second Try: Sentiment Analysis in Python</h3>
+          <h4 class="vcard author">by <span class="fn">andy</span></h4>
+          <div class="entry-content">
+              <h2>Introduction</h2>
+<p>After my <a href="http://andybromberg.com/sentiment-analysis/">first experiments</a> with using R for sentiment analysis, I started talking with a friend here at school about my work. Jackson and I decided that we’d like to give it a better shot and really try to get some meaningful results. After a lot of research, we decided to shift languages to Python (even though we both know R). We made this shift because Python has a number of very useful libraries for text processing and sentiment analysis, plus it’s easy to code in. We launched right into tutorials and coding, and this post will be about that process and our results.</p>
+<p>We also met with <a href="http://www.stanford.edu/~cgpotts/" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-article&#39;, &#39;http://www.stanford.edu/~cgpotts/&#39;, &#39;Christopher Potts&#39;);">Christopher Potts</a>, a professor of linguistics here at Stanford. Prior to meeting with him, we consulted <a href="http://sentiment.christopherpotts.net/" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-article&#39;, &#39;http://sentiment.christopherpotts.net/&#39;, &#39;his sentiment analysis guide&#39;);">his sentiment analysis guide</a> extensively and found it incredibly useful. We had a fantastic chat with Professor Potts and he helped us grasp some of the concepts we were working on.</p>
+<p>If you’d like to jump straight to seeing the full code, you can head over to the <a href="https://github.com/abromberg/sentiment_analysis_python" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-article&#39;, &#39;https://github.com/abromberg/sentiment_analysis_python&#39;, &#39;GitHub repository&#39;);">GitHub repository</a>.</p>
+<h2>The Setup</h2>
+<p>One of the resources we got a lot of mileage out of was <a href="http://streamhacker.com/" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-article&#39;, &#39;http://streamhacker.com/&#39;, &#39;StreamHacker&#39;);">StreamHacker</a>, especially the articles on <a href="http://streamhacker.com/2010/05/10/text-classification-sentiment-analysis-naive-bayes-classifier/" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-article&#39;, &#39;http://streamhacker.com/2010/05/10/text-classification-sentiment-analysis-naive-bayes-classifier/&#39;, &#39;basic techniques&#39;);">basic techniques</a>, <a href="http://streamhacker.com/2010/05/17/text-classification-sentiment-analysis-precision-recall/" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-article&#39;, &#39;http://streamhacker.com/2010/05/17/text-classification-sentiment-analysis-precision-recall/&#39;, &#39;precision and recall&#39;);">precision and recall</a>. and <a href="http://streamhacker.com/2010/06/16/text-classification-sentiment-analysis-eliminate-low-information-features/" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-article&#39;, &#39;http://streamhacker.com/2010/06/16/text-classification-sentiment-analysis-eliminate-low-information-features/&#39;, &#39;eliminating features&#39;);">eliminating features</a>. More to follow about each of those elements.</p>
+<p>Another great discovery was the <a href="http://nltk.org/" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-article&#39;, &#39;http://nltk.org/&#39;, &#39;Natural Language ToolKit&#39;);">Natural Language ToolKit</a> (NLTK). This is an incredible library for Python that can do a huge amount of text processing and analysis. This would end up forming the basis for our program.</p>
+<p>During our first attempt, we basically just tried to convert my program in R into Python. We quickly realized that not only did Python have more efficient ways to do some of the steps, but it also was missing some functionality that I used in the R version. So instead, we started based on StreamHacker’s code.</p>
+<p>An important piece of sentiment analysis terminology: “features” are whatever you’re analyzing in an attempt to correlate to the labels. For example, in this code, the features will be the words in each review. Other algorithms could use different types of features — some algorithms use bigrams or trigrams (strings of two or three consecutive words, respectively) as the features.</p>
+<p>An idea from StreamHacker that we really liked was writing a function to evaluate different feature selection mechanisms. That means that we would be able to write different methods to select different subsets of the features (read: words) in the reviews and then evaluate those methods.</p>
+<p>As an aside, here are the imports we used for the project, so I won’t have to reference them again:</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="line_numbers"><pre class="prettyprint prettyprinted" style=""><span class="lit">1</span><span class="pln">
+</span><span class="lit">2</span><span class="pln">
+</span><span class="lit">3</span><span class="pln">
+</span><span class="lit">4</span><span class="pln">
+</span><span class="lit">5</span></pre></td><td class="code"><pre class="python prettyprint prettyprinted" style="font-family: monospace;"><span style="color: #ff7700;font-weight:bold;"><span class="kwd">import</span></span><span class="pln"> </span><span style="color: #dc143c;"><span class="pln">re</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> </span><span style="color: #dc143c;"><span class="pln">math</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> </span><span style="color: #dc143c;"><span class="pln">collections</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> </span><span style="color: #dc143c;"><span class="pln">itertools</span></span><span class="pln">
+</span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">import</span></span><span class="pln"> nltk</span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> nltk</span><span class="pun">.</span><span style="color: black;"><span class="pln">classify</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">util</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> nltk</span><span class="pun">.</span><span style="color: black;"><span class="pln">metrics</span></span><span class="pln">
+</span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">from</span></span><span class="pln"> nltk</span><span class="pun">.</span><span style="color: black;"><span class="pln">classify</span></span><span class="pln"> </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">import</span></span><span class="pln"> </span><span class="typ">NaiveBayesClassifier</span><span class="pln">
+</span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">from</span></span><span class="pln"> nltk</span><span class="pun">.</span><span style="color: black;"><span class="pln">metrics</span></span><span class="pln"> </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">import</span></span><span class="pln"> </span><span class="typ">BigramAssocMeasures</span><span class="pln">
+</span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">from</span></span><span class="pln"> nltk</span><span class="pun">.</span><span style="color: black;"><span class="pln">probability</span></span><span class="pln"> </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">import</span></span><span class="pln"> </span><span class="typ">FreqDist</span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> </span><span class="typ">ConditionalFreqDist</span></pre></td></tr></tbody></table></div>
+
+<p>We began to write our feature evaluator (again, many thanks to StreamHacker.):</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="line_numbers"><pre class="prettyprint prettyprinted" style=""><span class="lit">1</span><span class="pln">
+</span><span class="lit">2</span><span class="pln">
+</span><span class="lit">3</span><span class="pln">
+</span><span class="lit">4</span><span class="pln">
+</span><span class="lit">5</span><span class="pln">
+</span><span class="lit">6</span><span class="pln">
+</span><span class="lit">7</span><span class="pln">
+</span><span class="lit">8</span><span class="pln">
+</span><span class="lit">9</span><span class="pln">
+</span><span class="lit">10</span><span class="pln">
+</span><span class="lit">11</span><span class="pln">
+</span><span class="lit">12</span><span class="pln">
+</span><span class="lit">13</span><span class="pln">
+</span><span class="lit">14</span><span class="pln">
+</span><span class="lit">15</span><span class="pln">
+</span><span class="lit">16</span><span class="pln">
+</span><span class="lit">17</span><span class="pln">
+</span><span class="lit">18</span><span class="pln">
+</span><span class="lit">19</span></pre></td><td class="code"><pre class="python prettyprint prettyprinted" style="font-family: monospace;"><span style="color: #ff7700;font-weight:bold;"><span class="kwd">def</span></span><span class="pln"> evaluate_features</span><span style="color: black;"><span class="pun">(</span></span><span class="pln">feature_select</span><span style="color: black;"><span class="pun">)</span></span><span class="pun">:</span><span class="pln">
+    </span><span style="color: #808080; font-style: italic;"><span class="com">#reading pre-labeled input and splitting into lines</span></span><span class="pln">
+    posSentences </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: #008000;"><span class="pln">open</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: #483d8b;"><span class="str">'polarityData</span><span style="color: #000099; font-weight: bold;"><span class="str">\\</span></span><span class="str">rt-polaritydata</span><span style="color: #000099; font-weight: bold;"><span class="str">\\</span></span><span class="str">rt-polarity-pos.txt'</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> </span><span style="color: #483d8b;"><span class="str">'r'</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+    negSentences </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: #008000;"><span class="pln">open</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: #483d8b;"><span class="str">'polarityData</span><span style="color: #000099; font-weight: bold;"><span class="str">\\</span></span><span class="str">rt-polaritydata</span><span style="color: #000099; font-weight: bold;"><span class="str">\\</span></span><span class="str">rt-polarity-neg.txt'</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> </span><span style="color: #483d8b;"><span class="str">'r'</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+    posSentences </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: #dc143c;"><span class="pln">re</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">split</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">r</span><span style="color: #483d8b;"><span class="str">'</span><span style="color: #000099; font-weight: bold;"><span class="str">\n</span></span><span class="str">'</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> posSentences</span><span class="pun">.</span><span style="color: black;"><span class="pln">read</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: black;"><span class="pun">)</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+    negSentences </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: #dc143c;"><span class="pln">re</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">split</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">r</span><span style="color: #483d8b;"><span class="str">'</span><span style="color: #000099; font-weight: bold;"><span class="str">\n</span></span><span class="str">'</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> negSentences</span><span class="pun">.</span><span style="color: black;"><span class="pln">read</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: black;"><span class="pun">)</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+&nbsp;
+    posFeatures </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: black;"><span class="pun">[</span></span><span style="color: black;"><span class="pun">]</span></span><span class="pln">
+    negFeatures </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: black;"><span class="pun">[</span></span><span style="color: black;"><span class="pun">]</span></span><span class="pln">
+    </span><span style="color: #808080; font-style: italic;"><span class="com">#http://stackoverflow.com/questions/367155/splitting-a-string-into-words-and-punctuation</span></span><span class="pln">
+    </span><span style="color: #808080; font-style: italic;"><span class="com">#breaks up the sentences into lists of individual words (as selected by the input mechanism) and appends 'pos' or 'neg' after each list</span></span><span class="pln">
+    </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">for</span></span><span class="pln"> i </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">in</span></span><span class="pln"> posSentences</span><span class="pun">:</span><span class="pln">
+        posWords </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: #dc143c;"><span class="pln">re</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">findall</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">r</span><span style="color: #483d8b;"><span class="str">"[</span><span style="color: #000099; font-weight: bold;"><span class="str">\w</span></span><span class="str">']+|[.,!?;]"</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> i</span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+        posWords </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: black;"><span class="pun">[</span></span><span class="pln">feature_select</span><span style="color: black;"><span class="pun">(</span></span><span class="pln">posWords</span><span style="color: black;"><span class="pun">)</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> </span><span style="color: #483d8b;"><span class="str">'pos'</span></span><span style="color: black;"><span class="pun">]</span></span><span class="pln">
+        posFeatures</span><span class="pun">.</span><span style="color: black;"><span class="pln">append</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">posWords</span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+    </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">for</span></span><span class="pln"> i </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">in</span></span><span class="pln"> negSentences</span><span class="pun">:</span><span class="pln">
+        negWords </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: #dc143c;"><span class="pln">re</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">findall</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">r</span><span style="color: #483d8b;"><span class="str">"[</span><span style="color: #000099; font-weight: bold;"><span class="str">\w</span></span><span class="str">']+|[.,!?;]"</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> i</span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+        negWords </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: black;"><span class="pun">[</span></span><span class="pln">feature_select</span><span style="color: black;"><span class="pun">(</span></span><span class="pln">negWords</span><span style="color: black;"><span class="pun">)</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> </span><span style="color: #483d8b;"><span class="str">'neg'</span></span><span style="color: black;"><span class="pun">]</span></span><span class="pln">
+        negFeatures</span><span class="pun">.</span><span style="color: black;"><span class="pln">append</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">negWords</span><span style="color: black;"><span class="pun">)</span></span></pre></td></tr></tbody></table></div>
+
+<p>This is the same polarity data that was used in my <a href="http://andybromberg.com/sentiment-analysis/">previous post</a>, so check that out if you’re curious about the data. Essentially what that block of code does is splits up the reviews by line and then builds a posFeatures variable which contains the output of our feature selection mechanism (we’ll see how that works in a minute) with ‘pos’ or ‘neg’ appended to it, depending on whether the review it is drawing from is positive or negative.</p>
+<p>The next bit of code separates the data into training and testing data for a Naive Bayes classifier, which is the same type of classifier I used before.</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="line_numbers"><pre class="prettyprint prettyprinted" style=""><span class="lit">1</span><span class="pln">
+</span><span class="lit">2</span><span class="pln">
+</span><span class="lit">3</span><span class="pln">
+</span><span class="lit">4</span><span class="pln">
+</span><span class="lit">5</span></pre></td><td class="code"><pre class="python prettyprint prettyprinted" style="font-family: monospace;"><span style="color: #808080; font-style: italic;"><span class="com">#selects 3/4 of the features to be used for training and 1/4 to be used for testing</span></span><span class="pln">
+    posCutoff </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: #008000;"><span class="kwd">int</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: #dc143c;"><span class="pln">math</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">floor</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: #008000;"><span class="pln">len</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">posFeatures</span><span style="color: black;"><span class="pun">)</span></span><span class="pun">*</span><span style="color: #ff4500;"><span class="lit">3</span></span><span class="pun">/</span><span style="color: #ff4500;"><span class="lit">4</span></span><span style="color: black;"><span class="pun">)</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+    negCutoff </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: #008000;"><span class="kwd">int</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: #dc143c;"><span class="pln">math</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">floor</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: #008000;"><span class="pln">len</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">negFeatures</span><span style="color: black;"><span class="pun">)</span></span><span class="pun">*</span><span style="color: #ff4500;"><span class="lit">3</span></span><span class="pun">/</span><span style="color: #ff4500;"><span class="lit">4</span></span><span style="color: black;"><span class="pun">)</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+    trainFeatures </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> posFeatures</span><span style="color: black;"><span class="pun">[</span></span><span class="pun">:</span><span class="pln">posCutoff</span><span style="color: black;"><span class="pun">]</span></span><span class="pln"> </span><span class="pun">+</span><span class="pln"> negFeatures</span><span style="color: black;"><span class="pun">[</span></span><span class="pun">:</span><span class="pln">negCutoff</span><span style="color: black;"><span class="pun">]</span></span><span class="pln">
+    testFeatures </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> posFeatures</span><span style="color: black;"><span class="pun">[</span></span><span class="pln">posCutoff</span><span class="pun">:</span><span style="color: black;"><span class="pun">]</span></span><span class="pln"> </span><span class="pun">+</span><span class="pln"> negFeatures</span><span style="color: black;"><span class="pun">[</span></span><span class="pln">negCutoff</span><span class="pun">:</span><span style="color: black;"><span class="pun">]</span></span></pre></td></tr></tbody></table></div>
+
+<p>Now, thanks to NLTK, I can very simply train my classifier:</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="line_numbers"><pre class="prettyprint prettyprinted" style=""><span class="lit">1</span></pre></td><td class="code"><pre class="python prettyprint prettyprinted" style="font-family: monospace;"><span class="pln">classifier </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span class="typ">NaiveBayesClassifier</span><span class="pun">.</span><span style="color: black;"><span class="pln">train</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">trainFeatures</span><span style="color: black;"><span class="pun">)</span></span></pre></td></tr></tbody></table></div>
+
+<p>Pretty cool, huh? The last thing this function needs to do is check how well the classifier does when it tries to classify the testing data. This code is a little challenging so I’ll walk through it thoroughly.</p>
+<p>First, I have to initiate referenceSets and testSets, to be used shortly. referenceSets will contain the actual values for the testing data (which we know because the data is prelabeled) and testSets will contain the predicted output.</p>
+<p>Next, for each one of the testFeatures (the reviews that need testing), I iterate through three things: an arbitrary ‘i’, so be used as an identifier, and then the features (or words) in the review, and the actual label (‘pos’ or ‘neg’).</p>
+<p>I add the ‘i’ (the unique identifier) to the correct bin in referenceSets. I then predict the label based on the features using the trained classifier and put the unique identifier in the predicted bin in testSets.</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="line_numbers"><pre class="prettyprint prettyprinted" style=""><span class="lit">1</span><span class="pln">
+</span><span class="lit">2</span><span class="pln">
+</span><span class="lit">3</span><span class="pln">
+</span><span class="lit">4</span></pre></td><td class="code"><pre class="python prettyprint prettyprinted" style="font-family: monospace;"><span style="color: #ff7700;font-weight:bold;"><span class="kwd">for</span></span><span class="pln"> i</span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> </span><span style="color: black;"><span class="pun">(</span></span><span class="pln">features</span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> label</span><span style="color: black;"><span class="pun">)</span></span><span class="pln"> </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">in</span></span><span class="pln"> </span><span style="color: #008000;"><span class="pln">enumerate</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">testFeatures</span><span style="color: black;"><span class="pun">)</span></span><span class="pun">:</span><span class="pln">
+        referenceSets</span><span style="color: black;"><span class="pun">[</span></span><span class="pln">label</span><span style="color: black;"><span class="pun">]</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">add</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">i</span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+        predicted </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> classifier</span><span class="pun">.</span><span style="color: black;"><span class="pln">classify</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">features</span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+        testSets</span><span style="color: black;"><span class="pun">[</span></span><span class="pln">predicted</span><span style="color: black;"><span class="pun">]</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">add</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">i</span><span style="color: black;"><span class="pun">)</span></span></pre></td></tr></tbody></table></div>
+
+<p>This gives me a big list of identifiers in referenceSets[‘pos’], which are the reviews known to be positive (and the same for the negative reviews). It also gives me a list of identifiers in testSets[‘pos’], which are the reviews predicted to be positive (and similarly for predicted negatives). What this allows me to do is to compare these lists and see how well the predictor did. Here’s where one of the StreamHacker articles (on <a href="http://andybromberg.com/sentiment-analysis/">precision and recall</a>) really helped.</p>
+<p>The essence of those two terms is that precision is a measure of false positives — a higher precision means fewer reviews that aren’t in the desired label get labeled as being in there. A high recall means fewer reviews that are in the desired label get put in the wrong level. As you can imagine, these metrics correlate very closely. Here’s the code (again from the NLTK library) to print out the positive and negative recall and precision, as well as the accuracy (a less-specific measure just showing what percentage the classifier got right). NLTK also has a cool function that shows the features (words) that were most helpful to the classifier in determining whether a review was positive or negative. So here’s the code:</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="line_numbers"><pre class="prettyprint prettyprinted" style=""><span class="lit">1</span><span class="pln">
+</span><span class="lit">2</span><span class="pln">
+</span><span class="lit">3</span><span class="pln">
+</span><span class="lit">4</span><span class="pln">
+</span><span class="lit">5</span><span class="pln">
+</span><span class="lit">6</span><span class="pln">
+</span><span class="lit">7</span></pre></td><td class="code"><pre class="python prettyprint prettyprinted" style="font-family: monospace;"><span style="color: #ff7700;font-weight:bold;"><span class="kwd">print</span></span><span class="pln"> </span><span style="color: #483d8b;"><span class="str">'train on %d instances, test on %d instances'</span></span><span class="pln"> </span><span class="pun">%</span><span class="pln"> </span><span style="color: black;"><span class="pun">(</span></span><span style="color: #008000;"><span class="pln">len</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">trainFeatures</span><span style="color: black;"><span class="pun">)</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> </span><span style="color: #008000;"><span class="pln">len</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">testFeatures</span><span style="color: black;"><span class="pun">)</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+    </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">print</span></span><span class="pln"> </span><span style="color: #483d8b;"><span class="str">'accuracy:'</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> nltk</span><span class="pun">.</span><span style="color: black;"><span class="pln">classify</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">util</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">accuracy</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">classifier</span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> testFeatures</span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+    </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">print</span></span><span class="pln"> </span><span style="color: #483d8b;"><span class="str">'pos precision:'</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> nltk</span><span class="pun">.</span><span style="color: black;"><span class="pln">metrics</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">precision</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">referenceSets</span><span style="color: black;"><span class="pun">[</span></span><span style="color: #483d8b;"><span class="str">'pos'</span></span><span style="color: black;"><span class="pun">]</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> testSets</span><span style="color: black;"><span class="pun">[</span></span><span style="color: #483d8b;"><span class="str">'pos'</span></span><span style="color: black;"><span class="pun">]</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+    </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">print</span></span><span class="pln"> </span><span style="color: #483d8b;"><span class="str">'pos recall:'</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> nltk</span><span class="pun">.</span><span style="color: black;"><span class="pln">metrics</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">recall</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">referenceSets</span><span style="color: black;"><span class="pun">[</span></span><span style="color: #483d8b;"><span class="str">'pos'</span></span><span style="color: black;"><span class="pun">]</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> testSets</span><span style="color: black;"><span class="pun">[</span></span><span style="color: #483d8b;"><span class="str">'pos'</span></span><span style="color: black;"><span class="pun">]</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+    </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">print</span></span><span class="pln"> </span><span style="color: #483d8b;"><span class="str">'neg precision:'</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> nltk</span><span class="pun">.</span><span style="color: black;"><span class="pln">metrics</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">precision</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">referenceSets</span><span style="color: black;"><span class="pun">[</span></span><span style="color: #483d8b;"><span class="str">'neg'</span></span><span style="color: black;"><span class="pun">]</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> testSets</span><span style="color: black;"><span class="pun">[</span></span><span style="color: #483d8b;"><span class="str">'neg'</span></span><span style="color: black;"><span class="pun">]</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+    </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">print</span></span><span class="pln"> </span><span style="color: #483d8b;"><span class="str">'neg recall:'</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> nltk</span><span class="pun">.</span><span style="color: black;"><span class="pln">metrics</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">recall</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">referenceSets</span><span style="color: black;"><span class="pun">[</span></span><span style="color: #483d8b;"><span class="str">'neg'</span></span><span style="color: black;"><span class="pun">]</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> testSets</span><span style="color: black;"><span class="pun">[</span></span><span style="color: #483d8b;"><span class="str">'neg'</span></span><span style="color: black;"><span class="pun">]</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+    classifier</span><span class="pun">.</span><span style="color: black;"><span class="pln">show_most_informative_features</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: #ff4500;"><span class="lit">10</span></span><span style="color: black;"><span class="pun">)</span></span></pre></td></tr></tbody></table></div>
+
+<h2>The Basic Method</h2>
+<p>So after all that, we can start to figure out our feature selection mechanism. This basically means the way we select which words to train the classifier on.</p>
+<p>In my previous post, I didn’t actually train the classifier on words at all. The classifier was trained on the number of words in each category from very negative to very positive. With this Python program, Jackson and I chose to look at the individual words themselves rather than counting positive and negative words.</p>
+<p>We did this because there is inherent error in picking positive and negative words — there’s a huge loss of information there: sentence-long reviews were reduced down to just a few digits. With this method, we’re keeping a lot more of the information in the review (<sup id="fnref:1"><a href="http://andybromberg.com/sentiment-analysis-python/#fn:1" rel="footnote">1</a></sup>).</p>
+<p>The most obvious feature selection mechanism is just to look at all the words in each review — it’s simple to code and provides a great base case. Here’s all we need:</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="line_numbers"><pre class="prettyprint prettyprinted" style=""><span class="lit">1</span><span class="pln">
+</span><span class="lit">2</span></pre></td><td class="code"><pre class="python prettyprint prettyprinted" style="font-family: monospace;"><span style="color: #ff7700;font-weight:bold;"><span class="kwd">def</span></span><span class="pln"> make_full_dict</span><span style="color: black;"><span class="pun">(</span></span><span class="pln">words</span><span style="color: black;"><span class="pun">)</span></span><span class="pun">:</span><span class="pln">
+    </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">return</span></span><span class="pln"> </span><span style="color: #008000;"><span class="pln">dict</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: black;"><span class="pun">[</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">word</span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> </span><span style="color: #008000;"><span class="kwd">True</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pln"> </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">for</span></span><span class="pln"> word </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">in</span></span><span class="pln"> words</span><span style="color: black;"><span class="pun">]</span></span><span style="color: black;"><span class="pun">)</span></span></pre></td></tr></tbody></table></div>
+
+<p>This just builds a <a href="http://docs.python.org/2/tutorial/datastructures.html#dictionaries" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-article&#39;, &#39;http://docs.python.org/2/tutorial/datastructures.html#dictionaries&#39;, &#39;dictionary object&#39;);">dictionary object</a> (what we need for the evaluate_features method) that has each of the words in the review followed by ‘True’.</p>
+<p>Then we can just run the testing method:</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="line_numbers"><pre class="prettyprint prettyprinted" style=""><span class="lit">1</span><span class="pln">
+</span><span class="lit">2</span></pre></td><td class="code"><pre class="python prettyprint prettyprinted" style="font-family: monospace;"><span style="color: #ff7700;font-weight:bold;"><span class="kwd">print</span></span><span class="pln"> </span><span style="color: #483d8b;"><span class="str">'using all words as features'</span></span><span class="pln">
+evaluate_features</span><span style="color: black;"><span class="pun">(</span></span><span class="pln">make_full_dict</span><span style="color: black;"><span class="pun">)</span></span></pre></td></tr></tbody></table></div>
+
+<p>Here’s the output:</p>
+<pre class="prettyprint prettyprinted" style=""><code><span class="kwd">using</span><span class="pln"> all words </span><span class="kwd">as</span><span class="pln"> features
+train on </span><span class="lit">7998</span><span class="pln"> instances</span><span class="pun">,</span><span class="pln"> test on </span><span class="lit">2666</span><span class="pln"> instances
+accuracy</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.773068267067</span><span class="pln">
+pos precision</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.787066246057</span><span class="pln">
+pos recall</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.748687171793</span><span class="pln">
+neg precision</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.760371959943</span><span class="pln">
+neg recall</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.797449362341</span><span class="pln">
+</span><span class="typ">Most</span><span class="pln"> </span><span class="typ">Informative</span><span class="pln"> </span><span class="typ">Features</span><span class="pln">
+              engrossing </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">True</span><span class="pln">              pos </span><span class="pun">:</span><span class="pln"> neg    </span><span class="pun">=</span><span class="pln">     </span><span class="lit">17.0</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">1.0</span><span class="pln">
+                   quiet </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">True</span><span class="pln">              pos </span><span class="pun">:</span><span class="pln"> neg    </span><span class="pun">=</span><span class="pln">     </span><span class="lit">15.7</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">1.0</span><span class="pln">
+                mediocre </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">True</span><span class="pln">              neg </span><span class="pun">:</span><span class="pln"> pos    </span><span class="pun">=</span><span class="pln">     </span><span class="lit">13.7</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">1.0</span><span class="pln">
+               absorbing </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">True</span><span class="pln">              pos </span><span class="pun">:</span><span class="pln"> neg    </span><span class="pun">=</span><span class="pln">     </span><span class="lit">13.0</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">1.0</span><span class="pln">
+                portrait </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">True</span><span class="pln">              pos </span><span class="pun">:</span><span class="pln"> neg    </span><span class="pun">=</span><span class="pln">     </span><span class="lit">12.4</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">1.0</span><span class="pln">
+              refreshing </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">True</span><span class="pln">              pos </span><span class="pun">:</span><span class="pln"> neg    </span><span class="pun">=</span><span class="pln">     </span><span class="lit">12.3</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">1.0</span><span class="pln">
+                   flaws </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">True</span><span class="pln">              pos </span><span class="pun">:</span><span class="pln"> neg    </span><span class="pun">=</span><span class="pln">     </span><span class="lit">12.3</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">1.0</span><span class="pln">
+               inventive </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">True</span><span class="pln">              pos </span><span class="pun">:</span><span class="pln"> neg    </span><span class="pun">=</span><span class="pln">     </span><span class="lit">12.3</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">1.0</span><span class="pln">
+                 triumph </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">True</span><span class="pln">              pos </span><span class="pun">:</span><span class="pln"> neg    </span><span class="pun">=</span><span class="pln">     </span><span class="lit">11.7</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">1.0</span><span class="pln">
+            refreshingly </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">True</span><span class="pln">              pos </span><span class="pun">:</span><span class="pln"> neg    </span><span class="pun">=</span><span class="pln">     </span><span class="lit">11.7</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">1.0</span></code></pre>
+<p>That might seem overwhelming, but we can go through it bit by bit!</p>
+<p>First, we see that the accuracy is 77% — this is already seeming a lot better than my first attempt with R. Then we see that the precisions and recalls are all pretty close to each other, which means that it is classifying everything fairly evenly. No problems there, and we don’t need to read a whole lot more into it.</p>
+<p>Then we see the most informative features — for example, if ‘engrossing’ is in a review, there’s a 17:1 chance the review is positive.</p>
+<p>As a side note, there’s a couple interesting ones in there. For example, ‘flaws’ being in a review strongly indicates that the review is positive. Perhaps that’s because people rarely use “flaws” in a very negative sense, typically opting for stronger words. However, it is common to hear “it had some flaws, but…”</p>
+<h2>The Next Step</h2>
+<p>Moving on, the next way to select features is to only take the n most informative features — basically, the features that convey the most information. Again (for the millionth time), thanks to StreamHacker here.</p>
+<p>We first need to find the information gain of each word. This is a big chunk of code, but we’ll break it up.</p>
+<p>First, we broke up the words in a similar way to in the evaluate_features function and made them iterable (so that we could iterate through them):</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="line_numbers"><pre class="prettyprint prettyprinted" style=""><span class="lit">1</span><span class="pln">
+</span><span class="lit">2</span><span class="pln">
+</span><span class="lit">3</span><span class="pln">
+</span><span class="lit">4</span><span class="pln">
+</span><span class="lit">5</span><span class="pln">
+</span><span class="lit">6</span><span class="pln">
+</span><span class="lit">7</span><span class="pln">
+</span><span class="lit">8</span><span class="pln">
+</span><span class="lit">9</span><span class="pln">
+</span><span class="lit">10</span><span class="pln">
+</span><span class="lit">11</span><span class="pln">
+</span><span class="lit">12</span><span class="pln">
+</span><span class="lit">13</span><span class="pln">
+</span><span class="lit">14</span><span class="pln">
+</span><span class="lit">15</span><span class="pln">
+</span><span class="lit">16</span><span class="pln">
+</span><span class="lit">17</span><span class="pln">
+</span><span class="lit">18</span></pre></td><td class="code"><pre class="python prettyprint prettyprinted" style="font-family: monospace;"><span style="color: #ff7700;font-weight:bold;"><span class="kwd">def</span></span><span class="pln"> create_word_scores</span><span style="color: black;"><span class="pun">(</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pun">:</span><span class="pln">
+    </span><span style="color: #808080; font-style: italic;"><span class="com">#splits sentences into lines</span></span><span class="pln">
+    posSentences </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: #008000;"><span class="pln">open</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: #483d8b;"><span class="str">'polarityData</span><span style="color: #000099; font-weight: bold;"><span class="str">\\</span></span><span class="str">rt-polaritydata</span><span style="color: #000099; font-weight: bold;"><span class="str">\\</span></span><span class="str">rt-polarity-pos.txt'</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> </span><span style="color: #483d8b;"><span class="str">'r'</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+    negSentences </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: #008000;"><span class="pln">open</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: #483d8b;"><span class="str">'polarityData</span><span style="color: #000099; font-weight: bold;"><span class="str">\\</span></span><span class="str">rt-polaritydata</span><span style="color: #000099; font-weight: bold;"><span class="str">\\</span></span><span class="str">rt-polarity-neg.txt'</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> </span><span style="color: #483d8b;"><span class="str">'r'</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+    posSentences </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: #dc143c;"><span class="pln">re</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">split</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">r</span><span style="color: #483d8b;"><span class="str">'</span><span style="color: #000099; font-weight: bold;"><span class="str">\n</span></span><span class="str">'</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> posSentences</span><span class="pun">.</span><span style="color: black;"><span class="pln">read</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: black;"><span class="pun">)</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+    negSentences </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: #dc143c;"><span class="pln">re</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">split</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">r</span><span style="color: #483d8b;"><span class="str">'</span><span style="color: #000099; font-weight: bold;"><span class="str">\n</span></span><span class="str">'</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> negSentences</span><span class="pun">.</span><span style="color: black;"><span class="pln">read</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: black;"><span class="pun">)</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+&nbsp;
+    </span><span style="color: #808080; font-style: italic;"><span class="com">#creates lists of all positive and negative words</span></span><span class="pln">
+    posWords </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: black;"><span class="pun">[</span></span><span style="color: black;"><span class="pun">]</span></span><span class="pln">
+    negWords </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: black;"><span class="pun">[</span></span><span style="color: black;"><span class="pun">]</span></span><span class="pln">
+    </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">for</span></span><span class="pln"> i </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">in</span></span><span class="pln"> posSentences</span><span class="pun">:</span><span class="pln">
+        posWord </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: #dc143c;"><span class="pln">re</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">findall</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">r</span><span style="color: #483d8b;"><span class="str">"[</span><span style="color: #000099; font-weight: bold;"><span class="str">\w</span></span><span class="str">']+|[.,!?;]"</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> i</span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+        posWords</span><span class="pun">.</span><span style="color: black;"><span class="pln">append</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">posWord</span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+    </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">for</span></span><span class="pln"> i </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">in</span></span><span class="pln"> negSentences</span><span class="pun">:</span><span class="pln">
+        negWord </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: #dc143c;"><span class="pln">re</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">findall</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">r</span><span style="color: #483d8b;"><span class="str">"[</span><span style="color: #000099; font-weight: bold;"><span class="str">\w</span></span><span class="str">']+|[.,!?;]"</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> i</span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+        negWords</span><span class="pun">.</span><span style="color: black;"><span class="pln">append</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">negWord</span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+    posWords </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: #008000;"><span class="pln">list</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: #dc143c;"><span class="pln">itertools</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">chain</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pun">*</span><span class="pln">posWords</span><span style="color: black;"><span class="pun">)</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+    negWords </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: #008000;"><span class="pln">list</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: #dc143c;"><span class="pln">itertools</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">chain</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pun">*</span><span class="pln">negWords</span><span style="color: black;"><span class="pun">)</span></span><span style="color: black;"><span class="pun">)</span></span></pre></td></tr></tbody></table></div>
+
+<p>Then we set up an overall frequency distribution of all the words, which can be visualized as a huge histogram with the number of each word in all the reviews combined. However, with just this line, all we do is initialize the frequency distribution — it’s actually empty:</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="line_numbers"><pre class="prettyprint prettyprinted" style=""><span class="lit">1</span></pre></td><td class="code"><pre class="python prettyprint prettyprinted" style="font-family: monospace;"><span class="pln">word_fd </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span class="typ">FreqDist</span><span style="color: black;"><span class="pun">(</span></span><span style="color: black;"><span class="pun">)</span></span></pre></td></tr></tbody></table></div>
+
+<p>We’ll also need a conditional frequency distribution — a distribution that takes into account whether the word is in a positive or negative review. This can be visualized as two different histograms, one with all the words in positive reviews, and one with all the words in negative reviews. Like above, this is just an empty conditional frequency distribution. Nothing is in there yet.</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="line_numbers"><pre class="prettyprint prettyprinted" style=""><span class="lit">1</span></pre></td><td class="code"><pre class="python prettyprint prettyprinted" style="font-family: monospace;"><span class="pln">cond_word_fd </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span class="typ">ConditionalFreqDist</span><span style="color: black;"><span class="pun">(</span></span><span style="color: black;"><span class="pun">)</span></span></pre></td></tr></tbody></table></div>
+
+<p>Then, we essentially fill out the frequency distributions, incrementing (with .inc) the counter of each word within the appropriate distribution.</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="line_numbers"><pre class="prettyprint prettyprinted" style=""><span class="lit">1</span><span class="pln">
+</span><span class="lit">2</span><span class="pln">
+</span><span class="lit">3</span><span class="pln">
+</span><span class="lit">4</span><span class="pln">
+</span><span class="lit">5</span><span class="pln">
+</span><span class="lit">6</span></pre></td><td class="code"><pre class="python prettyprint prettyprinted" style="font-family: monospace;"><span style="color: #ff7700;font-weight:bold;"><span class="kwd">for</span></span><span class="pln"> word </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">in</span></span><span class="pln"> posWords</span><span class="pun">:</span><span class="pln">
+        word_fd</span><span class="pun">.</span><span style="color: black;"><span class="pln">inc</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">word</span><span class="pun">.</span><span style="color: black;"><span class="pln">lower</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: black;"><span class="pun">)</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+        cond_word_fd</span><span style="color: black;"><span class="pun">[</span></span><span style="color: #483d8b;"><span class="str">'pos'</span></span><span style="color: black;"><span class="pun">]</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">inc</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">word</span><span class="pun">.</span><span style="color: black;"><span class="pln">lower</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: black;"><span class="pun">)</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+    </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">for</span></span><span class="pln"> word </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">in</span></span><span class="pln"> negWords</span><span class="pun">:</span><span class="pln">
+        word_fd</span><span class="pun">.</span><span style="color: black;"><span class="pln">inc</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">word</span><span class="pun">.</span><span style="color: black;"><span class="pln">lower</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: black;"><span class="pun">)</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+        cond_word_fd</span><span style="color: black;"><span class="pun">[</span></span><span style="color: #483d8b;"><span class="str">'neg'</span></span><span style="color: black;"><span class="pun">]</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">inc</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">word</span><span class="pun">.</span><span style="color: black;"><span class="pln">lower</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: black;"><span class="pun">)</span></span><span style="color: black;"><span class="pun">)</span></span></pre></td></tr></tbody></table></div>
+
+<p>The next thing we need to find the highest-information features is the count of words in positive reviews, words in negative reviews, and total words:</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="line_numbers"><pre class="prettyprint prettyprinted" style=""><span class="lit">1</span><span class="pln">
+</span><span class="lit">2</span><span class="pln">
+</span><span class="lit">3</span></pre></td><td class="code"><pre class="python prettyprint prettyprinted" style="font-family: monospace;"><span class="pln">pos_word_count </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> cond_word_fd</span><span style="color: black;"><span class="pun">[</span></span><span style="color: #483d8b;"><span class="str">'pos'</span></span><span style="color: black;"><span class="pun">]</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">N</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+    neg_word_count </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> cond_word_fd</span><span style="color: black;"><span class="pun">[</span></span><span style="color: #483d8b;"><span class="str">'neg'</span></span><span style="color: black;"><span class="pun">]</span></span><span class="pun">.</span><span style="color: black;"><span class="pln">N</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+    total_word_count </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> pos_word_count </span><span class="pun">+</span><span class="pln"> neg_word_count</span></pre></td></tr></tbody></table></div>
+
+<p>The last thing we need to do is use a <a href="http://en.wikipedia.org/wiki/Chi-squared_test" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-article&#39;, &#39;http://en.wikipedia.org/wiki/Chi-squared_test&#39;, &#39;chi-squared test&#39;);">chi-squared test</a> test (also from NLTK) to score the words. We find each word’s positive information score and negative information score, add them up, and fill up a dictionary correlating the words and scores, which we then return out of the function. Chi-squared tests, as you can read in the Wikipedia article I just linked to, is a great way to see how much information a given input conveys.</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="line_numbers"><pre class="prettyprint prettyprinted" style=""><span class="lit">1</span><span class="pln">
+</span><span class="lit">2</span><span class="pln">
+</span><span class="lit">3</span><span class="pln">
+</span><span class="lit">4</span><span class="pln">
+</span><span class="lit">5</span><span class="pln">
+</span><span class="lit">6</span><span class="pln">
+</span><span class="lit">7</span></pre></td><td class="code"><pre class="python prettyprint prettyprinted" style="font-family: monospace;"><span class="pln">word_scores </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: black;"><span class="pun">{</span></span><span style="color: black;"><span class="pun">}</span></span><span class="pln">
+    </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">for</span></span><span class="pln"> word</span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> freq </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">in</span></span><span class="pln"> word_fd</span><span class="pun">.</span><span style="color: black;"><span class="pln">iteritems</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pun">:</span><span class="pln">
+        pos_score </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span class="typ">BigramAssocMeasures</span><span class="pun">.</span><span style="color: black;"><span class="pln">chi_sq</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">cond_word_fd</span><span style="color: black;"><span class="pun">[</span></span><span style="color: #483d8b;"><span class="str">'pos'</span></span><span style="color: black;"><span class="pun">]</span></span><span style="color: black;"><span class="pun">[</span></span><span class="pln">word</span><span style="color: black;"><span class="pun">]</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> </span><span style="color: black;"><span class="pun">(</span></span><span class="pln">freq</span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> pos_word_count</span><span style="color: black;"><span class="pun">)</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> total_word_count</span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+        neg_score </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span class="typ">BigramAssocMeasures</span><span class="pun">.</span><span style="color: black;"><span class="pln">chi_sq</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">cond_word_fd</span><span style="color: black;"><span class="pun">[</span></span><span style="color: #483d8b;"><span class="str">'neg'</span></span><span style="color: black;"><span class="pun">]</span></span><span style="color: black;"><span class="pun">[</span></span><span class="pln">word</span><span style="color: black;"><span class="pun">]</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> </span><span style="color: black;"><span class="pun">(</span></span><span class="pln">freq</span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> neg_word_count</span><span style="color: black;"><span class="pun">)</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> total_word_count</span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+        word_scores</span><span style="color: black;"><span class="pun">[</span></span><span class="pln">word</span><span style="color: black;"><span class="pun">]</span></span><span class="pln"> </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> pos_score </span><span class="pun">+</span><span class="pln"> neg_score
+&nbsp;
+    </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">return</span></span><span class="pln"> word_scores</span></pre></td></tr></tbody></table></div>
+
+<p>We then make another function that finds the best <em>n</em> words, given a set of scores (which we’ll calculate using the function we just made) and an <em>n</em>:</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="line_numbers"><pre class="prettyprint prettyprinted" style=""><span class="lit">1</span><span class="pln">
+</span><span class="lit">2</span><span class="pln">
+</span><span class="lit">3</span><span class="pln">
+</span><span class="lit">4</span></pre></td><td class="code"><pre class="python prettyprint prettyprinted" style="font-family: monospace;"><span style="color: #ff7700;font-weight:bold;"><span class="kwd">def</span></span><span class="pln"> find_best_words</span><span style="color: black;"><span class="pun">(</span></span><span class="pln">word_scores</span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> number</span><span style="color: black;"><span class="pun">)</span></span><span class="pun">:</span><span class="pln">
+    best_vals </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: #008000;"><span class="pln">sorted</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">word_scores</span><span class="pun">.</span><span style="color: black;"><span class="pln">iteritems</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: black;"><span class="pun">)</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> key</span><span style="color: #66cc66;"><span class="pun">=</span></span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">lambda</span></span><span class="pln"> </span><span style="color: black;"><span class="pun">(</span></span><span class="pln">w</span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> s</span><span style="color: black;"><span class="pun">)</span></span><span class="pun">:</span><span class="pln"> s</span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> reverse</span><span style="color: #66cc66;"><span class="pun">=</span></span><span style="color: #008000;"><span class="kwd">True</span></span><span style="color: black;"><span class="pun">)</span></span><span style="color: black;"><span class="pun">[</span></span><span class="pun">:</span><span class="pln">number</span><span style="color: black;"><span class="pun">]</span></span><span class="pln">
+    best_words </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: #008000;"><span class="kwd">set</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: black;"><span class="pun">[</span></span><span class="pln">w </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">for</span></span><span class="pln"> w</span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> s </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">in</span></span><span class="pln"> best_vals</span><span style="color: black;"><span class="pun">]</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+    </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">return</span></span><span class="pln"> best_words</span></pre></td></tr></tbody></table></div>
+
+<p>Are you a little confused by that ‘lambda’? I certainly was when I saw it. Essentially what it does is allow you to temporarily make a function to return something. In this case, it’s helping to sort the words into the correct order. You can check <a href="http://www.secnetix.de/olli/Python/lambda_functions.hawk" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-article&#39;, &#39;http://www.secnetix.de/olli/Python/lambda_functions.hawk&#39;, &#39;this&#39;);">this</a> out for more information on lambda functions.</p>
+<p>Finally, we can make a feature selection mechanism that returns ‘True’ for a word only if it is in the best words list:</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="line_numbers"><pre class="prettyprint prettyprinted" style=""><span class="lit">1</span><span class="pln">
+</span><span class="lit">2</span></pre></td><td class="code"><pre class="python prettyprint prettyprinted" style="font-family: monospace;"><span style="color: #ff7700;font-weight:bold;"><span class="kwd">def</span></span><span class="pln"> best_word_features</span><span style="color: black;"><span class="pun">(</span></span><span class="pln">words</span><span style="color: black;"><span class="pun">)</span></span><span class="pun">:</span><span class="pln">
+    </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">return</span></span><span class="pln"> </span><span style="color: #008000;"><span class="pln">dict</span></span><span style="color: black;"><span class="pun">(</span></span><span style="color: black;"><span class="pun">[</span></span><span style="color: black;"><span class="pun">(</span></span><span class="pln">word</span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> </span><span style="color: #008000;"><span class="kwd">True</span></span><span style="color: black;"><span class="pun">)</span></span><span class="pln"> </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">for</span></span><span class="pln"> word </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">in</span></span><span class="pln"> words </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">if</span></span><span class="pln"> word </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">in</span></span><span class="pln"> best_words</span><span style="color: black;"><span class="pun">]</span></span><span style="color: black;"><span class="pun">)</span></span></pre></td></tr></tbody></table></div>
+
+<p>Last, I ran it using the best 10, 100, 1000, 10000, and 15000 words. Here’s the code to do that:</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="line_numbers"><pre class="prettyprint prettyprinted" style=""><span class="lit">1</span><span class="pln">
+</span><span class="lit">2</span><span class="pln">
+</span><span class="lit">3</span><span class="pln">
+</span><span class="lit">4</span><span class="pln">
+</span><span class="lit">5</span><span class="pln">
+</span><span class="lit">6</span></pre></td><td class="code"><pre class="python prettyprint prettyprinted" style="font-family: monospace;"><span class="pln">numbers_to_test </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> </span><span style="color: black;"><span class="pun">[</span></span><span style="color: #ff4500;"><span class="lit">10</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> </span><span style="color: #ff4500;"><span class="lit">100</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> </span><span style="color: #ff4500;"><span class="lit">1000</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> </span><span style="color: #ff4500;"><span class="lit">10000</span></span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> </span><span style="color: #ff4500;"><span class="lit">15000</span></span><span style="color: black;"><span class="pun">]</span></span><span class="pln">
+</span><span style="color: #808080; font-style: italic;"><span class="com">#tries the best_word_features mechanism with each of the numbers_to_test of features</span></span><span class="pln">
+</span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">for</span></span><span class="pln"> num </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">in</span></span><span class="pln"> numbers_to_test</span><span class="pun">:</span><span class="pln">
+    </span><span style="color: #ff7700;font-weight:bold;"><span class="kwd">print</span></span><span class="pln"> </span><span style="color: #483d8b;"><span class="str">'evaluating best %d word features'</span></span><span class="pln"> </span><span class="pun">%</span><span class="pln"> </span><span style="color: black;"><span class="pun">(</span></span><span class="pln">num</span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+    best_words </span><span style="color: #66cc66;"><span class="pun">=</span></span><span class="pln"> find_best_words</span><span style="color: black;"><span class="pun">(</span></span><span class="pln">word_scores</span><span style="color: #66cc66;"><span class="pun">,</span></span><span class="pln"> num</span><span style="color: black;"><span class="pun">)</span></span><span class="pln">
+    evaluate_features</span><span style="color: black;"><span class="pun">(</span></span><span class="pln">best_word_features</span><span style="color: black;"><span class="pun">)</span></span></pre></td></tr></tbody></table></div>
+
+<p>Here’s my output (I’ve cut out the informative features list because it’s the same for all of them, including the one using all the features):</p>
+<pre class="prettyprint prettyprinted" style=""><code><span class="pln">evaluating best </span><span class="lit">10</span><span class="pln"> word features
+train on </span><span class="lit">7998</span><span class="pln"> instances</span><span class="pun">,</span><span class="pln"> test on </span><span class="lit">2666</span><span class="pln"> instances
+accuracy</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.574643660915</span><span class="pln">
+pos precision</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.549379652605</span><span class="pln">
+pos recall</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.830457614404</span><span class="pln">
+neg precision</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.652841781874</span><span class="pln">
+neg recall</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.318829707427</span><span class="pln">    
+
+evaluating best </span><span class="lit">100</span><span class="pln"> word features
+train on </span><span class="lit">7998</span><span class="pln"> instances</span><span class="pun">,</span><span class="pln"> test on </span><span class="lit">2666</span><span class="pln"> instances
+accuracy</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.682295573893</span><span class="pln">
+pos precision</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.659868421053</span><span class="pln">
+pos recall</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.752438109527</span><span class="pln">
+neg precision</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.712041884817</span><span class="pln">
+neg recall</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.61215303826</span><span class="pln">    
+
+evaluating best </span><span class="lit">1000</span><span class="pln"> word features
+train on </span><span class="lit">7998</span><span class="pln"> instances</span><span class="pun">,</span><span class="pln"> test on </span><span class="lit">2666</span><span class="pln"> instances
+accuracy</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.79632408102</span><span class="pln">
+pos precision</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.817014446228</span><span class="pln">
+pos recall</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.763690922731</span><span class="pln">
+neg precision</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.778169014085</span><span class="pln">
+neg recall</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.82895723931</span><span class="pln">    
+
+evaluating best </span><span class="lit">10000</span><span class="pln"> word features
+train on </span><span class="lit">7998</span><span class="pln"> instances</span><span class="pun">,</span><span class="pln"> test on </span><span class="lit">2666</span><span class="pln"> instances
+accuracy</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.846586646662</span><span class="pln">
+pos precision</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.868421052632</span><span class="pln">
+pos recall</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.81695423856</span><span class="pln">
+neg precision</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.827195467422</span><span class="pln">
+neg recall</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.876219054764</span><span class="pln">    
+
+evaluating best </span><span class="lit">15000</span><span class="pln"> word features
+train on </span><span class="lit">7998</span><span class="pln"> instances</span><span class="pun">,</span><span class="pln"> test on </span><span class="lit">2666</span><span class="pln"> instances
+accuracy</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.846961740435</span><span class="pln">
+pos precision</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.862745098039</span><span class="pln">
+pos recall</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.825206301575</span><span class="pln">
+neg precision</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.832494608196</span><span class="pln">
+neg recall</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.868717179295</span></code></pre>
+<h2>The Conclusions</h2>
+<p>There’s lots to read into here. Obviously, using very few features didn’t do great in terms of accuracy, precision, and recall because there wasn’t enough data to build the model off of. Using 1000 features is about as good as using all the features, but at 10000 and 15000, there’s a pretty huge increase over the base case, getting up to ~85% accuracy and similar precision and recall statistics.</p>
+<p>That means that using intelligent feature selection increased the accuracy by around 8 percentage points, which seems like quite a significant jump. Jackson and I were very happy about that.</p>
+<p>We’re also happy about the results as a whole — classifying reviews with over 80% accuracy is pretty impressive and we can see lots of applications for this technology.</p>
+<p>Of course, there are tons of ways to improve these results. These include (but are not limited to):</p>
+<ol>
+<li>Adding different feature selection mechanisms</li>
+<li>Pre-processing the text to get rid of unimportant words or punctuation</li>
+<li>Doing deeper analysis of the sentences as a whole</li>
+<li>Trying a different classifier than the Naive Bayes Classifier</li>
+</ol>
+<p>A disclaimer applies: we’re just learning all of this, and fairly independently too. There’s a decent chance that there’s a mistake or an inappropriate conclusion somewhere. If there is, please don’t hesitate to <a href="mailto:andy@andybromberg.com">email me</a>. I’d also love to hear from you if you have any other input on the project!</p>
+<p>For the full code, check out the <a href="https://github.com/abromberg/sentiment_analysis_python" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-article&#39;, &#39;https://github.com/abromberg/sentiment_analysis_python&#39;, &#39;GitHub repository&#39;);">GitHub repository</a>.</p>
+<h2>Addendum</h2>
+<p><a href="http://protobi.com/" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-article&#39;, &#39;http://protobi.com/&#39;, &#39;Pieter Sheth-Voss&#39;);">Pieter Sheth-Voss</a> pointed out in the comments section that there’s a linear relationship between the accuracy and the log of the number of features. I decided to take a look at this in R. Here’s the code I used.</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="line_numbers"><pre class="prettyprint prettyprinted" style=""><span class="lit">1</span><span class="pln">
+</span><span class="lit">2</span><span class="pln">
+</span><span class="lit">3</span><span class="pln">
+</span><span class="lit">4</span><span class="pln">
+</span><span class="lit">5</span><span class="pln">
+</span><span class="lit">6</span><span class="pln">
+</span><span class="lit">7</span><span class="pln">
+</span><span class="lit">8</span></pre></td><td class="code"><pre class="r prettyprint prettyprinted" style="font-family: monospace;"><span class="pln">library</span><span class="pun">(</span><span class="pln">ggplot2</span><span class="pun">)</span><span class="pln">
+features </span><span class="pun">&lt;-</span><span class="pln"> c</span><span class="pun">(</span><span class="lit">10</span><span class="pun">,</span><span class="pln"> </span><span class="lit">50</span><span class="pun">,</span><span class="pln"> </span><span class="lit">100</span><span class="pun">,</span><span class="pln"> </span><span class="lit">250</span><span class="pun">,</span><span class="pln"> </span><span class="lit">500</span><span class="pun">,</span><span class="pln"> </span><span class="lit">750</span><span class="pun">,</span><span class="pln"> </span><span class="lit">1000</span><span class="pun">,</span><span class="pln"> </span><span class="lit">2500</span><span class="pun">,</span><span class="pln"> </span><span class="lit">5000</span><span class="pun">,</span><span class="pln"> </span><span class="lit">7500</span><span class="pun">,</span><span class="pln"> </span><span class="lit">10000</span><span class="pun">,</span><span class="pln"> </span><span class="lit">12500</span><span class="pun">,</span><span class="pln"> </span><span class="lit">15000</span><span class="pun">)</span><span class="pln">
+logFeatures </span><span class="pun">&lt;-</span><span class="pln"> log</span><span class="pun">(</span><span class="pln">features</span><span class="pun">)</span><span class="pln">
+accuracy </span><span class="pun">&lt;-</span><span class="pln"> c</span><span class="pun">(</span><span class="lit">0.5746436609152288</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.6406601650412603</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.6822955738934734</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.7291822955738935</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.7659414853713429</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.7861965491372843</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.7963240810202551</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.8304576144036009</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.8510877719429858</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.8465866466616654</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.8465866466616654</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.8465866466616654</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.8469617404351087</span><span class="pun">)</span><span class="pln">
+data </span><span class="pun">&lt;-</span><span class="pln"> data</span><span class="pun">.</span><span class="pln">frame</span><span class="pun">(</span><span class="pln">logFeatures</span><span class="pun">,</span><span class="pln"> accuracy</span><span class="pun">)</span><span class="pln">
+ggplot</span><span class="pun">(</span><span class="pln">data</span><span class="pun">,</span><span class="pln"> aes</span><span class="pun">(</span><span class="pln">x</span><span class="pun">=</span><span class="pln">logFeatures</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">=</span><span class="pln">accuracy</span><span class="pun">))</span><span class="pln"> </span><span class="pun">+</span><span class="pln">
+  geom_point</span><span class="pun">(</span><span class="pln">shape</span><span class="pun">=</span><span class="lit">1</span><span class="pun">)</span><span class="pln"> </span><span class="pun">+</span><span class="pln">
+  geom_smooth</span><span class="pun">(</span><span class="pln">method</span><span class="pun">=</span><span class="pln">lm</span><span class="pun">)</span></pre></td></tr></tbody></table></div>
+
+<p>This takes advantage of the great <a href="http://ggplot2.org/" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-article&#39;, &#39;http://ggplot2.org/&#39;, &#39;ggplot2&#39;);">ggplot2</a> library for R. It simply puts in the features, calculates the log of them, puts in the accuracy, and plots these two variables. Here’s the output:</p>
+<p><a href="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/features_performance_all.png"><img src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/features_performance_all.png" alt="features_performance_all" width="540" height="450" class="alignnone size-full wp-image-62" srcset="http://andybromberg.com/wp-content/uploads/2013/02/features_performance_all.png 600w, http://andybromberg.com/wp-content/uploads/2013/02/features_performance_all-300x250.png 300w" sizes="(max-width: 540px) 100vw, 540px"></a></p>
+<p>I noticed here at the last 4 values seem a bit out of line and ran the script again with those removed to see how well the relationship performed through 5000 features:</p>
+<p><a href="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/features_performance_partial.png"><img src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/features_performance_partial.png" alt="features_performance_partial" width="540" height="450" class="alignnone size-full wp-image-61" srcset="http://andybromberg.com/wp-content/uploads/2013/02/features_performance_partial.png 600w, http://andybromberg.com/wp-content/uploads/2013/02/features_performance_partial-300x250.png 300w" sizes="(max-width: 540px) 100vw, 540px"></a></p>
+<p>This is quite a strong correlation. Very interesting how well that worked out. Thanks for the heads up, Pieter!</p>
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Although we certainly don’t keep all the information in the review, since sentence structure and punctuation disappear and we just look at words in a vacuum. Improving that might be a direction for us to go in the future.&nbsp;<a href="http://andybromberg.com/sentiment-analysis-python/#fnref:1" rev="footnote"><img draggable="false" class="emoji" alt="↩" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/21a9.svg"></a></p>
+</li>
+</ol>
+</div>
+          </div>
+        </div>
+        <div class="postMeta">
+                  
+          <div class="postDate"><span>Published:</span> <abbr class="published" title="2013-02-14T02:57:47+0000"><a href="http://andybromberg.com/2013/02/14/">February 14, 2013</a></abbr></div>
+        	<div class="categories"><span>Filed Under:</span> <a href="http://andybromberg.com/category/project/" rel="category tag">project</a></div>
+        	        	
+        	
+
+        </div>
+      </div>
+
+            
+	<!-- You can start editing here. -->
+<div id="comments">
+    	<h3 id="comments">31 Responses to “Second Try: Sentiment Analysis in Python”</h3>
+
+  	<div class="navigation">
+  		<div class="alignleft"></div>
+  		<div class="alignright"></div>
+  	</div>
+
+  	<ol class="commentlist">
+  			<li class="comment even thread-even depth-1 parent" id="comment-3">
+				<div id="div-comment-3" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/3974ec36e115aa7295da14f6b39dc23a.png" srcset="http://0.gravatar.com/avatar/3974ec36e115aa7295da14f6b39dc23a?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn"><a href="http://www.protobi.com/" rel="external nofollow" class="url">Pieter Sheth-Voss</a></cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-3">
+			February 15, 2013 at 2:37 am</a>		</div>
+
+		<p>Fascinating.   I’m sensing a trend… on stats.stackexchange.com, the QA forum for statisticians and data scientists, the top rated answer to the question “Software for easy yet robust data exploration?” is not R but … Python!</p>
+<p><a href="http://stats.stackexchange.com/questions/9085/software-for-easy-yet-robust-data-exploration" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-comment&#39;, &#39;http://stats.stackexchange.com/questions/9085/software-for-easy-yet-robust-data-exploration&#39;, &#39;http://stats.stackexchange.com/questions/9085/software-for-easy-yet-robust-data-exploration&#39;);" rel="nofollow">http://stats.stackexchange.com/questions/9085/software-for-easy-yet-robust-data-exploration</a></p>
+<p>Can’t wait to hear what you say about Lisp .. <a href="http://xkcd.com/224/" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-comment&#39;, &#39;http://xkcd.com/224/&#39;, &#39;http://xkcd.com/224/&#39;);" rel="nofollow">http://xkcd.com/224/</a></p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=3#respond" onclick="return addComment.moveForm( &quot;div-comment-3&quot;, &quot;3&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to Pieter Sheth-Voss">Reply</a></div>
+				</div>
+		<ul class="children">
+		<li class="comment byuser comment-author-andy bypostauthor odd alt depth-2" id="comment-5">
+				<div id="div-comment-5" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/7c45718582f30e0c0a2bc1975066c019.png" srcset="http://1.gravatar.com/avatar/7c45718582f30e0c0a2bc1975066c019?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn">andy</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-5">
+			February 15, 2013 at 5:34 am</a>		</div>
+
+		<p>Hah, I doubt I’m touching Lisp anytime soon!</p>
+<p>I definitely felt Python’s ease-of-use though — it was much easier to build the script up than when I used R. That said, I’ll still be using R for other applications.</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=5#respond" onclick="return addComment.moveForm( &quot;div-comment-5&quot;, &quot;5&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to andy">Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 parent" id="comment-4">
+				<div id="div-comment-4" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/3974ec36e115aa7295da14f6b39dc23a.png" srcset="http://0.gravatar.com/avatar/3974ec36e115aa7295da14f6b39dc23a?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn"><a href="http://www.protobi.com/" rel="external nofollow" class="url">Pieter Sheth-Voss</a></cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-4">
+			February 15, 2013 at 4:46 am</a>		</div>
+
+		<p>Interesting, there’s a linear relationship between accuracy and log(features) that crosses four orders of magnitude until it stops at 15,000.</p>
+<p>Concur with putting improving on Naive Bayes as the last option.  In my experience it’s hard to beat NBC, and while you typically can, it’s not often clear in advance exactly how to.</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=4#respond" onclick="return addComment.moveForm( &quot;div-comment-4&quot;, &quot;4&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to Pieter Sheth-Voss">Reply</a></div>
+				</div>
+		<ul class="children">
+		<li class="comment byuser comment-author-andy bypostauthor odd alt depth-2" id="comment-6">
+				<div id="div-comment-6" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/7c45718582f30e0c0a2bc1975066c019.png" srcset="http://1.gravatar.com/avatar/7c45718582f30e0c0a2bc1975066c019?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn">andy</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-6">
+			February 15, 2013 at 5:37 am</a>		</div>
+
+		<p>That is an interesting relationship… Maybe I’ll try with a whole bunch feature numbers and plot them. I’d like to see how that looks (I might even use R!).</p>
+<p>I do want to try different classifiers just for the sake of learning them. Perhaps along the way I’ll find one that works better for this application.</p>
+<p>Thanks for the comments!</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=6#respond" onclick="return addComment.moveForm( &quot;div-comment-6&quot;, &quot;6&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to andy">Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment byuser comment-author-andy bypostauthor even depth-2" id="comment-9">
+				<div id="div-comment-9" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/7c45718582f30e0c0a2bc1975066c019.png" srcset="http://1.gravatar.com/avatar/7c45718582f30e0c0a2bc1975066c019?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn">andy</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-9">
+			February 17, 2013 at 1:40 am</a>		</div>
+
+		<p>I just added an addendum at the bottom of the post with a couple graphs of log(features) vs. accuracy. Very interesting results. Thanks for the idea!</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=9#respond" onclick="return addComment.moveForm( &quot;div-comment-9&quot;, &quot;9&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to andy">Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 parent" id="comment-11">
+				<div id="div-comment-11" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/c6dc0b865cc37bdb2c049c4756bf2af8.png" srcset="http://0.gravatar.com/avatar/c6dc0b865cc37bdb2c049c4756bf2af8?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn">tom m</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-11">
+			February 18, 2013 at 8:17 pm</a>		</div>
+
+		<p>Here is a quick intro on how to plot using python:</p>
+<p>from math import log10<br>
+import numpy as np<br>
+import matplotlib.pyplot as plt</p>
+<p>features = [10, 50, 100, 250, 500, 750, 1000, 2500, 5000, 7500, 10000, 12500, 15000]<br>
+logFeatures = [log10(i) for i in features]</p>
+<p>accuracy = [0.5746436609152288, 0.6406601650412603, 0.6822955738934734, 0.7291822955738935, 0.7659414853713429, 0.7861965491372843, 0.7963240810202551, 0.8304576144036009, 0.8510877719429858, 0.8465866466616654, 0.8465866466616654, 0.8465866466616654, 0.8469617404351087]</p>
+<p>regression params</p>
+<p>m,b = np.polyfit(logFeatures, accuracy, 1)<br>
+regression = [m*x+b for x in logFeatures]</p>
+<p>plt.plot(logFeatures, accuracy)<br>
+plt.plot(logFeatures, regression)<br>
+plt.show()</p>
+<p>==</p>
+<p>Also, may want to check out the following page about doing the same things in python as R:<br>
+<a href="http://slendrmeans.wordpress.com/will-it-python/" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-comment&#39;, &#39;http://slendrmeans.wordpress.com/will-it-python/&#39;, &#39;http://slendrmeans.wordpress.com/will-it-python/&#39;);" rel="nofollow">http://slendrmeans.wordpress.com/will-it-python/</a></p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=11#respond" onclick="return addComment.moveForm( &quot;div-comment-11&quot;, &quot;11&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to tom m">Reply</a></div>
+				</div>
+		<ul class="children">
+		<li class="comment byuser comment-author-andy bypostauthor even depth-2" id="comment-12">
+				<div id="div-comment-12" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/7c45718582f30e0c0a2bc1975066c019.png" srcset="http://1.gravatar.com/avatar/7c45718582f30e0c0a2bc1975066c019?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn">andy</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-12">
+			February 18, 2013 at 10:49 pm</a>		</div>
+
+		<p>Tom — thank you very much for that code! I’ve been trying to learn more about numpy/matplotlib/etc. and that’s a great example.</p>
+<p>The “Will it Python?” series looks excellent too — I’ll definitely check that out and see what I can do from there.</p>
+<p>Thanks for the comment!</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=12#respond" onclick="return addComment.moveForm( &quot;div-comment-12&quot;, &quot;12&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to andy">Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="pingback odd alt thread-odd thread-alt depth-1" id="comment-15">
+				<div id="div-comment-15" class="comment-body">
+				<div class="comment-author vcard">
+						<cite class="fn"><a href="http://schoolofdata.org/2013/02/20/data-roundup-february-20/" rel="external nofollow" class="url">School of Data</a></cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-15">
+			February 20, 2013 at 5:03 pm</a>		</div>
+
+		<p>[…] how to do sentiment analysis in Python. Sentiment analysis is a natural language processing technique that has been growing in popularity […]</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=15#respond" onclick="return addComment.moveForm( &quot;div-comment-15&quot;, &quot;15&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to School of Data">Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 parent" id="comment-17">
+				<div id="div-comment-17" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/565c9c74f6428fca258bb0b93a127697.png" srcset="http://2.gravatar.com/avatar/565c9c74f6428fca258bb0b93a127697?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn">Neil Harding</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-17">
+			February 24, 2013 at 6:02 am</a>		</div>
+
+		<p>One thing you can do in a sentiment analysis to improve the results is to take into account negator words, like not. So if a review says the food was not good, the presence of the good would weigh the result as positive. You can fix this by preprocessing and change all the words that follow not in the same sentence to not_, so the review would read the food was not not_good which should improve the accuracy.</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=17#respond" onclick="return addComment.moveForm( &quot;div-comment-17&quot;, &quot;17&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to Neil Harding">Reply</a></div>
+				</div>
+		<ul class="children">
+		<li class="comment byuser comment-author-andy bypostauthor odd alt depth-2" id="comment-26">
+				<div id="div-comment-26" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/7c45718582f30e0c0a2bc1975066c019.png" srcset="http://1.gravatar.com/avatar/7c45718582f30e0c0a2bc1975066c019?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn">andy</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-26">
+			March 2, 2013 at 2:15 am</a>		</div>
+
+		<p>Neil —</p>
+<p>Thank you for the suggestion! I’m going to write a followup post improving on my methods and I’ll incorporate that.</p>
+<p>Thanks for the comment!</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=26#respond" onclick="return addComment.moveForm( &quot;div-comment-26&quot;, &quot;26&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to andy">Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 parent" id="comment-35">
+				<div id="div-comment-35" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/cfddf8805f4acfbb3242c237c57ac583.jpeg" srcset="http://0.gravatar.com/avatar/cfddf8805f4acfbb3242c237c57ac583?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn">Berto</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-35">
+			March 15, 2013 at 9:33 am</a>		</div>
+
+		<p>Wow, awesome post! <img draggable="false" class="emoji" alt="🙂" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/1f642.svg"> Thank you!</p>
+<p>Just in case you are interested, I built a simple sentiment analysis demo last year (using third party libraries):</p>
+<p><a href="http://sentiment.dev.ber.to/" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-comment&#39;, &#39;http://sentiment.dev.ber.to/&#39;, &#39;http://sentiment.dev.ber.to/&#39;);" rel="nofollow">http://sentiment.dev.ber.to/</a></p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=35#respond" onclick="return addComment.moveForm( &quot;div-comment-35&quot;, &quot;35&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to Berto">Reply</a></div>
+				</div>
+		<ul class="children">
+		<li class="comment byuser comment-author-andy bypostauthor odd alt depth-2 parent" id="comment-39">
+				<div id="div-comment-39" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/7c45718582f30e0c0a2bc1975066c019.png" srcset="http://1.gravatar.com/avatar/7c45718582f30e0c0a2bc1975066c019?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn">andy</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-39">
+			March 15, 2013 at 6:22 pm</a>		</div>
+
+		<p>Hi Berto —</p>
+<p>Thanks for the comment! That demo looks fantastic — I’m definitely going to try working more on visualization and d3 seems like a great place to start.</p>
+<p>EDIT: And thank you for putting your code up on <a href="https://github.com/bertez/Popcornjs-sentiment-tracker" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-comment&#39;, &#39;https://github.com/bertez/Popcornjs-sentiment-tracker&#39;, &#39;GitHub&#39;);" rel="nofollow">GitHub</a>! I’m going to dig into your code and see what I can learn.</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=39#respond" onclick="return addComment.moveForm( &quot;div-comment-39&quot;, &quot;39&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to andy">Reply</a></div>
+				</div>
+		<ul class="children">
+		<li class="comment even depth-3" id="comment-42">
+				<div id="div-comment-42" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/cfddf8805f4acfbb3242c237c57ac583.jpeg" srcset="http://0.gravatar.com/avatar/cfddf8805f4acfbb3242c237c57ac583?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn">Berto</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-42">
+			March 15, 2013 at 11:03 pm</a>		</div>
+
+		<p>Do not expect anything special <img draggable="false" class="emoji" alt="🙂" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/1f642.svg"> As I said it is just a simple demo using third party libraries, more focused in the visualization than the sentiment analysis.</p>
+<p>But glad you liked it!</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=42#respond" onclick="return addComment.moveForm( &quot;div-comment-42&quot;, &quot;42&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to Berto">Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 parent" id="comment-36">
+				<div id="div-comment-36" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/b017091a9a55d1c2a94fb8bad5f254c8.png" srcset="http://2.gravatar.com/avatar/b017091a9a55d1c2a94fb8bad5f254c8?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn">David</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-36">
+			March 15, 2013 at 10:40 am</a>		</div>
+
+		<p>You’re a boss. Just saying. Nice work!</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=36#respond" onclick="return addComment.moveForm( &quot;div-comment-36&quot;, &quot;36&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to David">Reply</a></div>
+				</div>
+		<ul class="children">
+		<li class="comment byuser comment-author-andy bypostauthor even depth-2" id="comment-40">
+				<div id="div-comment-40" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/7c45718582f30e0c0a2bc1975066c019.png" srcset="http://1.gravatar.com/avatar/7c45718582f30e0c0a2bc1975066c019?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn">andy</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-40">
+			March 15, 2013 at 6:23 pm</a>		</div>
+
+		<p>Thanks David!</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=40#respond" onclick="return addComment.moveForm( &quot;div-comment-40&quot;, &quot;40&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to andy">Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 parent" id="comment-37">
+				<div id="div-comment-37" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/29eeb66d9433caf5d6301adcc4e77fd2.png" srcset="http://2.gravatar.com/avatar/29eeb66d9433caf5d6301adcc4e77fd2?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn"><a href="http://agentile.com/" rel="external nofollow" class="url">Anthony Gentile</a></cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-37">
+			March 15, 2013 at 1:19 pm</a>		</div>
+
+		<p>I’m a master’s student at UW in computational linguistics and my thesis involves sentiment analysis. Something you will probably find if you read more literature about the subject is the popular use of Support Vector Machines over NB, MaxEnt, etc. Also, there is some new trends to use deep learning approaches, which leverage things like stacked denoising autoencoders. My particular study is in domain adaptation for sentiment analysis, but if you want to chat more, just shoot me an e-mail. Cheers.</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=37#respond" onclick="return addComment.moveForm( &quot;div-comment-37&quot;, &quot;37&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to Anthony Gentile">Reply</a></div>
+				</div>
+		<ul class="children">
+		<li class="comment byuser comment-author-andy bypostauthor even depth-2" id="comment-41">
+				<div id="div-comment-41" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/7c45718582f30e0c0a2bc1975066c019.png" srcset="http://1.gravatar.com/avatar/7c45718582f30e0c0a2bc1975066c019?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn">andy</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-41">
+			March 15, 2013 at 6:38 pm</a>		</div>
+
+		<p>Hi Anthony –</p>
+<p>Thanks for the comment! I’ve definitely started to look into other classifiers (especially MaxEnt right now) but it’s tough work considering my limited math and probability/stats knowledge. I’m working on it though!</p>
+<p>I’ll definitely email you (and thanks for the offer!).</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=41#respond" onclick="return addComment.moveForm( &quot;div-comment-41&quot;, &quot;41&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to andy">Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="pingback odd alt thread-even depth-1" id="comment-38">
+				<div id="div-comment-38" class="comment-body">
+				<div class="comment-author vcard">
+						<cite class="fn"><a href="http://jeredhiggins.wordpress.com/2013/03/15/sentiment-analysis-in-python/" rel="external nofollow" class="url">Interesting Reads</a></cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-38">
+			March 15, 2013 at 4:13 pm</a>		</div>
+
+		<p>[…] via Hacker News <a href="http://andybromberg.com/sentiment-analysis-python/" rel="nofollow">http://andybromberg.com/sentiment-analysis-python/</a> […]</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=38#respond" onclick="return addComment.moveForm( &quot;div-comment-38&quot;, &quot;38&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to Interesting Reads">Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 parent" id="comment-43">
+				<div id="div-comment-43" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/efd56b4fcb63e958f65692a4e551e87d.jpeg" srcset="http://2.gravatar.com/avatar/efd56b4fcb63e958f65692a4e551e87d?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn">Yordan</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-43">
+			March 16, 2013 at 1:23 pm</a>		</div>
+
+		<p>Great article! Summarises the basics of sentiment analysis in a very clear and simple way. I am a 4th year undergraduate doing my Honours Project on sentiment analysis from Twitter. I regret this post wasn’t around when I started it, hehe. Just a note: I believe you have a typo in your code snipper describing the find_best_words function – the first line, after the declaration.</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=43#respond" onclick="return addComment.moveForm( &quot;div-comment-43&quot;, &quot;43&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to Yordan">Reply</a></div>
+				</div>
+		<ul class="children">
+		<li class="comment byuser comment-author-andy bypostauthor odd alt depth-2" id="comment-44">
+				<div id="div-comment-44" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/7c45718582f30e0c0a2bc1975066c019.png" srcset="http://1.gravatar.com/avatar/7c45718582f30e0c0a2bc1975066c019?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn">andy</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-44">
+			March 16, 2013 at 9:57 pm</a>		</div>
+
+		<p>Yordan —</p>
+<p>Thank you for the comment and the compliment!</p>
+<p>And thanks for pointing out the error, I just fixed that.</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=44#respond" onclick="return addComment.moveForm( &quot;div-comment-44&quot;, &quot;44&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to andy">Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="pingback even thread-even depth-1" id="comment-56">
+				<div id="div-comment-56" class="comment-body">
+				<div class="comment-author vcard">
+						<cite class="fn"><a href="http://parasdoshi.com/2013/03/25/beginners-guide-sentiment-analysis-using-python-on-windows/" rel="external nofollow" class="url">Paras Doshi - Blog</a></cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-56">
+			March 25, 2013 at 1:03 pm</a>		</div>
+
+		<p>[…] Second Try: Sentiment Analysis in Python : Andy Bromberg (andybromberg.com) […]</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=56#respond" onclick="return addComment.moveForm( &quot;div-comment-56&quot;, &quot;56&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to Paras Doshi - Blog">Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 parent" id="comment-309">
+				<div id="div-comment-309" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/81f75fa0de7a2f913a4070f84fcb7b2e.png" srcset="http://2.gravatar.com/avatar/81f75fa0de7a2f913a4070f84fcb7b2e?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn">Aswin Roy</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-309">
+			July 10, 2013 at 5:40 am</a>		</div>
+
+		<p>Hello Andy,</p>
+<p>First of all, great tutorial! <img draggable="false" class="emoji" alt="🙂" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/1f642.svg"></p>
+<p>But, when I’m running the code, I get this error:</p>
+<p>posWords = [feature_select(posWords), ‘pos’]</p>
+<p>NameError: name ‘feature_select’ is not defined</p>
+<p>Would you know why?</p>
+<p>Thanks! <img draggable="false" class="emoji" alt="🙂" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/1f642.svg"></p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=309#respond" onclick="return addComment.moveForm( &quot;div-comment-309&quot;, &quot;309&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to Aswin Roy">Reply</a></div>
+				</div>
+		<ul class="children">
+		<li class="comment byuser comment-author-andy bypostauthor even depth-2" id="comment-4149">
+				<div id="div-comment-4149" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/7c45718582f30e0c0a2bc1975066c019.png" srcset="http://1.gravatar.com/avatar/7c45718582f30e0c0a2bc1975066c019?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn">andy</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-4149">
+			January 6, 2014 at 10:09 pm</a>		</div>
+
+		<p>Hi Aswin —</p>
+<p>Thanks for the comment! Are you still running that inside of the evaluate features function and passing in a feature selection mechanism as a parameter? If you took that code out of the function you’ll be missing the feature_select function.</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=4149#respond" onclick="return addComment.moveForm( &quot;div-comment-4149&quot;, &quot;4149&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to andy">Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 parent" id="comment-342">
+				<div id="div-comment-342" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/c5e6a1b498dc318940bdc415f6c320bb.png" srcset="http://0.gravatar.com/avatar/c5e6a1b498dc318940bdc415f6c320bb?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn"><a href="http://gabegaster.com/" rel="external nofollow" class="url">gabe</a></cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-342">
+			July 26, 2013 at 5:42 pm</a>		</div>
+
+		<p>Nice post! Thanks!</p>
+<p>Here’s a comment to shorten the code:</p>
+<p>Instead of    list(itertools.chain(*posWords))</p>
+<p>you can just use extend instead of append in the for-loops. Then you don’t need the the list(itertools.chain…) business.</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=342#respond" onclick="return addComment.moveForm( &quot;div-comment-342&quot;, &quot;342&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to gabe">Reply</a></div>
+				</div>
+		<ul class="children">
+		<li class="comment byuser comment-author-andy bypostauthor even depth-2" id="comment-4150">
+				<div id="div-comment-4150" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/7c45718582f30e0c0a2bc1975066c019.png" srcset="http://1.gravatar.com/avatar/7c45718582f30e0c0a2bc1975066c019?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn">andy</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-4150">
+			January 6, 2014 at 10:09 pm</a>		</div>
+
+		<p>Thanks for the heads up, Gabe! I’ll definitely check that out next time.</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=4150#respond" onclick="return addComment.moveForm( &quot;div-comment-4150&quot;, &quot;4150&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to andy">Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 parent" id="comment-455">
+				<div id="div-comment-455" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/3331a00ce4809f2b6ff771776472e685.png" srcset="http://0.gravatar.com/avatar/3331a00ce4809f2b6ff771776472e685?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn">Paul</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-455">
+			September 8, 2013 at 7:39 am</a>		</div>
+
+		<p>That’s a great SA tutorial.  Thank you for taking the time to post such a detailed article.  I (and I imagine anyone reading this) appreciate it very much.</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=455#respond" onclick="return addComment.moveForm( &quot;div-comment-455&quot;, &quot;455&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to Paul">Reply</a></div>
+				</div>
+		<ul class="children">
+		<li class="comment byuser comment-author-andy bypostauthor even depth-2" id="comment-4151">
+				<div id="div-comment-4151" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/7c45718582f30e0c0a2bc1975066c019.png" srcset="http://1.gravatar.com/avatar/7c45718582f30e0c0a2bc1975066c019?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn">andy</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-4151">
+			January 6, 2014 at 10:10 pm</a>		</div>
+
+		<p>Thanks for the comment, Paul!</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=4151#respond" onclick="return addComment.moveForm( &quot;div-comment-4151&quot;, &quot;4151&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to andy">Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 parent" id="comment-1028">
+				<div id="div-comment-1028" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/5a9b39bf5ea587f9f1244b85b5177507.png" srcset="http://2.gravatar.com/avatar/5a9b39bf5ea587f9f1244b85b5177507?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn"><a href="http://www.linkedin.com/pub/brian-deely/2a/766/801" rel="external nofollow" class="url">Brian Deely</a></cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-1028">
+			November 24, 2013 at 9:23 am</a>		</div>
+
+		<p>Andy, you have a great little blog going. I’ve been learning this stuff as well and came across your blog; nice to see how people approach each problem.</p>
+<p>I noticed at the end of this post, you reverted back to using R! Not that there’s anything wrong with that (I like it, too), but I thought you might like to know about some of the great graphing packages in python:<br>
+Seaborn –<br>
+<a href="https://github.com/mwaskom/seaborn" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-comment&#39;, &#39;https://github.com/mwaskom/seaborn&#39;, &#39;https://github.com/mwaskom/seaborn&#39;);" rel="nofollow">https://github.com/mwaskom/seaborn</a><br>
+Matplotlib –<br>
+<a href="http://matplotlib.org/" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-comment&#39;, &#39;http://matplotlib.org/&#39;, &#39;http://matplotlib.org/&#39;);" rel="nofollow">http://matplotlib.org/</a></p>
+<p>There is also a good python package that integrates with R scripting, which might help package your work all within one language:<br>
+<a href="http://rpy.sourceforge.net/" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-comment&#39;, &#39;http://rpy.sourceforge.net/&#39;, &#39;http://rpy.sourceforge.net/&#39;);" rel="nofollow">http://rpy.sourceforge.net/</a></p>
+<p>As a side, I saw that you’re thinking about what to major in. I always say follow your passions, but I will also admit that a lot of my friends that did management/engineering did some pretty cool stuff <img draggable="false" class="emoji" alt="😀" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/1f600.svg"></p>
+<p>Best of luck in your learning!</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=1028#respond" onclick="return addComment.moveForm( &quot;div-comment-1028&quot;, &quot;1028&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to Brian Deely">Reply</a></div>
+				</div>
+		<ul class="children">
+		<li class="comment byuser comment-author-andy bypostauthor even depth-2" id="comment-4152">
+				<div id="div-comment-4152" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/7c45718582f30e0c0a2bc1975066c019.png" srcset="http://1.gravatar.com/avatar/7c45718582f30e0c0a2bc1975066c019?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn">andy</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-4152">
+			January 6, 2014 at 10:12 pm</a>		</div>
+
+		<p>Thanks for all that info, Brian! I really appreciate it. I’ve been starting to poke around in matplotlib recently and I have to say I still like ggplot2 more, but it’s always good to know my options.</p>
+<p>I think I’ve settled on a math major, but I definitely plan on taking classes in as many disciplines as possible.</p>
+<p>Thanks again for the comment!</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=4152#respond" onclick="return addComment.moveForm( &quot;div-comment-4152&quot;, &quot;4152&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to andy">Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 parent" id="comment-7023">
+				<div id="div-comment-7023" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/48d8028ba3a36ef5fd6289e304251dc1.jpeg" srcset="http://1.gravatar.com/avatar/48d8028ba3a36ef5fd6289e304251dc1?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn"><a href="http://sujitpal.blogspot.com/" rel="external nofollow" class="url">Sujit Pal</a></cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-7023">
+			January 12, 2014 at 6:03 am</a>		</div>
+
+		<p>Thanks for this article, it helped me do something similar, ie, compute sentiment for some Yelp review data from a Kaggle comp using classification. My implementation is also in Python but I’ve used scikits-learn, but otherwise its quite similar. I especially liked the part about feature selection, hadn’t thought of doing that.</p>
+<p>My implementation is described here:<br>
+<a href="http://sujitpal.blogspot.com/2014/01/sentiment-analysis-using-classification.html" onclick="__gaTracker(&#39;send&#39;, &#39;event&#39;, &#39;outbound-comment&#39;, &#39;http://sujitpal.blogspot.com/2014/01/sentiment-analysis-using-classification.html&#39;, &#39;http://sujitpal.blogspot.com/2014/01/sentiment-analysis-using-classification.html&#39;);" rel="nofollow">http://sujitpal.blogspot.com/2014/01/sentiment-analysis-using-classification.html</a></p>
+<p>-sujit</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=7023#respond" onclick="return addComment.moveForm( &quot;div-comment-7023&quot;, &quot;7023&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to Sujit Pal">Reply</a></div>
+				</div>
+		<ul class="children">
+		<li class="comment byuser comment-author-andy bypostauthor even depth-2" id="comment-7156">
+				<div id="div-comment-7156" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt="" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/7c45718582f30e0c0a2bc1975066c019.png" srcset="http://1.gravatar.com/avatar/7c45718582f30e0c0a2bc1975066c019?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">			<cite class="fn">andy</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://andybromberg.com/sentiment-analysis-python/#comment-7156">
+			January 12, 2014 at 6:29 pm</a>		</div>
+
+		<p>Thanks for mentioning me in your post, Sujit! I really like your implementation and use of scikit-learn.</p>
+<p>Andy</p>
+
+		<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/?replytocom=7156#respond" onclick="return addComment.moveForm( &quot;div-comment-7156&quot;, &quot;7156&quot;, &quot;respond&quot;, &quot;49&quot; )" aria-label="Reply to andy">Reply</a></div>
+				</div>
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+  	</ol>
+
+  	<div class="navigation">
+  		<div class="alignleft"></div>
+  		<div class="alignright"></div>
+  	</div>
+   
+
+  
+
+  
+<div id="respond">  
+  
+
+<form action="http://andybromberg.com/wp-comments-post.php" method="post" id="commentform">
+
+  <div class="leaveComment">
+    
+    <fieldset>
+      <legend><span>Leave a Comment</span></legend>
+      <div class="commentForm">
+      
+                        <div class="commentAuthorInfo">
+            <label>Name: <em>Required</em> <input type="text" name="author" id="author" value=""></label>
+            <label>Email: <em>Required, not published</em> <input type="text" name="email" id="email" value=""></label>
+            <label>Homepage: <input type="text" name="url" id="url" value=""></label>
+          </div>
+        <label>Comment:
+        <textarea name="comment" id="comment" cols="50" rows="20"></textarea></label>
+      
+        <div id="cancel-comment-reply">
+        	<small><a rel="nofollow" id="cancel-comment-reply-link" href="http://andybromberg.com/sentiment-analysis-python/#respond" style="display:none;">Cancel Reply</a></small>
+        </div>
+        <input type="submit" value="Post Comment"> <input type="hidden" name="comment_post_ID" value="49">
+      </div>
+    </fieldset>
+  </div>
+  <input type="hidden" name="comment_post_ID" value="49" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+
+<p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="6921e658d2"></p><p style="display: none;"></p>
+<input type="hidden" id="ak_js" name="ak_js" value="1527747144692"></form>
+</div>
+
+
+  </div>
+
+  <div class="pageNav">
+    <div class="prev"><a href="http://andybromberg.com/sentiment-analysis/" rel="prev">« Previous Post</a></div>
+    <div class="next"><a href="http://andybromberg.com/credit-cards/" rel="next">Next Post »</a></div>
+  </div>
+
+
+	
+</div>
+
+
+</div>
+
+<div id="footer">
+
+  <!-- Footer Links -->
+  
+  <h5>Elsewhere</h5>
+  <ul class="elsewhere">
+    <li><a href="http://linkedin.com/in/andybromberg">LinkedIn</a></li>
+    <li><a href="http://github.com/abromberg">GitHub</a></li>
+  </ul>
+
+  <!-- Search Field -->
+  
+  <div class="footerContent">
+    <form method="get" id="searchform" action="http://andybromberg.com/">
+      <div id="search">
+        <input type="text" value="" name="s" id="s">
+        <input type="submit" id="searchsubmit" value="Search">
+      </div>
+    </form>
+    
+    
+    <p>© Andy Bromberg. Powered by <a href="http://wordpress.org/">WordPress</a> and <a href="http://jimbarraud.com/manifest/">Manifest</a></p>
+  </div>
+</div>
+
+<script type="text/javascript" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/form.js"></script>
+<script type="text/javascript" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/comment-reply.min.js"></script>
+<script type="text/javascript" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/wp-embed.min.js"></script>
+<script type="text/javascript" src="./Second Try_ Sentiment Analysis in Python _ Andy Bromberg_files/markdown.min.js"></script>
+
+
+
+
+<!-- Dynamic page generated in 0.833 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2018-05-31 05:08:58 -->
+
+<!-- Compression = gzip --></body></html>

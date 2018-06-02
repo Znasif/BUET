@@ -13,7 +13,7 @@ from skimage.filters import threshold_otsu
 import cv2
 
 # "load image data"
-Img_Original = cv2.imread('Maps/plot.jpg', 0)  # Gray image, rgb images need pre-conversion
+Img_Original = cv2.imread('Maps/port.jpg', 0)  # Gray image, rgb images need pre-conversion
 
 # "Convert gray images to binary images using Otsu's method"
 

@@ -1,14 +1,23 @@
 import cv2
+import matplotlib.pyplot as plt
 import numpy as np
+from skimage import measure, morphology, filters
 
-a=cv2.imread('Maps/plot.bmp',0)
-b=cv2.imread('Maps/nums.bmp',0)
+trial = cv2.imread('trial.jpg')
+plt.imshow(trial)
+plt.show()
 
-p,q=np.shape(a)
+trial_erode = morphology.binary_erosion(trial, selem=morphology.disk(7))
+plt.imshow(trial_erode)
+plt.show()
 
-new=np.full((p,q,3),(255,255,255))
 
-new[a==0]=(255,255,0)
-new[b==0]=(255,0,255)
 
-cv2.imwrite('Maps/see.bmp',new)
+
+
+
+
+
+
+
+
