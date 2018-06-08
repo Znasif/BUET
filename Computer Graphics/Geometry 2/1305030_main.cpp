@@ -364,7 +364,7 @@ int decide_point(int f, int s, int i)
 void make_monotone()
 {
     //FILE* fi = freopen("1305030_out.txt","r",stdin);
-    FILE* fi = freopen("1305030_input5.txt","r",stdin);
+    FILE* fi = freopen("1305030_outmany1.txt","r",stdin);
     //FILE* fi = freopen("1305030_mono.txt","r",stdin);
     int cnt=0;
     //cout.precision(12);
