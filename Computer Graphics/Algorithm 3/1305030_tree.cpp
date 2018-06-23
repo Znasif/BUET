@@ -4,6 +4,8 @@
 #define AVL_TREE 1
 #define DEBUG 1
 #define dbg(s) if(DEBUG) fout<<endl<<"DEBUG : "<<s<<endl
+#define cnow() chrono::high_resolution_clock::now()
+#define ptime() cout<<chrono::duration_cast<chrono::microseconds>(en - st).count()<<endl
 
 using namespace std;
 
@@ -85,11 +87,13 @@ typedef tuple<node*, node*> nodes;
 
 struct tree{
     node* root = nullptr;
+    int members = 0;
     int status;
 
     tree(int key, int status){
         this->status = status;
         root = new node(key);
+        members++;
     }
 
     void print(){
@@ -288,7 +292,7 @@ struct tree{
     bool look(int key){
         if(status == SPLAY_TREE){
             root = splay(root, key);
-            if(root->key != key) return false;
+            if(root && root->key != key) return false;
             return true;
         }
         else{
@@ -316,14 +320,16 @@ struct tree{
             temp = avl_insert(root, temp);
             balanceHeight(temp);
         }
+        members++;
     }
 
     void cut(int key){
         if(status == SPLAY_TREE){
             root = splay(root, key);
-            if(root->key == key){
+            if(root && root->key == key){
                 root = join(root->left, root->right);
                 if(root) root->parent = nullptr;
+                members--;
             }
         }
         else{
@@ -331,6 +337,7 @@ struct tree{
             if(temp && temp->key == key){
                 avl_delete(temp);
                 balanceHeight(temp->parent);
+                members--;
             }
         }
     }
@@ -347,26 +354,62 @@ int main(){
     fout.open(fl, ofstream::out);
     freopen("1305030_input.txt","r",stdin);
     cin>>n>>i;
+
+    long long int insert_time = 0, delete_time = 0, search_time = 0;
+
+    auto st = cnow();
     tree* tr = new tree(i, c);
+
     fout<<"new : "<<i<<endl;
     tr->print();
+    int n_ = n;
+
     while(n>0){
         cin>>c>>i;
         if(c==0){
             fout<<endl<<"insert : ";
+            if(tr->status == SPLAY_TREE) st = cnow();
             tr->add(i);
+            if(tr->status == SPLAY_TREE){
+                auto en = cnow();
+                insert_time += chrono::duration_cast<chrono::nanoseconds>(en - st).count();
+            }
         }
         else if(c==1){
             fout<<endl<<"search : ";
+            if(tr->status == SPLAY_TREE) st = cnow();
             tr->look(i);
+            if(tr->status == SPLAY_TREE){
+                auto en = cnow();
+                search_time += chrono::duration_cast<chrono::nanoseconds>(en - st).count();
+            }
         }
         else if(c==2){
             fout<<endl<<"delete : ";
+            if(tr->status == SPLAY_TREE) st = cnow();
             tr->cut(i);
+            if(tr->status == SPLAY_TREE){
+                auto en = cnow();
+                delete_time += chrono::duration_cast<chrono::nanoseconds>(en - st).count();
+            }
         }
         fout<<i<<endl;
         n--;
         tr->print();
+    }
+    if(tr->status == AVL_TREE){
+        auto en = cnow();
+        insert_time += chrono::duration_cast<chrono::microseconds>(en - st).count();
+        cout << "*******TIME********"<<endl;
+        cout << insert_time<<endl;
+        cout << "*******HEIGHT********"<<endl;
+        cout << tr->getHeight(tr->root) <<"\nN: "<<tr->members<<endl;
+    }
+    if(tr->status == SPLAY_TREE){
+        cout << "*******Amortized********"<<endl;
+        cout << "Insertion time: " << (insert_time) << endl;
+        cout << "Deletion time: " << (delete_time) << endl;
+        cout << "Search time: " << (search_time) << endl;
     }
     fclose(stdin);
 }
