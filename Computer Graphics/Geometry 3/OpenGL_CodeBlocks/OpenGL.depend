@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1530192568 source:e:\onedrive\codes\buet codes\computer graphics\geomtry 3\opengl_codeblocks\main.cpp
+	<vector>
+	<map>
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<iostream>
+	<fstream>
+	<windows.h>
+	<algorithm>
+	<time.h>
+	<glut.h>
+
+1392007564 e:\onedrive\codes\buet codes\computer graphics\geomtry 3\opengl_codeblocks\opengl\include\glut.h
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+

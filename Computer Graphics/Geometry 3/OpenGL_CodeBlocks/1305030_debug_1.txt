@@ -1,0 +1,100 @@
+Inside First Triangle
+
+-----------------
+ X : -2.5 Y : 5
+point is strictly interior to
+***** Triangle ******
+Symbolic -2
+Symbolic -1
+ X : 5 Y : 10
+*********************
+Setting triangles
+-2 * -1
+-1 * 0
+0 * -2
+
+-----------------
+ X : 5 Y : 0
+point is strictly interior to
+***** Triangle ******
+Symbolic -2
+Symbolic -1
+ X : -2.5 Y : 5
+*********************
+Setting triangles
+-2 * -1
+-1 * 1
+Inside Circle Check : -1 1 2
+1 * -2
+Inside Circle Check : 1 -2 2
+
+-----------------
+ X : 0 Y : 10
+point is strictly interior to
+***** Triangle ******
+ X : 5 Y : 10
+Symbolic -2
+ X : -2.5 Y : 5
+*********************
+Setting triangles
+0 * -2
+-2 * 1
+Inside Circle Check : -2 1 3
+1 * 0
+Inside Circle Check : 1 0 3
+
+-----------------
+ X : 0 Y : 0
+point is strictly interior to
+***** Triangle ******
+Symbolic -2
+Symbolic -1
+ X : 5 Y : 0
+*********************
+Setting triangles
+-2 * -1
+-1 * 2
+Inside Circle Check : -1 2 4
+2 * -2
+Inside Circle Check : 2 -2 4
+flip :2 & -2 into -> 4 & 1legalize : 1
+1 * 2
+Inside Circle Check : 1 2 4
+1 * -2
+Inside Circle Check : 1 -2 4
+
+-----------------
+ X : 2.5 Y : 5
+point is strictly interior to
+***** Triangle ******
+Symbolic -1
+ X : 5 Y : 10
+ X : -2.5 Y : 5
+*********************
+Setting triangles
+-1 * 0
+0 * 1
+Inside Circle Check : 0 1 5
+Check inside Circle : 3
+legalize : 3
+3 * 0
+Inside Circle Check : 3 0 5
+3 * 1
+Inside Circle Check : 3 1 5
+don't flip :3 & 1 into -> 5 & -21 * -1
+Inside Circle Check : 1 -1 5
+flip :1 & -1 into -> 5 & 2legalize : 2
+2 * 1
+Inside Circle Check : 2 1 5
+Check inside Circle : 4
+legalize : 4
+4 * 2
+Inside Circle Check : 4 2 5
+4 * 1
+Inside Circle Check : 4 1 5
+2 * -1
+Inside Circle Check : 2 -1 5
+ooooooooo 0 3 5
+ooooooooo 3 1 5
+ooooooooo 4 2 5
+ooooooooo 1 4 5
