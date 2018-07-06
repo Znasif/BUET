@@ -132,8 +132,21 @@ int compareNode(Point a, Point b, int d){
     return 2;
 }
 
-bool compareRange(Point a, Point b, int key){
+bool inRange(query q, Point r){
+    if(q.a.x<=r.x && q.b.x>=r.x && q.a.y<=r.y && q.b.y>=r.y){
+        return true;
+    }
+    return false;
+}
 
+bool compareRange(query q, query r){
+    if(q.a.x>r.b.x || r.a.x>q.b.x) return false;
+    if(q.a.y>r.b.y || r.a.y>q.b.y) return false;
+    return true;
+}
+
+bool completelyIn(query q, query r){
+    return inRange(q, r.a) && inRange(q, r.b);
 }
 
 struct tree{
@@ -156,6 +169,42 @@ struct tree{
             temp->right = new node();
             temp->right->leaf = true;
             temp->right->key = v->key;
+        }
+    }
+
+    void reportSub(node* v){
+        if(v == nullptr) return;
+        if(v->leaf){
+            cout<<"("<<A[v->key].x<<" , "<<A[v->key].y<<")";
+            members++;
+        }
+        reportSub(v->left);
+        reportSub(v->right);
+    }
+
+    void searchRange(node* v, query r, query q, int d){
+        if(v == nullptr) return;
+        if(v && v->leaf && inRange(q, A[v->key])){
+            cout<<"("<<A[v->key].x<<" , "<<A[v->key].y<<")";
+            members++;
+            return;
+        }
+        query p1 = r, p2 = r;
+        if(d%2){
+            p1.b.y = A[v->key].y;
+            p2.a.y = A[v->key].y;
+        }
+        else{
+            p1.b.x = A[v->key].x;
+            p2.a.x = A[v->key].x;
+        }
+        if(completelyIn(q, p1)) reportSub(v->left);
+        else if(compareRange(q, p1)){
+            searchRange(v->left, p1, q, d+1);
+        }
+        if(completelyIn(q, p2)) reportSub(v->right);
+        else if(compareRange(q, p2)){
+            searchRange(v->right, p2, q, d+1);
         }
     }
 
@@ -187,7 +236,6 @@ struct tree{
             dbg("("<<i<<", "<<i<<")"<<"("<<j<<", "<<j<<")"<<endl);
             ret->key = B[i].idx;
             dbg(i<<endl);
-            members++;
             populate_leaf(ret);
             ret->right = build(j, j, d+1);
             ret->right->parent = ret;
@@ -197,7 +245,6 @@ struct tree{
         dbg("("<<i<<", "<<mid-1<<")"<<"("<<mid+1<<", "<<j<<")"<<endl);
         ret->key = B[mid].idx;
         dbg(mid<<endl);
-        members++;
         ret->left = build(i, mid-1, d+1);
         ret->left->parent = ret;
         populate_leaf(ret);
@@ -218,7 +265,18 @@ int main(){
         A.push_back(a);
         B.push_back(a);
     }
+
+    tree* tr = new tree();
+    tr->print();
+
+    query plane;
+    plane.a.x = -INFINITY;
+    plane.a.y = -INFINITY;
+    plane.b.x = INFINITY;
+    plane.b.y = INFINITY;
+
     fin>>q;
+
     for(int i=0; i<q; i++){
         char p;
         fin>>p;
@@ -228,6 +286,9 @@ int main(){
             fin>>r.a.x>>r.a.y;
             fin>>r.b.x>>r.b.y;
             Q.push_back(r);
+            tr->searchRange(tr->root, plane, r, 0);
+            cout<<endl<<tr->members<<endl;
+            tr->members = 0;
         }
         else{
             r.type = 1;
@@ -235,8 +296,6 @@ int main(){
             Q.push_back(r);
         }
     }
-    tree* tr = new tree();
-    tr->print();
     dbg("\n*********POINTS********\n");
     for(int i=0; i<n; i++) A[i].print();
     dbg("*********QUERIES********\n");

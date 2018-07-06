@@ -151,3 +151,10 @@ class Process:
 
         plots = Process.blurs(plots, 2)
         return plots, nums
+
+    @staticmethod
+    def find_disconnections():
+        """
+        Find points of contention where the edge terminates abruptly
+        :return:
+        """
