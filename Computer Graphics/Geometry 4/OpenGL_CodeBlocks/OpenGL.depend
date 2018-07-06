@@ -17,3 +17,25 @@
 	<GL/gl.h>
 	<GL/glu.h>
 
+1530863604 source:c:\users\administrator\documents\buet\computer graphics\geometry 4\opengl_codeblocks\main.cpp
+	"1305030_kd_tree.cpp"
+
+1530862974 c:\users\administrator\documents\buet\computer graphics\geometry 4\opengl_codeblocks\1305030_kd_tree.cpp
+	<vector>
+	<map>
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<iostream>
+	<fstream>
+	<windows.h>
+	<algorithm>
+	<time.h>
+	<glut.h>
+	<tuple>
+
+1530860038 c:\users\administrator\documents\buet\computer graphics\geometry 4\opengl_codeblocks\opengl\include\glut.h
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
