@@ -21,14 +21,23 @@ void drawAxes()
             glVertex3f(0,-500,0);
             glVertex3f(0, 500,0);
 
-            glVertex3f(0,0, 500);
-            glVertex3f(0,0,-500);
+            //glVertex3f(0,0, 500);
+            //glVertex3f(0,0,-500);
         }
         glEnd();
     }
 }
 
-int step = 0;
+int step = -1;
+
+void makeQuery(){
+    if(Q[step].type) return;
+    Q[step].print();
+    cout<<"Result : \n";
+    tr->searchRange(tr->root, plane, Q[step], 0);
+    cout<<endl<<tr->members<<endl;
+    tr->members = 0;
+}
 
 void specialKeyListener(int key, int x,int y)
 {
@@ -43,10 +52,12 @@ void specialKeyListener(int key, int x,int y)
     case GLUT_KEY_RIGHT:
         step += 1;
         step = step%q;
+        makeQuery();
         break;
     case GLUT_KEY_LEFT:
         step -= 1;
         if(step<0) step = q-1;
+        makeQuery();
         break;
     case GLUT_KEY_PAGE_UP:
         break;
@@ -91,13 +102,8 @@ void display()
     ****************************/
     //add objects
 
-
     glScalef(10,10,1);
-    glPointSize(3);
-    for(int i=0; i<q; i++){
-        glColor3f(1.0, 1.0, 0.0);
-        if(Q[i].type==0 && step==i) glRectd(Q[i].a.x, Q[i].a.y, Q[i].b.x, Q[i].b.y);
-    }
+
     for(int i=0; i<n; i++)       //print
     {
         glColor3f(1.0, 0.0, 0);
@@ -106,6 +112,14 @@ void display()
             glVertex3f(A[i].x,A[i].y,0);
         }
         glEnd();
+    }
+
+    drawAxes();
+
+    glPointSize(3);
+    for(int i=0; i<q; i++){
+        glColor3f(1.0, 1.0, 0.0);
+        if(Q[i].type==0 && step==i) glRectd(Q[i].a.x, Q[i].a.y, Q[i].b.x, Q[i].b.y);
     }
 
     //drawAxes();

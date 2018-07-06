@@ -232,7 +232,7 @@ struct tree{
         int mid;
         if(i==j){
             ret->key = B[j].idx;
-            dbg(i<<endl);
+            //dbg(i<<endl);
             populate_leaf(ret);
             return ret;
         }
@@ -243,18 +243,18 @@ struct tree{
             sort(B.begin()+i, B.begin()+j+1, compareByX);
         }
         if(i+1==j){
-            dbg("("<<i<<", "<<i<<")"<<"("<<j<<", "<<j<<")"<<endl);
+            //dbg("("<<i<<", "<<i<<")"<<"("<<j<<", "<<j<<")"<<endl);
             ret->key = B[i].idx;
-            dbg(i<<endl);
+            //dbg(i<<endl);
             populate_leaf(ret);
             ret->right = build(j, j, d+1);
             ret->right->parent = ret;
             return ret;
         }
         mid = (i+j)/2;
-        dbg("("<<i<<", "<<mid-1<<")"<<"("<<mid+1<<", "<<j<<")"<<endl);
+        //dbg("("<<i<<", "<<mid-1<<")"<<"("<<mid+1<<", "<<j<<")"<<endl);
         ret->key = B[mid].idx;
-        dbg(mid<<endl);
+        //dbg(mid<<endl);
         ret->left = build(i, mid-1, d+1);
         ret->left->parent = ret;
         populate_leaf(ret);
@@ -264,6 +264,8 @@ struct tree{
     }
 };
 
+tree* tr;
+query plane;
 
 void input(){
     fin>>n;
@@ -276,10 +278,9 @@ void input(){
         B.push_back(a);
     }
 
-    tree* tr = new tree();
+    tr = new tree();
     tr->print();
 
-    query plane;
     plane.a.x = -INFINITY;
     plane.a.y = -INFINITY;
     plane.b.x = INFINITY;
@@ -293,12 +294,9 @@ void input(){
         query r;
         if(p=='R'){
             r.type = 0;
-            fin>>r.a.x>>r.a.y;
-            fin>>r.b.x>>r.b.y;
+            fin>>r.a.x>>r.b.x;
+            fin>>r.a.y>>r.b.y;
             Q.push_back(r);
-            tr->searchRange(tr->root, plane, r, 0);
-            cout<<endl<<tr->members<<endl;
-            tr->members = 0;
         }
         else{
             r.type = 1;
@@ -309,5 +307,4 @@ void input(){
     dbg("\n*********POINTS********\n");
     for(int i=0; i<n; i++) A[i].print();
     dbg("*********QUERIES********\n");
-    for(int i=0; i<q; i++) Q[i].print();
 }
