@@ -36,7 +36,7 @@ struct Point{
 };
 
 struct query{
-    int type;
+    int type = 0;
     Point a, b;
     void print(){
         if(type==0){
@@ -132,21 +132,36 @@ struct node{
     }
 };
 
-int compareNode(Point a, Point b, int d){
-    if(compareByY(a, b) == compareByY(b, a)) return 1;
-    if(d%2){
-        if(compareByY(a, b)) return 0;
-        return 2;
-    }
-    if(compareByX(a, b)) return 0;
-    return 2;
-}
-
 bool inRange(query q, Point r){
     if(q.a.x<=r.x && q.b.x>=r.x && q.a.y<=r.y && q.b.y>=r.y){
         return true;
     }
     return false;
+}
+
+double distance(Point a, Point b){
+    return sqrt((a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y));
+}
+
+double distance(query q, Point r){
+    if(q.a.x<=r.x && q.b.x>=r.x) return min(abs(q.a.y-r.y), abs(q.b.y-r.y));
+    if(q.a.y<=r.y && q.b.y>=r.y) return min(abs(q.a.x-r.x), abs(q.b.x-r.x));
+    if(q.a.x>r.x && q.a.y>r.y) return distance(q.a, r);
+    if(q.b.x<r.x && q.b.y<r.y) return distance(q.b, r);
+    if(q.a.x>r.x && q.b.y<r.y){
+        Point a;
+        a.x = q.a.x;
+        a.y = q.b.y;
+        return distance(a, r);
+    }
+    if(q.b.x<r.x && q.a.y>r.y){
+        Point a;
+        a.x = q.b.x;
+        a.y = q.a.y;
+        return distance(a, r);
+    }
+    cout<<"Some Mistake"<<endl;
+    return -1;
 }
 
 bool compareRange(query q, query r){
@@ -161,29 +176,17 @@ bool completelyIn(query q, query r){
 
 struct tree{
     node* root = nullptr;
+    double near_len = INFINITY;
     int members = 0;
+    int near_point = -1;
 
     tree(){
         root = build(0, B.size()-1, 0);
     }
 
-    void populate_leaf(node* v){
-        if(v->left == nullptr){
-            v->left = new node();
-            v->left->leaf = true;
-            v->left->key = v->key;
-        }
-        else{
-            node* temp = v->left;
-            while(temp->right) temp = temp->right;
-            temp->right = new node();
-            temp->right->leaf = true;
-            temp->right->key = v->key;
-        }
-    }
-
     void reportSub(node* v){
         if(v == nullptr) return;
+        //cout<<v->key<<endl;
         if(v->leaf){
             cout<<"("<<A[v->key].x<<" , "<<A[v->key].y<<")";
             members++;
@@ -210,11 +213,39 @@ struct tree{
         }
         if(completelyIn(q, p1)) reportSub(v->left);
         else if(compareRange(q, p1)){
+            //if(v->left) cout<<v->left->key<<endl;
             searchRange(v->left, p1, q, d+1);
         }
         if(completelyIn(q, p2)) reportSub(v->right);
         else if(compareRange(q, p2)){
+            //if(v->right) cout<<v->right->key<<endl;
             searchRange(v->right, p2, q, d+1);
+        }
+    }
+
+    void nearest(node* v, query r, Point q, int d){
+        if(v == nullptr) return;
+        if(v && v->leaf && near_len>distance(q, A[v->key])){
+            near_len = distance(q, A[v->key]);
+            near_point = v->key;
+            return;
+        }
+        query p1 = r, p2 = r;
+        if(d%2){
+            p1.b.y = A[v->key].y;
+            p2.a.y = A[v->key].y;
+        }
+        else{
+            p1.b.x = A[v->key].x;
+            p2.a.x = A[v->key].x;
+        }
+        if(inRange(p1, q)){
+            nearest(v->left, p1, q, d+1);
+            if(v->right && near_len>distance(p2, q)) nearest(v->right, p2, q, d+1);
+        }
+        else{
+            nearest(v->right, p2, q, d+1);
+            if(v->left && near_len>=distance(p1, q)) nearest(v->left, p1, q, d+1);
         }
     }
 
@@ -233,7 +264,7 @@ struct tree{
         if(i==j){
             ret->key = B[j].idx;
             //dbg(i<<endl);
-            populate_leaf(ret);
+            ret->leaf = true;
             return ret;
         }
         else if(d%2){
@@ -242,22 +273,12 @@ struct tree{
         else{
             sort(B.begin()+i, B.begin()+j+1, compareByX);
         }
-        if(i+1==j){
-            //dbg("("<<i<<", "<<i<<")"<<"("<<j<<", "<<j<<")"<<endl);
-            ret->key = B[i].idx;
-            //dbg(i<<endl);
-            populate_leaf(ret);
-            ret->right = build(j, j, d+1);
-            ret->right->parent = ret;
-            return ret;
-        }
         mid = (i+j)/2;
         //dbg("("<<i<<", "<<mid-1<<")"<<"("<<mid+1<<", "<<j<<")"<<endl);
         ret->key = B[mid].idx;
         //dbg(mid<<endl);
-        ret->left = build(i, mid-1, d+1);
+        ret->left = build(i, mid, d+1);
         ret->left->parent = ret;
-        populate_leaf(ret);
         ret->right = build(mid+1, j, d+1);
         ret->right->parent = ret;
         return ret;
@@ -294,8 +315,8 @@ void input(){
         query r;
         if(p=='R'){
             r.type = 0;
-            fin>>r.a.x>>r.b.x;
-            fin>>r.a.y>>r.b.y;
+            fin>>r.a.x>>r.a.y;
+            fin>>r.b.x>>r.b.y;
             Q.push_back(r);
         }
         else{

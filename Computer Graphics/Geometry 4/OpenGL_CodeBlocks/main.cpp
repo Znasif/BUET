@@ -7,6 +7,36 @@ double cameraAngle;
 #define pi (2*acos(0.0))
 
 int drawaxes,draw1=1,draw2=1;
+double radius;
+
+void drawCircle(Point a)
+{
+    int i;
+    int segments = 100;
+    Point points[segments+1];
+    glColor3f(1, 1, 0);
+    //generate points
+    for(i=0;i<=segments;i++)
+    {
+        points[i].x=radius*cos(((double)i/(double)segments)*2*pi);
+        points[i].y=radius*sin(((double)i/(double)segments)*2*pi);
+    }
+    //draw segments using generated points
+    glPushMatrix();
+    {
+        glTranslatef(a.x,a.y,0);
+        for(i=0;i<segments;i++)
+        {
+            glBegin(GL_LINES);
+            {
+                glVertex3f(points[i].x,points[i].y,0);
+                glVertex3f(points[i+1].x,points[i+1].y,0);
+            }
+            glEnd();
+        }
+    }
+    glPopMatrix();
+}
 
 void drawAxes()
 {
@@ -31,9 +61,17 @@ void drawAxes()
 int step = -1;
 
 void makeQuery(){
-    if(Q[step].type) return;
-    Q[step].print();
     cout<<"Result : \n";
+    if(Q[step].type){
+        tr->nearest(tr->root, plane, Q[step].a, 0);
+        radius = tr->near_len;
+        cout<<tr->near_len;
+        A[tr->near_point].print();
+        tr->near_point = -1;
+        tr->near_len = INFINITY;
+        return;
+    }
+    Q[step].print();
     tr->searchRange(tr->root, plane, Q[step], 0);
     cout<<endl<<tr->members<<endl;
     tr->members = 0;
@@ -102,8 +140,8 @@ void display()
     ****************************/
     //add objects
 
-    glScalef(10,10,1);
-
+    glScalef(4,4,1);
+    glPointSize(3);
     for(int i=0; i<n; i++)       //print
     {
         glColor3f(1.0, 0.0, 0);
@@ -116,10 +154,18 @@ void display()
 
     drawAxes();
 
-    glPointSize(3);
     for(int i=0; i<q; i++){
         glColor3f(1.0, 1.0, 0.0);
         if(Q[i].type==0 && step==i) glRectd(Q[i].a.x, Q[i].a.y, Q[i].b.x, Q[i].b.y);
+        if(Q[i].type && step==i){
+            glColor3f(0, 1, 0);
+            glBegin(GL_POINTS);
+            {
+                glVertex3f(Q[i].a.x,Q[i].a.y,0);
+            }
+            glEnd();
+            drawCircle(Q[i].a);
+        }
     }
 
     //drawAxes();
