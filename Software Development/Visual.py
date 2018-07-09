@@ -13,6 +13,8 @@ class Visual:
 
     in_folder = "Maps/"
     out_folder = "Extracted/"
+    image = None
+    clicks = []
 
     @staticmethod
     def image_open(title, flag=0):
@@ -26,6 +28,7 @@ class Visual:
         img = cv2.imread(Visual.in_folder+title, flag)
         # cv2.imshow(Visual.in_folder+title, img)
         # cv2.waitKey()
+        Visual.image = img
         return img
 
     @staticmethod
@@ -37,6 +40,7 @@ class Visual:
         :param img: numpy array to write
         :return: NIL
         """
+        Visual.image = img
         cv2.imwrite(Visual.out_folder+title.split(".")[0]+".tif", img)
 
     @staticmethod
@@ -52,7 +56,20 @@ class Visual:
         plt.imshow(image, cmap=a_map)
         plt.title(title)
         plt.axis('off')
+        Visual.image = image
         plt.show()
+
+    @staticmethod
+    def show(title, image):
+        """
+        Show image in new window
+
+        :param title: Title of image
+        :param image: the numpy array to represent
+        :return: NIL
+        """
+        Visual.image = image
+        cv2.imshow(title, Visual.image)
 
     @staticmethod
     def get_nums(im_org, im_plot):
@@ -68,6 +85,7 @@ class Visual:
         # Visual.plot('Contour', im_plot)
         # Visual.plot('Numbers and Contour', im_org)
         Visual.plot('Numbers', im_nums)
+        Visual.image = im_nums
         return im_nums
 
     @staticmethod
@@ -84,7 +102,7 @@ class Visual:
 
         new[im_org == 0] = (255, 255, 0)
         new[im_plot == 0] = (255, 0, 255)
-
+        Visual.image = new
         return new
 
     @staticmethod
@@ -99,4 +117,21 @@ class Visual:
         empty = np.zeros(img_org.shape, np.uint8)
         empty = ~empty
         cv2.drawContours(empty, [contour], 0, 0, 1)
+        Visual.image = empty
         return empty
+
+    @staticmethod
+    def on_mouse(event, x, y, flags, params):
+        if event == cv2.EVENT_LBUTTONDBLCLK:
+            cv2.circle(Visual.image, (x, y), 1, 0, -1)
+            Visual.clicks.append((y, x))
+
+    @staticmethod
+    def get_pixel(img):
+        cv2.namedWindow('Connect Broken Edges')
+        cv2.setMouseCallback('Connect Broken Edges', Visual.on_mouse, 0)
+        while True:
+            Visual.show('Connect Broken Edges', img)
+            pressed_key = cv2.waitKey(20) & 0xFF
+            if pressed_key == ord('q'):
+                cv2.destroyAllWindows()

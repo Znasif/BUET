@@ -2,6 +2,10 @@ from Visual import Visual
 from Process import Process
 
 
+def sp(t):
+    return t.split('.')[0]
+
+
 def make_subplots(t):
     """
     Stores a sub-categorized image in the title+"sub.jpg" file
@@ -11,7 +15,7 @@ def make_subplots(t):
     a = Visual.image_open(t)
     b = Visual.image_open(t, 1)
     a, b = Process.get_contour(a, 1, b)
-    Visual.image_write(t.split('.')[0] + "_subs", a)
+    Visual.image_write(sp(t) + "_subs", a)
 
 
 def separate_plots(t):
@@ -22,15 +26,24 @@ def separate_plots(t):
     """
     a = Visual.image_open(t)
     a, b = Process.get_split(a)
-    Visual.image_write(t.split('.')[0] + "_split_to_plot", a)
-    Visual.image_write(t.split('.')[0] + "_split_to_num", b)
+    Visual.image_write(sp(t) + "_split_to_plot", a)
+    Visual.image_write(sp(t) + "_split_to_num", b)
     c = Visual.get_overlay(a, b)
-    Visual.image_write(t.split('.')[0] + "_overlay", c)
+    Visual.image_write(sp(t) + "_overlay", c)
+
+
+def hough_trans(t):
+    a = Visual.image_open(t)
+    a, b = Process.get_split(a)
+    a = Process.find_hough(a)
+    Visual.image_write(sp(t) + "_houghl", a)
+
 
 if __name__ == "__main__":
     title = ["Numbered.png", "Enhanced.png", "nums.jpg", "plot.jpg", "port.jpg", "see.jpg", "subsection.jpg",
              "testplot.jpg", "trial.jpg"]
     temps = ["Template/Symbols.png", "Template/SymbolSet.png", "Template/Crops"]
 
-    make_subplots(title[4])
-    # separate_plots(title[4])
+    make_subplots(title[0])
+    # separate_plots(title[7])
+    # hough_trans(title[4])

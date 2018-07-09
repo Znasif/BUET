@@ -1,6 +1,9 @@
 import cv2
 import numpy as np
 import random as rn
+from skimage.feature import canny
+from skimage.transform import probabilistic_hough_line
+from scipy.ndimage import grey_erosion, grey_dilation, generate_binary_structure
 
 
 class Process:
@@ -50,12 +53,16 @@ class Process:
             kernel = np.ones((7, 7), np.uint8)
             img = cv2.erode(img, kernel, iterations=1)
             kernel = np.ones((3, 3), np.uint8)
-            img = cv2.dilate(img, kernel, iterations=5)
+            img = cv2.dilate(img, kernel, iterations=2)
         elif select == 3:
             blur = cv2.GaussianBlur(img, (3, 3), 0)
             ret3, img = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
             kernel = np.ones((3, 3), np.uint8)
             img = cv2.dilate(img, kernel, iterations=1)
+        elif select == 4:
+            img = cv2.GaussianBlur(img, (5, 5), 0)
+            img = grey_erosion(img, size=(3, 3))
+            img = grey_dilation(img, size=(3, 3))
         return img
 
     @staticmethod
@@ -116,7 +123,7 @@ class Process:
         return subplot_list, contours
 
     @staticmethod
-    def get_split(img, contour_size=1000):
+    def get_split(img, contour_size=1200):
         """
         This is the first step to get two images: One with plot and another with nums
         based on the contour sizes
@@ -153,8 +160,35 @@ class Process:
         return plots, nums
 
     @staticmethod
+    def find_hough(image):
+        """
+        Applied probabilistic Hough Transform to obtain straight lines
+        :param image:
+        :return:
+        """
+        image = Process.blurs(image, 1)
+        edges = canny(image, 2, 1, 25)
+        lines = probabilistic_hough_line(edges, threshold=10, line_length=1,
+                                         line_gap=10)
+        print(len(lines))
+        img = np.zeros_like(image)
+        img[img == 0] = 255
+        for line in lines:
+            p0, p1 = line
+            cv2.line(img, (p0[0], p0[1]), (p1[0], p1[1]), (0, 0, 0), 5)
+        return img
+
+    @staticmethod
     def find_disconnections():
         """
         Find points of contention where the edge terminates abruptly
         :return:
+        """
+
+    @staticmethod
+    def get_original(loc):
+        """
+        The pixel is found on the original image and extracted from it
+        :param loc: pixel location
+        :return: extracted image
         """

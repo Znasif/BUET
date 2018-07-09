@@ -62,14 +62,15 @@ def region_growing(img, seed):
     outimg = np.ones_like(img)
     outimg[outimg==1]=255
     processed = []
-    img_thresh = int(input("Enter Threshold Value: "))
+    img_thresh = 180#int(input("Enter Threshold Value: "))
     while (len(list) > 0):
         pix = list[0]
-        outimg[pix] = 255
+        outimg[pix] = 0
         for coord in get8n(pix[0], pix[1], img.shape):
-            if coord not in processed and img[coord] > img_thresh:
-                #print(img[coord],end=" ")
-                outimg[coord] = 255
+            print(coord)
+            if coord not in processed and img[coord] < img_thresh:
+                print(img[coord],end=" ")
+                outimg[coord] = 0
                 list.append(coord)
                 processed.append(coord)
         #print()
@@ -104,10 +105,11 @@ def ex1():
         cv2.imshow('Seed Points', img)
         k = cv2.waitKey(20) & 0xFF
         if (k == ord('q')):
+            cv2.destroyAllWindows()
             print("STOP")
             out = region_growing(img, clicks)
-            cv2.imshow('Region Growing', out)
-            # cv2.imwrite('Extracted/p.bmp',out)
+            # cv2.imshow('Region Growing', out)
+            cv2.imwrite('Extracted/p.bmp',out)
             # cv2.destroyAllWindows()
             break
     cv2.waitKey()

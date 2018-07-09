@@ -1,23 +1,23 @@
 import cv2
-import matplotlib.pyplot as plt
+import scipy.ndimage as ni
 import numpy as np
-from skimage import measure, morphology, filters
+from skimage import filters
 
-trial = cv2.imread('trial.jpg')
-plt.imshow(trial)
-plt.show()
-
-trial_erode = morphology.binary_erosion(trial, selem=morphology.disk(7))
-plt.imshow(trial_erode)
-plt.show()
-
-
-
-
-
-
-
-
-
-
-
+# img = cv2.imread('SymbolSet.png', 0)
+img = cv2.imread('port.jpg', 0)
+'''img = np.array([[10, 50, 10, 50, 10],
+                [10, 55, 10, 55, 10],
+                [10, 65, 10, 65, 10],
+                [10, 50, 10, 50, 10],
+                [10, 55, 10, 55, 10]])
+'''
+k = np.array([[-1, -2, -1],
+              [0, 0, 0],
+              [1, 2, 1]])
+# img1 = ni.correlate(img, k, mode='mirror')
+img1 = np.array(filters.sobel(img))
+cv2.imwrite('test.jpg', img+img1)
+# img = cv2.imread('test.png', 0)
+# img = np.invert(img)
+cv2.imshow('test', img)
+cv2.waitKey(0)

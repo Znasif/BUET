@@ -9,7 +9,7 @@ import cv2
 a = cv2.imread("Maps/port.jpg", 0)
 b = threshold_otsu(a)
 a = a > b
-image = invert(data.horse())
+image = invert(a)
 
 # perform skeletonization
 skeleton = skeletonize(image)
