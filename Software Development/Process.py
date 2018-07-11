@@ -153,7 +153,7 @@ class Process:
             min_contour_ize = min(now_size, min_contour_ize)
             if now_size > contour_size:
                 cv2.drawContours(plots, [cnt], 0, 0, 2)
-            else:
+            elif now_size > contour_size/6:
                 cv2.drawContours(nums, [cnt], 0, 0, -1)
 
         plots = Process.blurs(plots, 2)

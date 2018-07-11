@@ -39,11 +39,18 @@ def hough_trans(t):
     Visual.image_write(sp(t) + "_houghl", a)
 
 
+def verify_click(t):
+    a = Visual.image_open(t)
+    Visual.get_pixel(a)
+
+
+
 if __name__ == "__main__":
     title = ["Numbered.png", "Enhanced.png", "nums.jpg", "plot.jpg", "port.jpg", "see.jpg", "subsection.jpg",
              "testplot.jpg", "trial.jpg"]
     temps = ["Template/Symbols.png", "Template/SymbolSet.png", "Template/Crops"]
 
-    make_subplots(title[0])
-    # separate_plots(title[7])
+    # make_subplots(title[0])
+    # separate_plots(title[4])
     # hough_trans(title[4])
+    verify_click(title[0])

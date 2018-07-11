@@ -135,3 +135,4 @@ class Visual:
             pressed_key = cv2.waitKey(20) & 0xFF
             if pressed_key == ord('q'):
                 cv2.destroyAllWindows()
+                break
