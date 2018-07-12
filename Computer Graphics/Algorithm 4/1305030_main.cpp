@@ -7,83 +7,160 @@ typedef long long int lli;
 
 using namespace std;
 
-ifstream fin("1305030_string.txt");
-lli n, m, cnt, d = 26;
-string T, P;
-set<string> Match;
-
 lli q[] = {1000000007, 1000000103};
 
-void Naive_1(){
-    for(lli i=0; i<n-m+1; i++){
-        if(P==T.substr(i, m)) cnt++;
-    }
-    cout<<cnt<<endl;
-    cnt = 0;
-}
+struct Common{
+    lli n, m, cnt, d = 26;
+    string T, P;
 
-void Naive_2(){
-    for(lli i=0; i<n-1; i++){
-        for(lli j=i+1; j<n; j++){
-            Match.insert(T.substr(i, j));
+    void Naive(){
+        for(lli i=0; i<n-m+1; i++){
+            if(P==T.substr(i, m)) cnt++;
         }
+        cout<<"Naive : "<<cnt<<endl;
+        cnt = 0;
     }
-    cout<<Match.size()<<endl;
-    Match.clear();
-}
 
-void hashing(){
-    lli h[] = {1, 1}, p[] = {0, 0}, t[] = {0,0};
-    for(lli i=0; i<m; i++){
-        for(int j = 0; j<1; j++){
-            p[j] = (d*p[j] + P[i])%q[j];
-            t[j] = (d*t[j] + T[i])%q[j];
-            if(i<m-1) h[j] = (h[j]*d)%q[j];
-        }
-    }
-    for(lli i=0; i<n-m+1; i++){
-        if(p[0]==t[0] && p[1]==t[1]) cnt++;
-        if(i<n-m){
+    void hashing(){
+        lli h[] = {1, 1}, p[] = {0, 0}, t[] = {0,0};
+        for(lli i=0; i<m; i++){
             for(int j = 0; j<1; j++){
-                t[j] = ((t[j]-T[i]*h[j])*d + T[i+m])%q[j];
-                if(t[j]<0) t[j] += q[j];
+                p[j] = (d*p[j] + P[i])%q[j];
+                t[j] = (d*t[j] + T[i])%q[j];
+                if(i<m-1) h[j] = (h[j]*d)%q[j];
+            }
+        }
+        for(lli i=0; i<n-m+1; i++){
+            if(p[0]==t[0] && p[1]==t[1]) cnt++;
+            if(i<n-m){
+                for(int j = 0; j<1; j++){
+                    t[j] = ((t[j]-T[i]*h[j])*d + T[i+m])%q[j];
+                    if(t[j]<0) t[j] += q[j];
+                }
+            }
+        }
+        cout<<"Hashing : "<<cnt<<endl;
+        cnt = 0;
+    }
+
+    void KMP(){
+        lli pi[m];
+        pi[0] = 0;
+        lli k=0;
+        for(lli i=1; i<m; i++){
+            while(k>0 && P[k] != P[i]) k = pi[k];
+            if(P[k] == P[i]) k++;
+            pi[i] = k;
+        }
+        lli q = 0;
+        for(lli i=0; i<n; i++){
+            while(q>0 && P[q] != T[i]) q = pi[q - 1];
+            if(P[q] == T[i]) q++;
+            if(q == m){
+                cnt++;
+                q = pi[q - 1];
+            }
+        }
+        cout<<"KMP : "<<cnt<<endl;
+        cnt = 0;
+    }
+};
+
+struct entry {
+    lli nr[2], p;
+};
+
+bool cmp(struct entry a, struct entry b)
+{
+    return a.nr[0] == b.nr[0] ? (a.nr[1] < b.nr[1] ? true : false) : (a.nr[0] < b.nr[0] ? true : false);
+}
+
+struct Distinct{
+    set<string> Match;
+    lli n, cnt;
+    string T;
+    int** P;
+    int stp;
+
+    void Naive(){
+        for(lli i=0; i<n; i++){
+            for(lli j=0; j<n-i; j++){
+                Match.insert(T.substr(i, j+1));
+            }
+        }
+        for (set<string>::iterator it=Match.begin(); it!=Match.end(); ++it) cout <<endl<< *it;
+        cout<<"Naive : "<<Match.size()<<endl;
+        Match.clear();
+    }
+
+    void printSuffix(){
+        for(lli i=0; i<n; i++){
+            Match.insert(T.substr(i, n-i));
+        }
+        for (set<string>::iterator it=Match.begin(); it!=Match.end(); ++it) cout <<endl<< *it;
+        Match.clear();
+    }
+
+    void SuffixArray(void)
+    {
+        lli i;
+        cnt = log2(n) + 1;
+        int S[cnt][n];
+        entry L[n];
+        for (i = 0; i < n; i ++) S[0][i] = T[i] - 'a';
+        for (stp = 1, cnt = 1; cnt >> 1 < n; stp ++, cnt <<= 1)
+        {
+            for (i = 0; i < n; i ++)
+            {
+                L[i].nr[0] = S[stp - 1][i];
+                L[i].nr[1] = i + cnt < n ? S[stp - 1][i + cnt] : -1;
+                L[i].p = i;
+            }
+            sort(L, L + n, cmp);
+            for (i = 0; i < n; i++){
+                S[stp][L[i].p] = i > 0 && L[i].nr[0] == L[i - 1].nr[0] && L[i].nr[1] == L[i - 1].nr[1] ?
+                S[stp][L[i - 1].p] : i;
+            }
+        }
+
+        int ret = 1;
+
+        for(int i=0; i<n-1; i++){
+            int j = i+1, k;
+            for (k = stp - 1; k >= 0 && i < n && j < n; k --){
+                if (P[k][i] == P[k][j]){
+                    i += 1 << k;
+                    j += 1 << k;
+                    ret += 1 << k;
+                }
             }
         }
     }
-    cout<<cnt<<endl;
-    cnt = 0;
-}
+};
 
-void KMP(){
-    lli pi[m];
-    pi[0] = 0;
-    lli k=0;
-    for(lli i=1; i<m; i++){
-        while(k>0 && P[k] != P[i]) k = pi[k];
-        if(P[k] == P[i]) k++;
-        pi[i] = k;
-    }
-    lli q = 0;
-    for(lli i=0; i<n; i++){
-        while(q>0 && P[q] != T[i]) q = pi[q];
-        if(P[q] == T[i]) q++;
-        if(q == m - 1){
-            cnt++;
-            q = pi[q];
-        }
-    }
-    cout<<cnt<<endl;
-    cnt = 0;
-}
 
 int main()
 {
-    fin>>n;
-    fin>>T;
-    fin>>m;
-    fin>>P;
-    Naive_1();
-    hashing();
-    /*Naive_2();*/
-    KMP();
+    cout<<"1: All occurences of P on T \n2: Number of Distinct Substrings\n";
+    int q;
+    cin>>q;
+    ifstream fin("1305030_string.txt");
+    if(q == 1){
+        Common C;
+        fin>>C.n;
+        fin>>C.T;
+        fin>>C.m;
+        fin>>C.P;
+        C.Naive();
+        C.hashing();
+        C.KMP();
+    }
+    else if(q == 2){
+        Distinct D;
+        fin>>D.n;
+        fin>>D.T;
+        D.printSuffix();
+        //D.Naive();
+        //D.SuffixArray();
+    }
 }
