@@ -22,7 +22,7 @@ double cameraAngle;
 #define dbg(s) cout<<s<<endl
 #define fout if(false) cout
 
-ifstream fin("1305030_points.txt");
+ifstream fin("1305030_points_4.txt");
 //ofstream fout("1305030_debug.txt");
 
 int V;
@@ -402,7 +402,7 @@ void input(int show=1)
     }
     graph[cnt]=graph[0];
     graph[0]=mx;
-    srand(time(0));
+    srand(5);//time(0)
     random_shuffle(graph.begin()+1, graph.end());
     //test();
     delaunay();

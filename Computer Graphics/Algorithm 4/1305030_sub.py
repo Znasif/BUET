@@ -5,8 +5,8 @@ import sys
 if __name__ == "__main__":
     n = int(sys.argv[1])
     m = int(sys.argv[2])
-    c = np.random.randint(ord('a'), ord('z')+1, n)
-    b = np.random.randint(ord('a'), ord('z')+1, m)
+    c = np.random.randint(ord('a'), ord('e')+1, n)
+    b = np.random.randint(ord('a'), ord('e')+1, m)
     T = ""
     P = ""
     for i in range(n):

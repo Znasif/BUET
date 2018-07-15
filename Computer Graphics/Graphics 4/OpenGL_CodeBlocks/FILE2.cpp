@@ -6,16 +6,16 @@
 #include <glut.h>
 
 Object{
-    Vector3 reference_point;
-    Double height, width, length;
+    point reference_point;
+    double height, width, length;
     int Shine;
     double color[3];
     double co_efficients[4];
     Object(){};
     virtual void draw(){};
-    void setColor;
-    void setShine;
-    void setCoEfficients;
+    void setColor();
+    void setShine();
+    void setCoEfficients();
 }
 
 vector <Object>  objects;

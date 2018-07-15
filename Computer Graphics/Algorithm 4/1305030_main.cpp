@@ -7,6 +7,8 @@ typedef long long int lli;
 
 using namespace std;
 
+ofstream fout;
+
 lli q[] = {1000000007, 1000000103};
 
 struct Common{
@@ -14,8 +16,13 @@ struct Common{
     string T, P;
 
     void Naive(){
+        cnt = 0;
+        fout<<"Naive :\n";
         for(lli i=0; i<n-m+1; i++){
-            if(P==T.substr(i, m)) cnt++;
+            if(P==T.substr(i, m)){
+                cnt++;
+                fout<<i<<" ";
+            }
         }
         cout<<"Naive : "<<cnt<<endl;
         cnt = 0;
@@ -23,6 +30,7 @@ struct Common{
 
     void hashing(){
         lli h[] = {1, 1}, p[] = {0, 0}, t[] = {0,0};
+        fout<<"\n\nHashing :\n";
         for(lli i=0; i<m; i++){
             for(int j = 0; j<1; j++){
                 p[j] = (d*p[j] + P[i])%q[j];
@@ -31,7 +39,10 @@ struct Common{
             }
         }
         for(lli i=0; i<n-m+1; i++){
-            if(p[0]==t[0] && p[1]==t[1]) cnt++;
+            if(p[0]==t[0] && p[1]==t[1]){
+                cnt++;
+                fout<<i<<" ";
+            }
             if(i<n-m){
                 for(int j = 0; j<1; j++){
                     t[j] = ((t[j]-T[i]*h[j])*d + T[i+m])%q[j];
@@ -53,11 +64,13 @@ struct Common{
             pi[i] = k;
         }
         lli q = 0;
+        fout<<"\n\nKMP :\n";
         for(lli i=0; i<n; i++){
             while(q>0 && P[q] != T[i]) q = pi[q - 1];
             if(P[q] == T[i]) q++;
             if(q == m){
                 cnt++;
+                fout<<i-m+1<<" ";
                 q = pi[q - 1];
             }
         }
@@ -66,48 +79,42 @@ struct Common{
     }
 };
 
-struct entry {
-    lli nr[2], p;
+struct entry
+{
+    int p;
+    int nr[2];
 };
 
-bool cmp(struct entry a, struct entry b)
+int cmp(entry a, entry b)
 {
-    return a.nr[0] == b.nr[0] ? (a.nr[1] < b.nr[1] ? true : false) : (a.nr[0] < b.nr[0] ? true : false);
+    return (a.nr[0] == b.nr[0]) ? (a.nr[1] < b.nr[1] ? 1 : 0):
+               (a.nr[0] < b.nr[0] ?1: 0);
 }
 
 struct Distinct{
     set<string> Match;
     lli n, cnt;
-    string T;
-    int** P;
     int stp;
+    string T;
 
     void Naive(){
-        for(lli i=0; i<n; i++){
-            for(lli j=0; j<n-i; j++){
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n-i; j++){
                 Match.insert(T.substr(i, j+1));
             }
         }
-        for (set<string>::iterator it=Match.begin(); it!=Match.end(); ++it) cout <<endl<< *it;
         cout<<"Naive : "<<Match.size()<<endl;
         Match.clear();
     }
 
-    void printSuffix(){
-        for(lli i=0; i<n; i++){
-            Match.insert(T.substr(i, n-i));
-        }
-        for (set<string>::iterator it=Match.begin(); it!=Match.end(); ++it) cout <<endl<< *it;
-        Match.clear();
-    }
-
-    void SuffixArray(void)
+    void SuffixArray()
     {
         lli i;
-        cnt = log2(n) + 1;
-        int S[cnt][n];
+        int S[21][n];
+        int sa[n];
         entry L[n];
         for (i = 0; i < n; i ++) S[0][i] = T[i] - 'a';
+
         for (stp = 1, cnt = 1; cnt >> 1 < n; stp ++, cnt <<= 1)
         {
             for (i = 0; i < n; i ++)
@@ -123,25 +130,33 @@ struct Distinct{
             }
         }
 
-        int ret = 1;
+        for(int i=0;i<n;i++) sa[S[stp-1][i]]=i;
+
+        lli ret=n;
+        ret*=(n+1);
+        ret/=2;
 
         for(int i=0; i<n-1; i++){
-            int j = i+1, k;
-            for (k = stp - 1; k >= 0 && i < n && j < n; k --){
-                if (P[k][i] == P[k][j]){
-                    i += 1 << k;
-                    j += 1 << k;
-                    ret += 1 << k;
+            int x=sa[i];
+            int y = sa[i+1], k;
+            for (k = stp - 1; k >= 0 && x < n && x < n; k --){
+                if (S[k][x] == S[k][y]){
+                    x += 1 << k;
+                    y += 1 << k;
+                    ret -= 1 << k;
                 }
             }
         }
+
+        cout<<"LCP : "<<ret<<endl;
     }
 };
 
 
 int main()
 {
-    cout<<"1: All occurences of P on T \n2: Number of Distinct Substrings\n";
+    fout.open("1305030_out.txt", ofstream::out);
+    cout<<"1: All occurrences of P on T \n2: Number of Distinct Substrings\n";
     int q;
     cin>>q;
     ifstream fin("1305030_string.txt");
@@ -159,8 +174,7 @@ int main()
         Distinct D;
         fin>>D.n;
         fin>>D.T;
-        D.printSuffix();
-        //D.Naive();
-        //D.SuffixArray();
+        D.Naive();
+        D.SuffixArray();
     }
 }
