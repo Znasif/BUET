@@ -14,6 +14,8 @@ class Process:
     def __init__(self):
         pass
 
+    idx = None
+
     @staticmethod
     def get_bin(img, threshold):
         """
@@ -179,16 +181,105 @@ class Process:
         return img
 
     @staticmethod
-    def find_disconnections():
-        """
-        Find points of contention where the edge terminates abruptly
-        :return:
-        """
-
-    @staticmethod
     def get_original(loc):
         """
         The pixel is found on the original image and extracted from it
         :param loc: pixel location
         :return: extracted image
         """
+
+    @staticmethod
+    def create_idx(img):
+        """
+        Stores a mapping for img pixel neighbors to pixel
+        :param img: original image
+        :return: NIL
+        """
+        dim = max(img.shape[0], img.shape[1])
+        a = np.repeat(np.arange(dim), dim).reshape((dim, dim))
+        Process.idx = np.dstack((a, a.T))
+
+    @staticmethod
+    def getn(x, y, coord, d=1):
+        """
+        returns the neighboring indices or the values of coord
+        :param x: shape[0]
+        :param y: shape[1]
+        :param coord: pixel location
+        :param d: window size
+        :return: array of indices
+        """
+        i, j = coord
+        return Process.idx[max(i - d, 0):min(i + d + 1, x), max(j - d, 0):min(j + d + 1, y)].flatten()
+
+    @staticmethod
+    def region_growing(seed):
+        """
+        Samples pixel from the original image from the provided seed point list
+        and shows its connected region
+        :param seed:
+        :return: image containing only seed-connected region
+        """
+
+    @staticmethod
+    def seed_selection(cnt):
+        """
+        This method returns a number of seeds from the separated contours that are smaller
+        in area the selection probability is proportional to the inverse of its area
+        :param cnt: List of contours with small size
+        :return: list of seed points
+        """
+
+    @staticmethod
+    def endings(img):
+        """
+        takes a morphological skeleton of an image and finds probable list of end-points: points
+        where edges terminate abruptly
+        :param img: skeleton image
+        :return: probable line-endings
+        """
+
+    @staticmethod
+    def store_tree(tree):
+        """
+        Stores the detected contours in a tree structure so that the neighboring information
+        can be restored from non-volatile memory such as
+        :param tree: contour tree
+        :return: NIL
+        """
+
+    @staticmethod
+    def fitness_function_1(man, auto):
+        """
+        Man and Auto are Manually and automatically generated images respectively. This fitness
+        function calculates the unlinked broken edges
+        :param man: Manually linked image
+        :param auto: Automatically linked image
+        :return: error rate
+        """
+
+    @staticmethod
+    def fitness_function_2(man, auto):
+        """
+        Man and Auto are Manually and automatically generated images respectively. This fitness
+        function calculates the number of unrecognized regions
+        :param man: Manually segmented image
+        :param auto: Automatically segmented image
+        :return: error rate
+        """
+
+    @staticmethod
+    def fidelity():
+        """
+        Uses the fitness functions to determine the next course of action
+        :return:
+        """
+
+    @staticmethod
+    def symbolize(nums):
+        """
+        Classifies Text/Digit/Symbols based on morphology using SIFT
+        :param nums: Separated nums field
+        :return: dictionary mapping object to string
+        """
+

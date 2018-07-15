@@ -33,6 +33,11 @@ def separate_plots(t):
 
 
 def hough_trans(t):
+    """
+    Apply probabilistic Hough Transform to determine possible missing edges
+    :param t: file name
+    :return: NIL
+    """
     a = Visual.image_open(t)
     a, b = Process.get_split(a)
     a = Process.find_hough(a)
@@ -42,7 +47,7 @@ def hough_trans(t):
 def verify_click(t):
     a = Visual.image_open(t)
     Visual.get_pixel(a)
-
+    # Visual.image_write(sp(t) + "_manual", Visual.image)
 
 
 if __name__ == "__main__":
@@ -53,4 +58,4 @@ if __name__ == "__main__":
     # make_subplots(title[0])
     # separate_plots(title[4])
     # hough_trans(title[4])
-    verify_click(title[0])
+    verify_click(title[3])

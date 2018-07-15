@@ -14,6 +14,8 @@ class Visual:
     in_folder = "Maps/"
     out_folder = "Extracted/"
     image = None
+    current = [0, 0]
+    shift = False
     clicks = []
 
     @staticmethod
@@ -62,14 +64,24 @@ class Visual:
     @staticmethod
     def show(title, image):
         """
-        Show image in new window
+        Show image in new window with shifting window
 
         :param title: Title of image
         :param image: the numpy array to represent
         :return: NIL
         """
         Visual.image = image
-        cv2.imshow(title, Visual.image)
+        a, b = 600, 1200
+        if Visual.shift:
+            Visual.current[1] += b
+            if Visual.current[1] > image.shape[1]:
+                Visual.current[1] = 0
+                Visual.current[0] += a
+                if Visual.current[0] > image.shape[0]:
+                    Visual.current[0] = 0
+        mx, my = min(image.shape[0], Visual.current[0]+a), min(image.shape[1], Visual.current[1]+b)
+        show_image = image[Visual.current[0]:mx, Visual.current[1]:my]
+        cv2.imshow(title, show_image)
 
     @staticmethod
     def get_nums(im_org, im_plot):
@@ -122,17 +134,62 @@ class Visual:
 
     @staticmethod
     def on_mouse(event, x, y, flags, params):
-        if event == cv2.EVENT_LBUTTONDBLCLK:
-            cv2.circle(Visual.image, (x, y), 1, 0, -1)
-            Visual.clicks.append((y, x))
+        """
+        Select seed Points using Left Mouse Click
+        :param event: Left Mouse Click
+        :param x: Column
+        :param y: Row
+        :param flags: NIL
+        :param params: NIL
+        :return: stores (y, x) into clicks
+        """
+        if event == cv2.EVENT_LBUTTONDOWN:
+            cv2.circle(Visual.image, (Visual.current[1] + x, Visual.current[0] + y), 1, 0, -1)
+            Visual.clicks.append((Visual.current[0] + y, Visual.current[1] + x))
 
     @staticmethod
-    def get_pixel(img):
-        cv2.namedWindow('Connect Broken Edges')
-        cv2.setMouseCallback('Connect Broken Edges', Visual.on_mouse, 0)
+    def get_pixel(img, title='Collect Seed'):
+        """
+        Selection of seed point for 1. Edge linking 2. Region growing etc.
+        :param img: Original image
+        :param title: Window Name
+        :return: NIL
+        """
+        cv2.namedWindow(title)
+        cv2.setMouseCallback(title, Visual.on_mouse, 0)
+        Visual.current = [0, 0]
+        Visual.shift = False
         while True:
-            Visual.show('Connect Broken Edges', img)
+            Visual.show(title, img)
+            Visual.shift = False
             pressed_key = cv2.waitKey(20) & 0xFF
+            # print(chr(pressed_key))
             if pressed_key == ord('q'):
                 cv2.destroyAllWindows()
                 break
+            elif pressed_key == ord('a'):
+                Visual.shift = True
+            elif pressed_key == ord('c'):
+                Visual.connect_line()
+
+    @staticmethod
+    def connect_line():
+        """
+        Connect points from Clicks with 1. Lines 2. Extrapolated Curves
+        :return: NIL
+        """
+        ln = len(Visual.clicks)
+        for i in range(0, ln, 2):
+            y, x = Visual.clicks[i]
+            y_, x_ = Visual.clicks[i+1]
+            Visual.image = cv2.line(Visual.image, (x, y), (x_, y_), 0, 2)
+
+    @staticmethod
+    def plot_fidelity(x, y, seed_cnt):
+        """
+        Plot fitness functions vs seed_cnt
+        :param x: fitness_function_1
+        :param y: fitness_function_2
+        :param seed_cnt: number of provided seeds
+        :return: NIL
+        """
