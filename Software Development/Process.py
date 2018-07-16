@@ -155,7 +155,7 @@ class Process:
             min_contour_ize = min(now_size, min_contour_ize)
             if now_size > contour_size:
                 cv2.drawContours(plots, [cnt], 0, 0, 2)
-            elif now_size > contour_size/6:
+            elif now_size > contour_size/10:
                 cv2.drawContours(nums, [cnt], 0, 0, -1)
 
         plots = Process.blurs(plots, 2)
@@ -172,7 +172,7 @@ class Process:
         edges = canny(image, 2, 1, 25)
         lines = probabilistic_hough_line(edges, threshold=10, line_length=1,
                                          line_gap=10)
-        print(len(lines))
+        # print(len(lines))
         img = np.zeros_like(image)
         img[img == 0] = 255
         for line in lines:
@@ -281,5 +281,14 @@ class Process:
         Classifies Text/Digit/Symbols based on morphology using SIFT
         :param nums: Separated nums field
         :return: dictionary mapping object to string
+        """
+
+    @staticmethod
+    def synthetic_data(cnts):
+        """
+        List of contours are provided; from which synthetic data for digit and Symbol recognition
+        is generated
+        :param cnts: List of contours
+        :return: dictionary
         """
 

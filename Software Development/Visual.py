@@ -55,9 +55,12 @@ class Visual:
         :param a_map: default to greyscale image
         :return: NIL
         """
-        plt.imshow(image, cmap=a_map)
         plt.title(title)
         plt.axis('off')
+        if len(image.shape) == 3:
+            plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+        else:
+            plt.imshow(image, cmap=a_map)
         Visual.image = image
         plt.show()
 
@@ -110,7 +113,7 @@ class Visual:
         """
         p, q = np.shape(im_org)
 
-        new = np.full((p, q, 3), (255, 255, 255))
+        new = np.full((p, q, 3), (255, 255, 255), dtype=np.uint8)
 
         new[im_org == 0] = (255, 255, 0)
         new[im_plot == 0] = (255, 0, 255)
@@ -181,7 +184,9 @@ class Visual:
         ln = len(Visual.clicks)
         for i in range(0, ln, 2):
             y, x = Visual.clicks[i]
-            y_, x_ = Visual.clicks[i+1]
+            y_, x_ = Visual.clicks[i]
+            if i + 1 < ln:
+                y_, x_ = Visual.clicks[i+1]
             Visual.image = cv2.line(Visual.image, (x, y), (x_, y_), 0, 2)
 
     @staticmethod

@@ -15,7 +15,8 @@ def make_subplots(t):
     a = Visual.image_open(t)
     b = Visual.image_open(t, 1)
     a, b = Process.get_contour(a, 1, b)
-    Visual.image_write(sp(t) + "_subs", a)
+    # Visual.image_write(sp(t) + "_subs", a)
+    Visual.plot(sp(t) + "_subs", a)
 
 
 def separate_plots(t):
@@ -26,10 +27,13 @@ def separate_plots(t):
     """
     a = Visual.image_open(t)
     a, b = Process.get_split(a)
-    Visual.image_write(sp(t) + "_split_to_plot", a)
-    Visual.image_write(sp(t) + "_split_to_num", b)
+    # Visual.image_write(sp(t) + "_split_to_plot", a)
+    # Visual.image_write(sp(t) + "_split_to_num", b)
+    Visual.plot(sp(t) + "_split_to_plot", a)
+    Visual.plot(sp(t) + "_split_to_num", b)
     c = Visual.get_overlay(a, b)
-    Visual.image_write(sp(t) + "_overlay", c)
+    # Visual.image_write(sp(t) + "_overlay", c)
+    Visual.plot(sp(t) + "_overlay", c)
 
 
 def hough_trans(t):
@@ -41,13 +45,21 @@ def hough_trans(t):
     a = Visual.image_open(t)
     a, b = Process.get_split(a)
     a = Process.find_hough(a)
-    Visual.image_write(sp(t) + "_houghl", a)
+    # Visual.image_write(sp(t) + "_houghl", a)
+    Visual.plot(sp(t) + "_houghl", a)
 
 
-def verify_click(t):
+def manual(t):
+    """
+    Image generated from manual edge linking
+    :param t: file name
+    :return: NIL
+    """
     a = Visual.image_open(t)
+    b = Visual.image_open(t, 1)
     Visual.get_pixel(a)
-    # Visual.image_write(sp(t) + "_manual", Visual.image)
+    a, c = Process.get_contour(Visual.image, 1, b)
+    Visual.image_write(sp(t) + "_manual", a)
 
 
 if __name__ == "__main__":
@@ -57,5 +69,5 @@ if __name__ == "__main__":
 
     # make_subplots(title[0])
     # separate_plots(title[4])
-    # hough_trans(title[4])
-    verify_click(title[3])
+    # hough_trans(title[3])
+    manual(title[3])
