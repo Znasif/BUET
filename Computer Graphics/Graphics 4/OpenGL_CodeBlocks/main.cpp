@@ -1,28 +1,18 @@
 #include "FILE2.cpp"
 
-#define pi (2*acos(0.0))
+#define Window_width 500
+#define Window_height 500
 
+#define pi (2*acos(0.0))
 
 
 int drawgrid;
 int drawaxes;
 double angle;
-double transform;
-double move = 10;
+double fovy;
+int Screen_Width, Screen_Height;
+double mv = 10;
 
-struct point
-{
-	double x, y, z;
-}pos, l, r, u;
-
-
-void change(int home) {
-	if (transform > 1 && home == 1) transform = transform;
-	else if (transform <= 0 && home == -1) transform = transform;
-	else {
-		transform += 0.1*home;
-	}
-}
 
 void tilt(int axis, double angle) {
 	double f1 = cos(angle);
@@ -81,170 +71,171 @@ void drawAxes()
 {
 	if (drawaxes == 1)
 	{
-		glColor3f(1.0, 1.0, 1.0);
 		glBegin(GL_LINES); {
-			glVertex3f(100, 0, 0);
-			glVertex3f(-100, 0, 0);
+		    glColor3f(0, 0, 1.0);
+			glVertex3f(300, 0, 0);
+			glVertex3f(-300, 0, 0);
 
-			glVertex3f(0, -100, 0);
-			glVertex3f(0, 100, 0);
+            glColor3f(0, 1.0, 0);
+			glVertex3f(0, -300, 0);
+			glVertex3f(0, 300, 0);
 
-			glVertex3f(0, 0, 100);
-			glVertex3f(0, 0, -100);
+            glColor3f(1.0, 0, 0);
+			glVertex3f(0, 0, 300);
+			glVertex3f(0, 0, -300);
 		}glEnd();
 	}
 }
 
+void loadActualData(){
+    Object *temp;
+    freopen("scene.txt","r",stdin);
+    cin>>Recursion_level>>Screen_Width;
+	Screen_Height = Screen_Width;
+	int n;
+	cin>>n;
+	string l;
+    for(int i=0; i<n; i++){
+        cin>>l;
+        double a, b, c, d;
+        int j;
+        if(l == "general"){
+            double m[10];
+            double clip[6];
+            for(int k=0; k<10; k++) cin>>m[k];
+            for(int k=0; k<6; k++) cin>>clip[k];
+            cin>>a>>b>>c;
+            cin>>a>>b>>c>>d;
+            cin>>j;
+            continue;
+        }
+        else if(l == "sphere"){
+            cin>>a>>b>>c;
+            cin>>d;
+            temp = new Sphere(Point3(a, b, c), d);
+        }
+        else if(l == "triangle"){
+            cin>>a>>b>>c;
+            Point3 p(a, b, c);
+            cin>>a>>b>>c;
+            Point3 q(a, b, c);
+            cin>>a>>b>>c;
+            Point3 r(a, b, c);
+            temp = new Triangle(p, q, r);
+        }
+        cin>>a>>b>>c;
+        temp->setColor(a, b, c);
+        cin>>a>>b>>c>>d;
+        temp->setCoEfficients(a, b, c, d);
+        cin>>j;
+        temp->setShine(j);
+        objects.push_back(temp);
+    }
+    cin>>n;
+    for(int i=0; i<n; i++){
+        double a, b, c;
+        cin>>a>>b>>c;
+        lights.push_back(Point3(a, b, c));
+    }
 
-void drawGrid(point tl)
-{
-	int i;
-	if (drawgrid == 1)
-	{
-		glColor3f(0.6, 0.6, 0.6);	//grey
-		glBegin(GL_LINES); {
-			for (i = -8; i <= 8; i++) {
+    temp=new Floor(1000, 20);
+    temp->setCoEfficients(0.4, 0.2, 0.2, 0.2);
+    temp->setShine(1);
+    objects.push_back(temp);
+}
+void loadTestData(){
+    Object *temp;
+    temp=new Sphere(Point3(0, 0, 10), 10); // Center(0,0,10), Radius 10
+    temp->setColor(1,0,0);
+    temp->setCoEfficients(0.4,0.2,0.2,0.2);
+    temp->setShine(1);
+    objects.push_back(temp);
+    srand(33);
+    for(int i=0; i<6; i++){
+        int a[4];
+        double b[4];
+        for(int j=0; j<4; j++){
+            b[j] =  static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+            if(j<3){
+                a[j] = (b[j])*51;
+            }
+            else{
+                a[j] = 10;
+            }
+            if(a[j]%2 && j<2){
+                a[j] = -a[j];
+            }
+        }
 
-				if (i == 0)
-					continue;	//SKIP the MAIN axes
+        temp=new Sphere(Point3(a[0], a[1], a[2]), a[3]); // Center(0,0,10), Radius 10
+        temp->setColor(b[0], b[1], b[2]);
+        temp->setCoEfficients(0.4,0.2,0.2,0.2);
+        temp->setShine(1);
+        objects.push_back(temp);
+    }
 
-								//lines parallel to Y-axis
-				glVertex3f(i * 10, -90, 0);
-				glVertex3f(i * 10, 90, 0);
+    Point3 light1(-50,50,50);
+    lights.push_back(light1);
 
-				//lines parallel to X-axis
-				glVertex3f(-90, i * 10, 0);
-				glVertex3f(90, i * 10, 0);
-			}
-		}glEnd();
-	}
+    temp = new Triangle(Point3(30, 60, 0), Point3(50, 30, 0), Point3(50, 45, 50));
+    temp->setColor(1, 0, 0);
+    temp->setCoEfficients(0.4, 0.2, 0.1, 0.3);
+    temp->setShine(5);
+    objects.push_back(temp);
+
+    temp = new Triangle(Point3(70, 60, 0), Point3(30, 60, 0), Point3(50, 45, 50));
+    temp->setColor(1, 0, 0);
+    temp->setCoEfficients(0.4, 0.2, 0.1, 0.3);
+    temp->setShine(5);
+    objects.push_back(temp);
+
+    temp = new Triangle(Point3(50, 30, 0), Point3(70, 60, 0), Point3(50, 45, 50));
+    temp->setColor(1, 0, 0);
+    temp->setCoEfficients(0.4, 0.2, 0.1, 0.3);
+    temp->setShine(5);
+    objects.push_back(temp);
+
+    temp=new Floor(1000, 20);
+    temp->setCoEfficients(0.4, 0.2, 0.2, 0.2);
+    temp->setShine(1);
+    objects.push_back(temp);
+
+    Screen_Width = 768;
+	Screen_Height = 768;
+    Recursion_level = 3;
 }
 
-void drawSquare(double a)
-{
-	glColor3f(0.0, 1.0, 0.0);
-	glBegin(GL_QUADS); {
-		glVertex3f(a, a, 2);
-		glVertex3f(a, -a, 2);
-		glVertex3f(-a, -a, 2);
-		glVertex3f(-a, a, 2);
-	}glEnd();
+void Capture(){
+    bitmap_image image(Screen_Width, Screen_Height);
+    for(int i=0;i<Screen_Height;i++){
+        for(int j=0;j<Screen_Width;j++){
+            image.set_pixel(j, i, 0, 0, 0);
+        }
+    }
+    double plane_distance = (Window_height/2.0)/tan(fovy*pi/360.0);
+    Point3 topLeft = pos + l*plane_distance - r*(Window_width/2) + u*(Window_height/2);
+    double dv = Window_height*1.0/Screen_Height;
+    double du = Window_width*1.0/Screen_Width;
+    for(int i=0; i<Screen_Height; i++){
+        Point3 corner;
+        for(int j=0; j<Screen_Width; j++){
+                corner = topLeft + r*(j*du) - u*(i*dv);
+                Ray ray(pos, corner - pos);
+                double* addn = new double[3];
+                int nearest = getColor(ray, addn, 0);
+                if(nearest !=-1) image.set_pixel(j, i, addn[0]*255, addn[1]*255, addn[2]*255);
+            }
+        }
+    printf("DONE");
+    image.save_image("out.bmp");
 }
-
-
-void drawCircle(double radius, int segments)
-{
-	int i;
-	struct point points[100];
-	glColor3f(0.7, 0.7, 0.7);
-	//generate points
-	for (i = 0; i <= segments; i++)
-	{
-		points[i].x = radius * cos(((double)i / (double)segments) * 2 * pi);
-		points[i].y = radius * sin(((double)i / (double)segments) * 2 * pi);
-	}
-	//draw segments using generated points
-	for (i = 0; i<segments; i++)
-	{
-		glBegin(GL_LINES);
-		{
-			glVertex3f(points[i].x, points[i].y, 0);
-			glVertex3f(points[i + 1].x, points[i + 1].y, 0);
-		}
-		glEnd();
-	}
-}
-
-
-
-void drawSphere(double radius, int slices, int stacks)
-{
-	struct point points[100][100];
-	int i, j;
-	double h, r;
-	//generate points
-	for (i = 0; i <= stacks; i++)
-	{
-		h = radius * sin(((double)i / (double)stacks)*(pi / 2));
-		r = radius * cos(((double)i / (double)stacks)*(pi / 2));
-		for (j = 0; j <= slices; j++)
-		{
-			points[i][j].x = r * cos(((double)j / (double)slices) * 2 * pi);
-			points[i][j].y = r * sin(((double)j / (double)slices) * 2 * pi);
-			points[i][j].z = h;
-		}
-	}
-	//draw quads using generated points
-	for (i = 0; i<stacks; i++)
-	{
-		glColor3f((double)i / (double)stacks, (double)i / (double)stacks, (double)i / (double)stacks);
-		for (j = 0; j<slices; j++)
-		{
-			glBegin(GL_QUADS); {
-				//upper hemisphere
-				glVertex3f(points[i][j].x, points[i][j].y, points[i][j].z);
-				glVertex3f(points[i][j + 1].x, points[i][j + 1].y, points[i][j + 1].z);
-				glVertex3f(points[i + 1][j + 1].x, points[i + 1][j + 1].y, points[i + 1][j + 1].z);
-				glVertex3f(points[i + 1][j].x, points[i + 1][j].y, points[i + 1][j].z);
-				//lower hemisphere
-				glVertex3f(points[i][j].x, points[i][j].y, -points[i][j].z);
-				glVertex3f(points[i][j + 1].x, points[i][j + 1].y, -points[i][j + 1].z);
-				glVertex3f(points[i + 1][j + 1].x, points[i + 1][j + 1].y, -points[i + 1][j + 1].z);
-				glVertex3f(points[i + 1][j].x, points[i + 1][j].y, -points[i + 1][j].z);
-
-			}glEnd();
-		}
-	}
-}
-
-void drawCube()
-{
-	glPushMatrix();
-	{
-		glTranslatef(0, 0, -20);
-		drawSquare(20 * transform);
-	}
-	glPopMatrix();
-	glPushMatrix();
-	{
-		glTranslatef(0, 0, 20);
-		drawSquare(20 * transform);
-	}
-	glPopMatrix();
-	glPushMatrix();
-	{
-		glRotatef(-90, 0, 1, 0);
-		glTranslatef(0, 0, -20);
-		drawSquare(20 * transform);
-	}
-	glPopMatrix();
-	glPushMatrix();
-	{
-		glRotatef(90, 0, 1, 0);
-		glTranslatef(0, 0, -20);
-		drawSquare(20 * transform);
-	}
-	glPopMatrix();
-	glPushMatrix();
-	{
-		glRotatef(-90, 1, 0, 0);
-		glTranslatef(0, 0, -20);
-		drawSquare(20 * transform);
-	}
-	glPopMatrix();
-	glPushMatrix();
-	{
-		glRotatef(90, 1, 0, 0);
-		glTranslatef(0, 0, -20);
-		drawSquare(20 * transform);
-	}
-	glPopMatrix();
-}
-
 
 void keyboardListener(unsigned char key, int x, int y) {
 	switch (key) {
 
+    case '0':
+		Capture();
+		break;
 	case '1':
 		tilt(2, pi / 60);
 		break;
@@ -272,49 +263,42 @@ void keyboardListener(unsigned char key, int x, int y) {
 void specialKeyListener(int key, int x, int y) {
 	switch (key) {
 	case GLUT_KEY_DOWN:
-		pos.x -= move * l.x;
-		pos.y -= move * l.y;
-		pos.z -= move * l.z;
+		pos.x -= mv * l.x;
+		pos.y -= mv * l.y;
+		pos.z -= mv * l.z;
 		break;
 	case GLUT_KEY_UP:
-		pos.x += move * l.x;
-		pos.y += move * l.y;
-		pos.z += move * l.z;
+		pos.x += mv * l.x;
+		pos.y += mv * l.y;
+		pos.z += mv * l.z;
 		break;
-
 	case GLUT_KEY_RIGHT:
-		pos.x += move * r.x;
-		pos.y += move * r.y;
-		pos.z += move * r.z;
+		pos.x += mv * r.x;
+		pos.y += mv * r.y;
+		pos.z += mv * r.z;
 		break;
 	case GLUT_KEY_LEFT:
-		pos.x -= move * r.x;
-		pos.y -= move * r.y;
-		pos.z -= move * r.z;
+		pos.x -= mv * r.x;
+		pos.y -= mv * r.y;
+		pos.z -= mv * r.z;
 		break;
-
 	case GLUT_KEY_PAGE_UP:
-		pos.x += move * u.x;
-		pos.y += move * u.y;
-		pos.z += move * u.z;
+		pos.x += mv * u.x;
+		pos.y += mv * u.y;
+		pos.z += mv * u.z;
 		break;
 	case GLUT_KEY_PAGE_DOWN:
-		pos.x -= move * u.x;
-		pos.y -= move * u.y;
-		pos.z -= move * u.z;
+		pos.x -= mv * u.x;
+		pos.y -= mv * u.y;
+		pos.z -= mv * u.z;
 		break;
-
 	case GLUT_KEY_INSERT:
 	    drawgrid = 1 - drawgrid;
 		break;
-
 	case GLUT_KEY_HOME:
-		change(1); //cube to sphere
 		break;
 	case GLUT_KEY_END:
-		change(-1);
 		break;
-
 	default:
 		break;
 	}
@@ -380,25 +364,24 @@ void display() {
 	//add objects
 
 	drawAxes();
-	drawGrid();
 
-	//glColor3f(1,0,0);
-	//drawSquare(10);
-	drawCube();
-	//drawSS();
-
-	//drawCircle(30,24);
-
-	//drawCone(20,50,24);
-
-	//drawSphere(30, 24, 20);
-
-
-
+    for(int i=0; i<objects.size(); i++){
+        objects[i]->draw();
+    }
+    glPointSize(3);
+    for(int i=0; i<lights.size(); i++){
+        glColor3f(1.0, 1.0, 0);
+        glBegin(GL_POINTS);
+        {
+            glVertex3f(lights[i].x, lights[i].y, lights[i].z);
+        }
+        glEnd();
+    }
 
 	//ADD this line in the end --- if you use double buffer (i.e. GL_DOUBLE)
 	glutSwapBuffers();
 }
+
 
 
 void animate() {
@@ -411,25 +394,19 @@ void init() {
 	//codes for initialization
 	drawgrid = 0;
 	drawaxes = 1;
-
-	transform = 1; // middle ground
 	angle = 0;
 
-	pos.x = 100;
-	pos.y = 100;
-	pos.z = 30;
+	pos = Point3(0, -200, 10);
+	l = Point3(0, 200/sqrt(40100), -10/sqrt(40100));
+	r = Point3(1, 0, 0);
+	u = Point3(0, 0, 1);
 
-	l.x = -1 / sqrt(2);
-	l.y = -1 / sqrt(2);
-	l.z = 0;
+	/*pos = Point3(100, 100, 10);
+    l = Point3(-1/sqrt(2), -1/sqrt(2), 0);
+    r = Point3(-1/sqrt(2), 1/sqrt(2), 0);
+    u = Point3(0, 0, 1);*/
 
-	r.x = -1 / sqrt(2);
-	r.y = 1 / sqrt(2);
-	r.z = 0;
-
-	u.x = 0;
-	u.y = 0;
-	u.z = 1;
+	fovy = 80;
 
 	//clear the screen
 	glClearColor(0, 0, 0, 0);
@@ -444,7 +421,7 @@ void init() {
 	glLoadIdentity();
 
 	//give PERSPECTIVE parameters
-	gluPerspective(80, 1, 1, 1000.0);
+	gluPerspective(fovy, 1, 1, 1000.0);
 	//field of view in the Y (vertically)
 	//aspect ratio that determines the field of view in the X direction (horizontally)
 	//near distance
@@ -453,13 +430,16 @@ void init() {
 
 int main(int argc, char **argv) {
 	glutInit(&argc, argv);
-	glutInitWindowSize(500, 500);
+	glutInitWindowSize(Window_width, Window_height);
 	glutInitWindowPosition(0, 0);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGB);	//Depth, Double buffer, RGB color
 
 	glutCreateWindow("My OpenGL Program");
 
 	init();
+
+    //loadTestData();
+    loadActualData();
 
 	glEnable(GL_DEPTH_TEST);	//enable Depth Testing
 

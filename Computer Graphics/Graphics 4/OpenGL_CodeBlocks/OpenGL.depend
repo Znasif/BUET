@@ -29,3 +29,30 @@
 	<GL/gl.h>
 	<GL/glu.h>
 
+1532190524 source:e:\onedrive\codes\buet codes\computer graphics\graphics 4\opengl_codeblocks\main.cpp
+	"FILE2.cpp"
+
+1532191619 e:\onedrive\codes\buet codes\computer graphics\graphics 4\opengl_codeblocks\file2.cpp
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<vector>
+	<windows.h>
+	<glut.h>
+	"bitmap_image.hpp"
+
+1531397708 e:\onedrive\codes\buet codes\computer graphics\graphics 4\opengl_codeblocks\opengl\include\glut.h
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1527931013 e:\onedrive\codes\buet codes\computer graphics\graphics 4\opengl_codeblocks\bitmap_image.hpp
+	<algorithm>
+	<cmath>
+	<cstdlib>
+	<fstream>
+	<iostream>
+	<iterator>
+	<limits>
+	<string>
+
